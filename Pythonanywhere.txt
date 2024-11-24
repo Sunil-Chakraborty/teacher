@@ -1,0 +1,223 @@
+
+Pythonanywhere - Webhosting
+
+
+to access app :
+
+https://sayantani.pythonanywhere.com/
+user: Sayantani
+pwd: hiitsme
+
+
+
+to access server:
+
+https://www.pythonanywhere.com/login/
+user name : sayantani
+pwd : Hiitsme!1
+
+
+
+
+https://sunilc.pythonanywhere.com/accounts/login/
+user:sunil@gmail.com
+pwd:sunil123
+bash console:
+cd CRUD
+source myenv/bin/activate
+
+user: Sayantani
+pwd: hiitsme
+
+https://www.pythonanywhere.com/login/
+https://github.com/Sunil-Chakraborty/CRUD.git
+
+https://github.com/Sunil-Chakraborty/CRUD/tree/master
+https://github.com/Sunil-Chakraborty/CRUD/tree/crud_bkup
+
+git clone --branch master https://github.com/Sunil-Chakraborty/CRUD.git
+rm -rf CRUD
+https://www.pythonanywhere.com/tarpit
+source myenv/bin/activate
+
+https://sayantani.pythonanywhere.com/static/image/Softnook.png
+
+user name : sunilc
+pwd : Sunilc@59
+sunilc.pythonanywhere.com.
+python --version 3.8.10
+django-admin --version 4.10
+
+do you recomend the following site to enroll for learning of AI tools for Python using AI
+https://pay.aifortechies.in/checkout/at01-ga1?utm_campaign=21802681914&utm_term=&utm_content=&utm_id=21802681914&gad_source=1&gclid=CjwKCAjwpbi4BhByEiwAMC8JnTOJG5fpZ0e_Eevre22dreeOZDcvs5nRDLkSUrlXLRZvorG5A62xmhoC-lEQAvD_BwE
+
+user name : sayantani
+pwd : Hiitsme!1
+sayantani.pythonanywhere.com
+
+http://127.0.0.1:8000/teachers/
+user:skc
+pwd:skc123
+
+https://sayantani.pythonanywhere.com/teachers/
+user:sunil
+pwd:sunil123
+
+https://sayantani.pythonanywhere.com/admin/
+user:admin
+pwd:admin123
+
+
+/home/sayantani/venv
+python3.8 -m venv venv
+source venv/bin/activate
+rm -rf venv
+
+to view source code script
+cat system.py
+
+to update bash cloned data from github repository :
+git pull origin master
+git fetch origin
+git reset --hard origin/master
+
+
+pip install django-filter
+pip install xhtml2pdf
+
+
+# Check disk usage of your home directory
+du -sh ~
+
+# Check disk usage of the current directory
+du -sh *
+
+https://sunilc.pythonanywhere.com/crud/
+
+/home/sunilc/CRUD/myenv
+/home/sunilc/CRUD/myenv/bin/python
+
+Sometimes temporary files can take up space.
+du -sh /tmp/*
+rm -rf /tmp/*
+Verify the disk usage:
+du -sh ~/*
+
+echo $PYTHONPATH
+(venv) 12:36 ~/myproj $ cd ..
+(venv) 12:36 ~ $ export PYTHONPATH=/home/sayantani/
+
+# Install wheel
+pip install wheel
+
+# Upgrade requests to the required version
+pip install requests==2.31.0
+
+# Reinstall problematic packages
+pip install PyPDF3 svglib --no-cache-dir
+
+
+If you have the same issue with other apps, like accounts, you can do the same steps for them.
+python manage.py migrate accounts zero --fake
+python manage.py migrate accounts 0001_initial --fake
+python manage.py migrate accounts
+
+Reset Migrations (Optional)
+If you still encounter issues and are in a development environment where you can reset migrations:
+
+Delete Migration Files: Remove all migration files in the product/migrations/ directory except for __init__.py.
+
+Delete Migration Records: Remove migration records from the django_migrations table for the product app:
+
+sql
+Copy code
+DELETE FROM django_migrations WHERE app = 'product';
+
+
+ Using Django Shell for Drop Existing Tables in bash
+Dropping Tables in SQLite
+DROP TABLE IF EXISTS files_directory;
+DROP TABLE IF EXISTS files_file;
+
+sqlite3 db.sqlite3
+sqlite> .tables
+# Check if the tables exist
+sqlite> DROP TABLE files_directory;
+sqlite> DROP TABLE files_file;
+sqlite> .exit
+
+
+Steps to Restore from backup.tar to a New Git Branch
+
+First, create and switch to a new branch where you want to restore the backup:
+git checkout -b restore_backup
+
+Extract backup.tar into your current working directory. Make sure you are in the root directory 
+of your Git repository:
+tar -xvf backup.tar
+
+# Add and commit the restored files
+git add .
+git commit -m "Restored files from backup.tar"
+
+# Push the new branch to GitHub
+git push origin restore_backup
+
+Check Disk Space and Permissions:
+df -h
+ls -l
+Run Backup Command:
+tar -cvzf backup_$(date +%F_%H-%M-%S).tar.gz .
+
+
+in file table the url is :
+https://drive.google.com/drive/folders/1YXma8kFbrvh4FwOyGLKgVVt6NBueC9tu?usp=drive_link
+
+{% load static %}
+
+https://drive.google.com/file/d/1r1ocxVSvKsakyJuU48IZhrdgdqZSSk_p/view?usp=drive_link
+
+https://drive.google.com/uc?export=view&id=1LMDIKbHnewuzhfkj7GtQaR0bjvjdI2xP
+https://drive.google.com/uc?export=view&id=1r1ocxVSvKsakyJuU48IZhrdgdqZSSk_p
+
+
+https://drive.google.com/file/d/1c-MaKi9V-Bqi_xuH4w6ET8E3veicGTFV/view?usp=drive_link
+
+
+https://docs.google.com/presentation/d/1LMDIKbHnewuzhfkj7GtQaR0bjvjdI2xP/edit?usp=sharing&ouid=105728352372943651108&rtpof=true&sd=true
+
+<iframe src="https://docs.google.com/presentation/d/e/2PACX-1vSE3jFwWzZJv93SkEV8whkWkUIvJJk27ZtKSqvfTr5sWL8V6mbBQt8hw1t3LN8qZw/embed?start=false&loop=false&delayms=3000" frameborder="0" width="960" height="749" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
+https://docs.google.com/presentation/d/e/2PACX-1vSE3jFwWzZJv93SkEV8whkWkUIvJJk27ZtKSqvfTr5sWL8V6mbBQt8hw1t3LN8qZw/embed?start=false&loop=false&delayms=3000  pptx-file
+https://docs.google.com/presentation/d/e/2PACX-1vTUIhZxJMbrSrgYBBWPItO9BZvYjEFHYGuPXP4w3EV8v-02GS9lcjiZuja7jt3_nQ/embed?start=false&loop=false&delayms=3000  pptx-file
+https://docs.google.com/document/d/e/2PACX-1vQNivkS8el76z6YCBmODoEwtdzqkUb7aAXbqtXyCzg4-r1fjrKSVhAEHkaYjrv0ZsF6jfSV4FOje1db/pub?embedded=true  pdf-file
+https://docs.google.com/document/d/e/2PACX-1vQ4hyU4RqEFWMlX6JaRi1s64rPQ1n2CnM_L2kiCOo35ON0xUGlY7SD2FzBPZG97BQ/pub?embedded=true  word-file
+https://docs.google.com/spreadsheets/d/e/2PACX-1vSv5cj2bnpJtAWxdHpZEXmVfDgyDfk76K_4m2b56lXflkASZs9arP5LB0OBqcWtYA/pubhtml?widget=true&amp;headers=false  xlsx-file
+
+কুড়ানি ------ মনীশ ঘটক
+
+<iframe src="https://docs.google.com/presentation/d/e/2PACX-1vTUIhZxJMbrSrgYBBWPItO9BZvYjEFHYGuPXP4w3EV8v-02GS9lcjiZuja7jt3_nQ/embed?start=false&loop=false&delayms=3000" frameborder="0" width="960" height="749" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
+<iframe src="https://docs.google.com/document/d/e/2PACX-1vQNivkS8el76z6YCBmODoEwtdzqkUb7aAXbqtXyCzg4-r1fjrKSVhAEHkaYjrv0ZsF6jfSV4FOje1db/pub?embedded=true"></iframe>
+<iframe src="https://docs.google.com/document/d/e/2PACX-1vQ4hyU4RqEFWMlX6JaRi1s64rPQ1n2CnM_L2kiCOo35ON0xUGlY7SD2FzBPZG97BQ/pub?embedded=true"></iframe>
+<iframe src="https://docs.google.com/spreadsheets/d/e/2PACX-1vSv5cj2bnpJtAWxdHpZEXmVfDgyDfk76K_4m2b56lXflkASZs9arP5LB0OBqcWtYA/pubhtml?widget=true&amp;headers=false"></iframe>
+
+
+
+
+from console:
+cd /home/sayantani
+python3 -m venv venv
+source myenv/bin/activate
+
+
+contact person:
+Ajanta Shoe :
+1. Souvik      : 9830889702 - Purchase
+2. Rahul        : 9830106494  - IT
+3. Chandan  : 9674166793  - Technical
+4. Abhisek    : 8447751151 - IT
+    Bharadwaj 
+
+1. Joydev Chatterjee : 9830227556 - Director
+
+
+

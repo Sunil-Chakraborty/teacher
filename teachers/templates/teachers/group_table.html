@@ -1,0 +1,64 @@
+
+{% extends 'grp_base.html' %}
+
+{% block content %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Group Table</title>
+    <style>
+        .sidebar {
+            width: 250px;
+            background-color: #f4f4f4;
+            padding: 1rem;
+            height: 100vh;
+            position: fixed;
+        }
+
+        .sidebar a {
+            display: block;
+            color: #333;
+            text-decoration: none;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .sidebar a:hover {
+            background-color: #ddd;
+        }
+
+        .content {
+            margin-left: 300px;
+            padding: 1rem;
+        }
+		
+    </style>
+</head>
+<body>
+    <!-- Sidebar Section -->
+    <div class="sidebar">
+		<h3>Tables</h3>
+		<ul>
+			<li><a href="{% url 'teachers:group_table_with_id' 'group1' %}">Ph.D Scholars with JRF/SRF etc.</a></li>
+			<li><a href="{% url 'teachers:group_table_with_id' 'group2' %}">Group 2</a></li>
+			<li><a href="{% url 'teachers:group_table_with_id' 'group3' %}">Group 3</a></li>
+		</ul>
+	
+	</div>
+
+    <!-- Main Content Section -->
+    <div class="content">
+		{% block group_table_details %}
+			<h2>Group Table</h2>
+			<p>Select a table from the sidebar to view its details.</p>		
+			<p>No table selected yet.</p>
+		{% endblock %}
+    </div>
+	
+	
+</body>
+</html>
+{% endblock %}

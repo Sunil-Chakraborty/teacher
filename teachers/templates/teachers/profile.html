@@ -1,0 +1,380 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/profile.css' %}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+    <style>
+        /* Add your CSS styling here, as included above */
+        /* No changes to inline styles were necessary */
+		
+	input[type=number]::-webkit-inner-spin-button, 
+    input[type=number]::-webkit-outer-spin-button { 
+           -webkit-appearance: none; 
+           margin: 0; 
+    }
+	
+
+
+    /* Modal Styles */
+    .modal {
+        display: none;
+        position: fixed;
+        z-index: 1000;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgba(0, 0, 0, 0.5);
+    }
+
+    .modal-content {
+        background-color: #f9f9f9;
+        margin: 10% auto;
+        padding: 20px;
+        border-radius: 8px;
+        width: 50%;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        animation: fadeIn 0.3s ease-in-out;
+    }
+
+    .modal-header {
+        margin-bottom: 20px;
+        text-align: center;
+        font-size: 1.5em;
+        color: #333;
+    }
+	/* Style for the close button (X) */
+	.close {
+		color: #aaa;
+		font-size: 28px;
+		font-weight: bold;
+		position: absolute;
+		top: 0;
+		right: 10px;
+	}
+    .form-container {
+        margin-bottom: 20px;
+    }
+
+    .form-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr; /* Two columns of equal width */
+        gap: 15px; /* Spacing between fields */
+    }
+
+    .form-group {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .form-group label {
+        margin-bottom: 5px;
+        font-weight: bold;
+        color: #555;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+        padding: 8px;
+        font-size: 1em;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+    }
+
+    .form-group .error {
+        color: red;
+        font-size: 0.9em;
+        margin-top: 5px;
+    }
+	.modal-footer {
+		display: flex;
+		justify-content: flex-end;
+		padding-top: 10px;
+		border-top: 1px solid #dee2e6;
+	}
+
+	.modal-footer .btn {
+		margin-left: 10px;
+	}
+    .btn {
+        font-size: 1em;
+        margin: 5px;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s ease-in-out;
+    }
+
+    .btn-primary {
+        background-color: #007bff;
+        color: #fff;
+    }
+
+    .btn-primary:hover {
+        background-color: #0056b3;
+    }
+
+    .btn-secondary {
+        background-color: #6c757d;
+        color: #fff;
+    }
+
+    .btn-secondary:hover {
+        background-color: #5a6268;
+    }
+
+    .modal-actions {
+        display: flex;
+        justify-content: flex-end;
+    }
+
+    .close {
+        color: #aaa;
+        float: right;
+        font-size: 1.5em;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+    .close:hover,
+    .close:focus {
+        color: #000;
+        text-decoration: none;
+        cursor: pointer;
+    }
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+        }
+        to {
+            opacity: 1;
+        }
+    }
+	
+	.current-photo {
+		width: 50px;
+		height: 50px;
+		object-fit: cover;
+		border-radius: 5px; /* Optional: Adds slight rounding for better aesthetics */
+	}
+	
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="box profile-box" id="profileBox">
+            <h3>Basic Info</h3>
+            <p style="font-weight:bold;color:teal;">{{ request.session.user_name }}</p>
+            <a href="#" id="editPersonalDetailsButton">Edit Personal Details</a>
+        </div>
+
+        <div class="box qualification-box" id="qualificationBox">
+            <h3>Qualifications</h3>
+            <p>{{ teacher.qualification_set.count }} Qualifications</p>
+        </div>
+
+        <div class="box publication-box" id="publicationBox">
+            <h3>Publications</h3>
+            <p>{{ teacher.publication_set.count }} Publications</p>
+        </div>
+
+        {% if request.session.hod %}
+        <div class="box group-box" id="groupBox">
+            <h3>Group Table</h3>
+            <a href="{% url 'teachers:group_table' %}">Go inside Group Table</a>
+        </div>
+        {% endif %}
+    </div>
+
+    <!-- Modal for Editing Personal Details -->
+    <div id="editPersonalDetailsModal" class="modal">
+        <div class="modal-content">
+            <h2 class="modal-header">Edit Personal Details</h2>
+            <form method="post" id="editPersonalDetailsForm" action="{% url 'teachers:edit_personal_details' %}" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="form-container">
+                    <div class="form-grid">
+                        {% for field in form %}
+                        <div class="form-group">
+                            {% if field.name == 'photo' %}
+                            <div class="photo-upload">
+                                <label for="{{ field.id_for_label }}">Profile Photo</label>
+                                <div class="photo-preview">
+                                    {% if field.value %}
+                                    <img src="{{ field.value.url }}" alt="Current Photo" class="current-photo">
+                                    {% else %}
+                                    <img src="/media/images/user-default.png" alt="Default Photo" class="current-photo">
+                                    {% endif %}
+                                </div>
+                                {{ field }}
+                                <div class="clear-option">
+                                    <input type="checkbox" id="clear-photo" name="clear-photo">
+                                    <label for="clear-photo">Clear</label>
+                                </div>
+                            </div>
+                            {% else %}
+                            <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                            {{ field }}
+                            {% if field.help_text %}
+                            <small class="form-text text-muted">{{ field.help_text }}</small>
+                            {% endif %}
+                            {% if field.errors %}
+                            {% for error in field.errors %}
+                            <div class="error-message" style="color: red;">{{ error }}</div>
+                            {% endfor %}
+                            {% endif %}
+                            {% endif %}
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" id="closeEditModalFooter">Close</button>
+                    <button type="submit" class="btn btn-primary" id="submitButton">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Other modals and their functionality remain the same -->
+	<!-- Qualifications Modal -->
+	<div id="qualificationModal" class="modal" data-backdrop="static">
+		<div class="modal-content">
+			<span class="close" id="closeQualificationModal">&times;</span>
+			<h3>Qualifications</h3>
+			<a href="{% url 'teachers:add_qualification' %}" class="btn-add">Add Qualification</a>
+			
+			<table class="qualification-table">
+				<thead>
+					<tr>
+						<th>Degree</th>
+						<th>Subject</th>
+						<th>Thesis</th>
+						<th>Institution</th>
+						<th>Date of Award</th>
+						<th>Upload Doc</th>
+						<th>Actions</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for qualification in teacher.qualification_set.all %}
+						<tr>
+							<td>{{ qualification.degree }}</td>
+							<td>{{ qualification.subject }}</td>
+							<td>{{ qualification.thesis }}</td>
+							<td>{{ qualification.degree }}</td>
+							<td>{{ qualification.institution }}</td>
+							<td>{{ qualification.dt_award }}</td>
+							<td>{{ qualification.award_doc }}</td>
+							<td>
+								<a href="{% url 'teachers:edit_qualification' qualification.id %}" class="btn-edit">Edit</a>
+								<a href="{% url 'teachers:delete_qualification' qualification.id %}" class="btn-delete">Delete</a>
+							</td>
+						</tr>
+					{% empty %}
+						<tr>
+							
+							<td colspan="7" class="no-data-message">No qualifications added yet.</td>
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
+	</div>
+
+
+		<!-- Publications Modal -->
+	<div id="publicationModal" class="modal">
+		<div class="modal-content">
+			<span class="close" id="closePublicationModal">&times;</span>
+			<h3>Publications</h3>
+			<a href="{% url 'teachers:add_publication' %}" class="btn-add">Add Publication</a>
+			
+			<table class="publication-table">
+				<thead>
+					<tr>
+						<th>Title</th>
+						<th>Journal</th>
+						<th>Publication Year</th>
+						<th>Actions</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for publication in teacher.publication_set.all %}
+						<tr>
+							<td>{{ publication.title }}</td>
+							<td>{{ publication.journal }}</td>
+							<td>{{ publication.publication_year }}</td>
+							<td>
+								<a href="{% url 'teachers:edit_publication' publication.id %}" class="btn-edit">Edit</a>
+								<a href="{% url 'teachers:delete_publication' publication.id %}" class="btn-delete">Delete</a>
+							</td>
+						</tr>
+					{% empty %}
+						<tr>
+							<td colspan="4" class="no-data-message">No publications added yet.</td>
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
+	</div>
+	
+	
+	
+
+    <script>
+        $(document).ready(function () {
+            // Handle Personal Details Modal
+            $('#editPersonalDetailsButton').on('click', function () {
+                $('#editPersonalDetailsModal').fadeIn();
+            });
+            $('#closeEditModalFooter').on('click', function () {
+                $('#editPersonalDetailsModal').fadeOut();
+            });
+
+			// Make the modal draggable
+			$('#editPersonalDetailsModal .modal-content').draggable({
+				handle: ".modal-header" // Allow dragging by the modal header
+			});
+			
+			// Open the Qualifications modal
+			qualificationBox.onclick = function() {
+				qualificationModal.style.display = "block";
+			};
+
+			// Close the Qualifications modal
+			closeQualificationModal.onclick = function() {
+				qualificationModal.style.display = "none";
+			};
+
+			// Open the Publications modal
+			publicationBox.onclick = function() {
+				publicationModal.style.display = "block";
+			};
+
+			// Close the Publications modal
+			closePublicationModal.onclick = function() {
+				publicationModal.style.display = "none";
+			};
+			
+			
+        });
+    </script>
+</body>
+
+{% endblock %}

@@ -1,0 +1,8 @@
+Use Django ORM to Drop the Table
+
+python manage.py shell
+
+from django.db import connection
+with connection.cursor() as cursor:
+    cursor.execute("DROP TABLE IF EXISTS teachers_teacher")
+print("Table dropped successfully.")
