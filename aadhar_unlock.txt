@@ -1,0 +1,36 @@
+
+uidai
+
+Send an SMS to 1947 from your registered mobile number 
+
+Include the following format in your SMS: 
+GETOTP <space> <last 6 digits of your Virtual ID>: to request an OTP 
+UNLOCKUID <space> <last 6 digits of your Virtual ID> <space> <6 digits of the OTP>: to unlock your Aadhaar number 
+
+To unlock your Aadhaar biometrics using SMS, follow this template:
+
+Exmp:
+UNLOCKUID 123456 654321
+
+Explanation:
+UNLOCKUID: The command to unlock biometrics.
+123456: Replace this with the last 6 digits of your Virtual ID (VID).
+654321: Replace this with the 6-digit OTP you received on your registered mobile number.
+
+
+Axix Bank
+1959 pin
+Mr.Avishek kumar - Axis Bank for support service (Form15/H)
+Cell : 9955899007
+
+Manager - 9674904811 
+Customer/Logon ID 481001500
+A/c No. 481010100011060
+
+
+A/c No2. 481010100049249
+IFSC CODE : UTIB0000481
+
+
+
+
