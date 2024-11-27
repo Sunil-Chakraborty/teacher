@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from django.conf import settings  # Import settings to access AUTH_USER_MODEL
 from django.utils import timezone
 import os
+from uuid import uuid4
 
 # Create your models here.
 
@@ -142,6 +143,11 @@ class Teacher(models.Model):
         return f"{self.user.email if self.user else 'Unknown User'}"
         
 
+def get_quali_path(instance, filename):
+    # Use the teacher's ID or other stable identifier
+    teacher_id = instance.teacher.id if instance.teacher else "unknown_teacher"
+    return os.path.join("general", f"user_{teacher_id}", filename)
+
     
 class Qualification(models.Model):
     teacher      = models.ForeignKey(Teacher, on_delete=models.CASCADE)
@@ -173,20 +179,28 @@ class Qualification(models.Model):
         null=True, blank=True
     )
     
-    award_doc    = models.ImageField(
-        verbose_name='Upload Award Letters',
-        upload_to=get_image_path, 
-        null=True, 
+    award_doc    = models.FileField(
+        verbose_name="Upload Award Letters",
+        upload_to=get_quali_path, null=True, 
         blank=True
     )
-     
+    
     created_date = models.DateTimeField(default=timezone.now)
     
     updated_date = models.DateTimeField(auto_now=True)
     
-   
+    def save(self, *args, **kwargs):
+        # Save instance first to ensure `id` is assigned
+        if not self.id:
+            super().save(*args, **kwargs)
+
+        # Update the upload_to path dynamically
+        self.award_doc.field.upload_to = get_quali_path
+        super().save(*args, **kwargs)
+
     def __str__(self):
         return f"{self.degree} from {self.institution}"
+        
 
 class Publication(models.Model):
     teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE)

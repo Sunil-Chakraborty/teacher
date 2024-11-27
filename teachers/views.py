@@ -67,7 +67,10 @@ def login_view(request):
                 
             if user.groups.filter(name='hod').exists():
                 hod_status = "Hod"  # Replace with your logic
-                                
+                
+            if user.groups.filter(name='actg_hod').exists():
+                hod_status = "Actg_Hod"  # Replace with your logic
+                
             request.session['hod'] = hod_status 
             
              
@@ -96,7 +99,7 @@ def profile(request):
     # Fetch the group name (assume the user belongs to one group, otherwise handle multiple)
     groups = request.user.groups.all()  # Fetch all groups for the user
     group_name = groups[0].name if groups else "No Group"  # Take the first group or default to "No Group"
-    print(group_name)
+    
     # Get or create the teacher instance
     teacher, created = Teacher.objects.update_or_create(
         user=request.user,
@@ -148,10 +151,10 @@ def edit_personal_details(request):
 @login_required
 def add_qualification(request):
     if request.method == 'POST':
-        form = QualificationForm(request.POST)
+        form = QualificationForm(request.POST, request.FILES)
         if form.is_valid():
-            qualification = form.save(commit=False)
-            qualification.teacher = Teacher.objects.get(user=request.user)
+            qualification = form.save(commit=False)            
+            qualification.teacher = get_object_or_404(Teacher, user=request.user)
             qualification.save()
             return redirect('teachers:profile')
     else:
@@ -163,7 +166,8 @@ def edit_qualification(request, id):
     qualification = Qualification.objects.get(id=id, teacher__user=request.user)
     # print("Qualification ID:", qualification.id)
     if request.method == 'POST':
-        form = QualificationForm(request.POST, instance=qualification)
+        form = QualificationForm(request.POST, request.FILES, instance=qualification)
+
         if form.is_valid():
             form.save()
             return redirect('teachers:profile')

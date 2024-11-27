@@ -4,6 +4,8 @@ from .models import CustomUser, Department, Teacher, Qualification, Publication
 from django.contrib.auth.forms import AuthenticationForm
 from django.core.exceptions import ValidationError
 from django.forms import DateInput
+from datetime import date, timedelta
+
 
 class UserRegistrationForm(forms.ModelForm):
     department = forms.CharField(max_length=100, required=True)  # Expect name, not ID
@@ -75,59 +77,88 @@ class TeacherForm(forms.ModelForm):
             'designation', 'doj', 'exp', 'mobile', 'photo'
         ]
         labels = {
-            'first_name': 'Full Name',  # Change label for first_name field
+            'first_name': 'Full Name',  # Custom label
         }
         widgets = {
             'dob': forms.DateInput(attrs={'type': 'date', 'class': 'datepicker'}),
             'doj': forms.DateInput(attrs={'type': 'date', 'class': 'datepicker'}),
-           
-            'mobile': forms.NumberInput(attrs={  # Use forms.NumberInput directly
+            'mobile': forms.NumberInput(attrs={
                 'class': 'form-control',
-                'required': 'required',                
-                'min': 2000000000,  # Minimum value for the mobile number
-                'max': 9999999999,  # Maximum value for the mobile number
-                'step': 1,  # Step value (for numeric input)
-                'oninvalid': "this.setCustomValidity('Give proper mobile number')",  # Custom message
-                'oninput': "this.setCustomValidity('')",  # Clear message on valid input
+                'required': 'required',
+                'min': 2000000000,
+                'max': 9999999999,
+                'oninvalid': "this.setCustomValidity('Enter a valid mobile number')",
+                'oninput': "this.setCustomValidity('')",
             }),
-            
-            'exp': forms.NumberInput(attrs={  # Use forms.NumberInput directly
+            'exp': forms.NumberInput(attrs={
                 'class': 'form-control',
-                'required': 'required',                
-                'min': 0,  # Minimum value for the exp number
-                'max': 60,  # Maximum value for the exp number
-                'step': 1,  # Step value (for numeric input)
+                'required': 'required',
+                'min': 0,
+                'max': 60,
             }),
         }
-       
+   
     def __init__(self, *args, **kwargs):
-        # Get the user from kwargs
-        user = kwargs.pop('user', None)
+        user = kwargs.pop('user', None)  # Optional: pass user if needed
         super(TeacherForm, self).__init__(*args, **kwargs)
 
-        # Make certain fields required
-        self.fields['dob'].required = True
-        self.fields['exp'].required = True
-        self.fields['doj'].required = True
-        self.fields['designation'].required = True
-        self.fields['caste'].required = True
-        self.fields['gender'].required = True
+        # Set field requirements
+        for field_name in ['dob', 'doj', 'exp', 'designation', 'caste', 'gender']:
+            self.fields[field_name].required = True
+        
+        # Check if dob is None before performing the operation
+        if self.instance.dob is not None:
+            min_doj = self.instance.dob + timedelta(days=15 * 365)  # Approximation
+        else:
+            # Handle the case where dob is None
+            min_doj = None  # Or set a default date if necessary
+            
+        self.fields['dob'].widget.attrs.update({'max': date.today()})
+        self.fields['doj'].widget.attrs.update({'max': date.today()})
+        self.fields['doj'].widget.attrs.update(
+            #{'min': self.instance.dob}
+            {'min': min_doj}
+        )
+            
+        # Set first_name as readonly
         self.fields['first_name'].widget.attrs['readonly'] = True
 
     def clean(self):
         cleaned_data = super().clean()
         #print("Cleaned Data:", cleaned_data)  # Debugging
         return cleaned_data
-        
+    
+    
+
+    
 class QualificationForm(forms.ModelForm):
     class Meta:
         model = Qualification
         fields = ['degree', 'subject', 'thesis', 'institution', 
         'dt_award', 'award_doc']
+        
         widgets = {
-            'dt_award': forms.DateInput(attrs={'type': 'date', 'class': 'datepicker'}),
+            'thesis': forms.Textarea(attrs={
+                'rows': 4,  # Adjust the number of rows
+                'cols': 50, # Adjust the number of columns
+                'placeholder': 'Enter the title of your dissertation or thesis here...'
+            }),
             
+            'dt_award': forms.DateInput(attrs={
+                'type': 'date', 
+                'class': 'datepicker'
+            }),
         }
+    def __init__(self, *args, **kwargs):
+        user = kwargs.pop('user', None)  # Optional: pass user if needed
+        super(QualificationForm, self).__init__(*args, **kwargs)
+        # Set field requirements
+        for field_name in ['degree', 'subject', 'institution']:
+            self.fields[field_name].required = True
+        
+        
+        
+        
 
 class PublicationForm(forms.ModelForm):
     class Meta:

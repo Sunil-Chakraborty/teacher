@@ -1,11 +1,153 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h2>Edit Qualification Details</h2>
-<form action="{% url 'edit_qualification' qualification.id %}" method="post">
+<div class="container">
+    <div class="form-container">
+        <h2 class="form-heading">Edit Qualification Details</h2>
+        <form action="{% url 'teachers:edit_qualification' qualification.id %}" method="post" enctype="multipart/form-data" class="form-grid">
+            {% csrf_token %}
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="id_degree">Degree/Certificate</label>
+                    {{ form.degree }}
+                </div>
+                <div class="form-group">
+                    <label for="id_subject">Subject</label>
+                    {{ form.subject }}
+                </div>
+                <div class="form-group">
+                    <label for="id_institution">Institution</label>
+                    {{ form.institution }}
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="id_thesis">Title of Dissertation/Thesis</label>
+                    {{ form.thesis }}
+                </div>
+                <div class="form-group">
+                    <label for="id_dt_award">Date of Award</label>
+                    {{ form.dt_award }}
+                </div>
+                <div class="form-group">
+                    <label for="id_award_doc">Award Document</label>
+                    {% if qualification.award_doc %}
+                        <button type="button" class="btn-view" onclick="window.open('{{ qualification.award_doc.url }}', '_blank')">View</button>
+                    {% else %}
+                        <span>No document uploaded</span>
+                    {% endif %}
+                    {{ form.award_doc }}
+                </div>
+            </div>
+            <div class="form-actions">
+                <button type="submit" class="btn-save">Save Changes</button>
+                <button type="button" onclick="window.location.href='{% url 'teachers:profile' %}'" class="btn-cancel">Cancel</button>
+            </div>
+        </form>
+    </div>
+</div>
+<style>
+    .container {
+        max-width: 800px;
+        margin: 20px auto;
+        background-color: #f9f9f9;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+    }
 
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Save Changes</button>
-</form>
+    .form-container {
+        padding: 20px;
+    }
+
+    .form-heading {
+        text-align: center;
+        font-size: 24px;
+        font-weight: bold;
+        margin-bottom: 20px;
+        color: #333;
+    }
+
+    .form-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 15px;
+    }
+
+    .form-group {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .form-group label {
+        font-weight: bold;
+        margin-bottom: 5px;
+    }
+
+    .form-actions {
+        margin-top: 20px;
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+    }
+
+    .btn-save {
+        background-color: #28a745;
+        color: white;
+        padding: 10px 20px;
+        font-size: 14px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    .btn-save:hover {
+        background-color: #218838;
+    }
+
+    .btn-cancel {
+        background-color: #dc3545;
+        color: white;
+        padding: 10px 20px;
+        font-size: 14px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    .btn-cancel:hover {
+        background-color: #c82333;
+    }
+
+    .btn-view {
+        background-color: #007bff;
+        color: white;
+        padding: 8px 15px;
+        font-size: 14px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    .btn-view:hover {
+        background-color: #0056b3;
+    }
+
+    @media (max-width: 768px) {
+        .form-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .form-actions {
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .btn-save,
+        .btn-cancel {
+            width: 100%;
+        }
+    }
+</style>
 {% endblock %}

@@ -42,7 +42,7 @@
         margin: 10% auto;
         padding: 20px;
         border-radius: 8px;
-        width: 50%;
+        width: 60%;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         animation: fadeIn 0.3s ease-in-out;
     }
@@ -170,7 +170,58 @@
 		object-fit: cover;
 		border-radius: 5px; /* Optional: Adds slight rounding for better aesthetics */
 	}
-	
+	.qualification-table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    .qualification-table th {
+        background-color: #f2f2f2; /* Light gray for header */
+        text-align: left;
+        padding: 8px;
+    }
+
+    .qualification-table td {
+        padding: 8px;
+        text-align: left;
+        vertical-align: top; /* Aligns multi-line text to the top */
+    }
+
+    .qualification-table tr:nth-child(even) {
+        background-color: #f9f9f9; /* Light gray for even rows */
+    }
+
+    .qualification-table tr:nth-child(odd) {
+        background-color: #ffffff; /* White for odd rows */
+    }
+
+    .btn-edit {
+        background-color: #f0ad4e;
+        color: white;
+        border: none;
+        padding: 5px 10px;
+        text-decoration: none;
+        border-radius: 3px;
+    }
+
+    .btn-delete {
+        background-color: #d9534f;
+        color: white;
+        border: none;
+        padding: 5px 10px;
+        text-decoration: none;
+        border-radius: 3px;
+    }
+
+    .btn-add {
+        background-color: #5cb85c;
+        color: white;
+        border: none;
+        padding: 10px 15px;
+        text-decoration: none;
+        border-radius: 3px;
+    }
+
     </style>
 </head>
 
@@ -190,7 +241,14 @@
         <div class="box publication-box" id="publicationBox">
             <h3>Publications</h3>
             <p>{{ teacher.publication_set.count }} Publications</p>
-        </div>
+			<div>
+				<a href="#" id="addPatents">Patents</a>
+				<br>
+				<a href="#" id="addResearchPub">Research Publication</a>
+				<br>
+				<a href="#" id="addBooks">Books/Books Chapters</a>
+			</div>
+		</div>
 
         {% if request.session.hod %}
         <div class="box group-box" id="groupBox">
@@ -211,32 +269,37 @@
                         {% for field in form %}
                         <div class="form-group">
                             {% if field.name == 'photo' %}
-                            <div class="photo-upload">
-                                <label for="{{ field.id_for_label }}">Profile Photo</label>
-                                <div class="photo-preview">
-                                    {% if field.value %}
-                                    <img src="{{ field.value.url }}" alt="Current Photo" class="current-photo">
-                                    {% else %}
-                                    <img src="/media/images/user-default.png" alt="Default Photo" class="current-photo">
-                                    {% endif %}
-                                </div>
-                                {{ field }}
-                                <div class="clear-option">
-                                    <input type="checkbox" id="clear-photo" name="clear-photo">
-                                    <label for="clear-photo">Clear</label>
-                                </div>
-                            </div>
+								<div class="photo-upload">
+									<label for="{{ field.id_for_label }}">Profile Photo</label>
+									<div class="photo-preview">
+										{% if field.value %}
+										<img src="{{ field.value.url }}" alt="Current Photo" class="current-photo">
+										{% else %}
+										<img src="/media/images/user-default.png" alt="Default Photo" class="current-photo">
+										{% endif %}
+									</div>
+									{{ field }}
+									<div class="clear-option">
+										<input type="checkbox" id="clear-photo" name="clear-photo">
+										<label for="clear-photo">Clear</label>
+									</div>
+								</div>
+														
                             {% else %}
-                            <label for="{{ field.id_for_label }}">{{ field.label }}</label>
-                            {{ field }}
-                            {% if field.help_text %}
-                            <small class="form-text text-muted">{{ field.help_text }}</small>
-                            {% endif %}
-                            {% if field.errors %}
-                            {% for error in field.errors %}
-                            <div class="error-message" style="color: red;">{{ error }}</div>
-                            {% endfor %}
-                            {% endif %}
+							
+								<label for="{{ field.id_for_label }}">{{ field.label }}</label>
+								{{ field }}
+								
+								{% if field.help_text %}
+									<small class="form-text text-muted">{{ field.help_text }}</small>
+								{% endif %}
+								
+								{% if field.errors %}
+									{% for error in field.errors %}
+										<div class="error-message" style="color: red;">{{ error }}</div>
+									{% endfor %}
+								{% endif %}
+								
                             {% endif %}
                         </div>
                         {% endfor %}
@@ -253,21 +316,21 @@
     <!-- Other modals and their functionality remain the same -->
 	<!-- Qualifications Modal -->
 	<div id="qualificationModal" class="modal" data-backdrop="static">
-		<div class="modal-content">
+		<div class="modal-content" style="max-width: 100%; margin: auto;"> <!-- Adjust width to 90% -->
 			<span class="close" id="closeQualificationModal">&times;</span>
-			<h3>Qualifications</h3>
+			<h2 class="modal-header">Qualifications</h2>
 			<a href="{% url 'teachers:add_qualification' %}" class="btn-add">Add Qualification</a>
-			
-			<table class="qualification-table">
+
+			<table  class="qualification-table" style="width: 100%; border-collapse: collapse;">
 				<thead>
 					<tr>
-						<th>Degree</th>
-						<th>Subject</th>
-						<th>Thesis</th>
-						<th>Institution</th>
-						<th>Date of Award</th>
-						<th>Upload Doc</th>
-						<th>Actions</th>
+						<th style="width: 12%;">Degree</th>
+						<th style="width: 15%;">Subject</th>
+						<th style="width: 20%;">Thesis</th>
+						<th style="width: 15%;">Institution</th>
+						<th style="width: 10%;">Awarded</th>
+						<th style="width: 10%;">Doc</th>
+						<th style="width: 18%;">Actions</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -276,10 +339,15 @@
 							<td>{{ qualification.degree }}</td>
 							<td>{{ qualification.subject }}</td>
 							<td>{{ qualification.thesis }}</td>
-							<td>{{ qualification.degree }}</td>
 							<td>{{ qualification.institution }}</td>
-							<td>{{ qualification.dt_award }}</td>
-							<td>{{ qualification.award_doc }}</td>
+							<td>{{ qualification.dt_award|date:"d-m-y" }}</td>
+							<td>
+								{% if qualification.award_doc %}
+									<a href="{{ qualification.award_doc.url }}" target="_blank" class="btn-view">View</a>
+								{% else %}
+									No Document
+								{% endif %}
+							</td>
 							<td>
 								<a href="{% url 'teachers:edit_qualification' qualification.id %}" class="btn-edit">Edit</a>
 								<a href="{% url 'teachers:delete_qualification' qualification.id %}" class="btn-delete">Delete</a>
@@ -287,7 +355,6 @@
 						</tr>
 					{% empty %}
 						<tr>
-							
 							<td colspan="7" class="no-data-message">No qualifications added yet.</td>
 						</tr>
 					{% endfor %}
@@ -295,7 +362,6 @@
 			</table>
 		</div>
 	</div>
-
 
 		<!-- Publications Modal -->
 	<div id="publicationModal" class="modal">
@@ -361,7 +427,11 @@
 			closeQualificationModal.onclick = function() {
 				qualificationModal.style.display = "none";
 			};
-
+			// Make the modal draggable
+			$('#qualificationModal .modal-content').draggable({
+				handle: ".modal-header" // Allow dragging by the modal header
+			});
+			
 			// Open the Publications modal
 			publicationBox.onclick = function() {
 				publicationModal.style.display = "block";
