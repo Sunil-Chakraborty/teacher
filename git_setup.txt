@@ -13,3 +13,11 @@ git remote add origin https://github.com/Sunil-Chakraborty/teacher.git
 git branch -M main
 git push -u origin main
 
+
+routine backup in git from (teacher_env) D:\JU>
+git add .
+git commit -m "Updated on ..."
+git push -u origin main
+
+
+
