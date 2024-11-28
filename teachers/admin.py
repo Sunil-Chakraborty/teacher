@@ -1,6 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
-from teachers.models import  CustomUser, Teacher, Qualification, Publication, Department
+from teachers.models import (CustomUser, Teacher, Qualification, 
+     Department, Patents)
 
 
 # Register your models here.
@@ -75,4 +76,10 @@ class QualificationAdmin(admin.ModelAdmin):
 	list_display = (
      'teacher','degree','subject','thesis','institution',
      'dt_award'
+     )
+
+@admin.register(Patents)
+class PatentsAdmin(admin.ModelAdmin):
+	list_display = (
+     'status','title','ref_no','dt_award','awarding_agency'
      )

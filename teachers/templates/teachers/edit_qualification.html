@@ -1,10 +1,12 @@
 {% extends 'base.html' %}
-
+{% load static %}
 {% block content %}
 <div class="container">
     <div class="form-container">
         <h2 class="form-heading">Edit Qualification Details</h2>
-        <form action="{% url 'teachers:edit_qualification' qualification.id %}" method="post" enctype="multipart/form-data" class="form-grid">
+        <!-- <form action="{% url 'teachers:edit_qualification' qualification.id %}" method="post" enctype="multipart/form-data" class="form-grid"> -->
+		
+		<form method="post" enctype="multipart/form-data" action="{% url 'teachers:edit_qualification' signed_id=signed_id %}" class="form-grid">
             {% csrf_token %}
             <div class="form-row">
                 <div class="form-group">
@@ -25,18 +27,27 @@
                     <label for="id_thesis">Title of Dissertation/Thesis</label>
                     {{ form.thesis }}
                 </div>
-                <div class="form-group">
+				
+                <div class="form-group" style="margin-top:8px;">
                     <label for="id_dt_award">Date of Award</label>
                     {{ form.dt_award }}
                 </div>
-                <div class="form-group">
+				<div class="form-group" style="margin-top:8px;" >
                     <label for="id_award_doc">Award Document</label>
                     {% if qualification.award_doc %}
-                        <button type="button" class="btn-view" onclick="window.open('{{ qualification.award_doc.url }}', '_blank')">View</button>
+                        <p>
+                            Current Document: 
+                            <a href="{{ qualification.award_doc.url }}" target="_blank" class="btn-view">View Document</a>
+                        
+                        <button type="button" class="btn-toggle" onclick="toggleReplaceDocument()">Replace Document</button>
+                        </p>
+						<div id="replace-document-section" style="display: none; margin-top: 10px;">
+                            {{ form.award_doc }}
+                        </div>
                     {% else %}
-                        <span>No document uploaded</span>
+                        <p><strong>Upload Award Document:</strong></p>
+                        {{ form.award_doc }}
                     {% endif %}
-                    {{ form.award_doc }}
                 </div>
             </div>
             <div class="form-actions">
@@ -98,7 +109,7 @@
         padding: 10px 20px;
         font-size: 14px;
         border: none;
-        border-radius: 4px;
+        border-radius: 2px;
         cursor: pointer;
     }
 
@@ -112,7 +123,7 @@
         padding: 10px 20px;
         font-size: 14px;
         border: none;
-        border-radius: 4px;
+        border-radius: 2px;
         cursor: pointer;
     }
 
@@ -149,5 +160,31 @@
             width: 100%;
         }
     }
+	.btn-toggle {
+        background-color: #ffc107;
+        color: #212529;
+        padding: 8px 15px;
+        font-size: 14px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    .btn-toggle:hover {
+        background-color: #e0a800;
+    }
+	
 </style>
+
+<script>
+    function toggleReplaceDocument() {
+        const section = document.getElementById('replace-document-section');
+        if (section.style.display === 'none' || section.style.display === '') {
+            section.style.display = 'block';
+        } else {
+            section.style.display = 'none';
+        }
+    }
+</script>
+
 {% endblock %}

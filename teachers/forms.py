@@ -1,6 +1,7 @@
 from django import forms
 from django.contrib.auth.models import User
-from .models import CustomUser, Department, Teacher, Qualification, Publication
+from .models import (CustomUser, Department, Teacher, 
+             Qualification, Patents)
 from django.contrib.auth.forms import AuthenticationForm
 from django.core.exceptions import ValidationError
 from django.forms import DateInput
@@ -139,8 +140,8 @@ class QualificationForm(forms.ModelForm):
         
         widgets = {
             'thesis': forms.Textarea(attrs={
-                'rows': 4,  # Adjust the number of rows
-                'cols': 50, # Adjust the number of columns
+                'rows': 3,  # Adjust the number of rows
+                'cols': 60, # Adjust the number of columns
                 'placeholder': 'Enter the title of your dissertation or thesis here...'
             }),
             
@@ -156,11 +157,23 @@ class QualificationForm(forms.ModelForm):
         for field_name in ['degree', 'subject', 'institution']:
             self.fields[field_name].required = True
         
-        
-        
-        
 
-class PublicationForm(forms.ModelForm):
+
+class PatentForm(forms.ModelForm):
     class Meta:
-        model = Publication
-        fields = ['title', 'journal', 'publication_year']
+        model = Patents
+        #fields = '__all__'
+        fields = ['dept_name','status', 'title', 'ref_no', 'dt_award', 'awarding_agency', 'patent_ecopy']
+        widgets = {
+            'dt_award': forms.DateInput(attrs={'type': 'date'}),
+        } 
+        
+    def __init__(self, *args, **kwargs):
+        user = kwargs.pop('user', None)  # Optional: pass user if needed
+        super(PatentForm, self).__init__(*args, **kwargs)
+        # Set field requirements
+        for field_name in ['status', 'title', 'ref_no', 'dt_award', 'awarding_agency']:
+            self.fields[field_name].required = True
+            
+        #for field in self.fields.values():
+        #    field.widget.attrs['style'] = 'font-weight: bold;'    

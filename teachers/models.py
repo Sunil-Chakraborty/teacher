@@ -150,8 +150,10 @@ def get_quali_path(instance, filename):
 
     
 class Qualification(models.Model):
-    teacher      = models.ForeignKey(Teacher, on_delete=models.CASCADE)
+    teacher      = models.ForeignKey(Teacher, on_delete=models.CASCADE, null=True)
     
+    dept_name = models.CharField(max_length=100, blank=True, null=True)  # Move first_name here
+
     degree       = models.CharField(
         verbose_name='Degree/Certificate',
         max_length=200, null=True, blank=True
@@ -202,14 +204,6 @@ class Qualification(models.Model):
         return f"{self.degree} from {self.institution}"
         
 
-class Publication(models.Model):
-    teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE)
-    title = models.CharField(max_length=200)
-    journal = models.CharField(max_length=200)
-    publication_year = models.IntegerField()
-
-    def __str__(self):
-        return self.title
         
 class Department(models.Model):
     name    =   models.CharField(max_length=100,  null=True, blank=True)
@@ -219,4 +213,79 @@ class Department(models.Model):
     def __str__(self):
         #return f"{self.name} - {self.program}"  # Include program in the string representation
         return f"{self.name}"  # Include program in the string representation
-        
+
+
+class Patents(models.Model):
+    teacher = models.ForeignKey(
+        Teacher, 
+        on_delete=models.CASCADE, 
+        null=True,
+        blank=True
+    )
+    
+    dept_name = models.CharField(max_length=100, blank=True, null=True)  # Move first_name here
+
+    STATUS_CHOICES = (
+        ('', 'Select Status'),  # Using an empty string as a default choice for better handling
+        ('stat-1', 'Published'),
+        ('stat-2', 'Granted'),
+    )
+    status = models.CharField(  # Changed the field name to lowercase for consistency
+        verbose_name='Status',
+        max_length=10,
+        choices=STATUS_CHOICES,
+        null=True,
+        blank=True
+    )
+
+    title = models.CharField(
+        verbose_name='Title of the Patent',
+        max_length=200,
+        null=True,
+        blank=True
+    )
+
+    ref_no = models.CharField(
+        verbose_name='Document No./Patent No./Other reference no',
+        max_length=200,
+        null=True,
+        blank=True
+    )
+
+    dt_award = models.DateField(
+        verbose_name='Publication/Award Date',
+        null=True,
+        blank=True
+    )
+
+    awarding_agency = models.CharField(
+        verbose_name='Patent Awarding Agency',
+        max_length=200,
+        null=True,
+        blank=True
+    )
+
+    patent_ecopy = models.FileField(
+        verbose_name="Upload e-copy of the patent",
+        upload_to=get_quali_path,
+        null=True,
+        blank=True
+    )
+
+    created_date = models.DateTimeField(default=timezone.now)
+
+    updated_date = models.DateTimeField(auto_now=True)
+
+    def save(self, *args, **kwargs):
+        # Ensure `upload_to` is correctly updated dynamically
+        if not self.id:  # Only set `upload_to` for new instances
+            super().save(*args, **kwargs)
+        self.patent_ecopy.field.upload_to = get_quali_path
+        super().save(*args, **kwargs)
+
+    def __str__(self):
+        return f"{self.title} - {self.status}" if self.title else "Patent"
+
+    class Meta:
+        verbose_name = "Patent"
+        verbose_name_plural = "Patents"    

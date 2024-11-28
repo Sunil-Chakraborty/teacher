@@ -1,16 +1,23 @@
+from django.core.signing import Signer, BadSignature
+from django.http import HttpResponseForbidden
+from django.contrib import messages
+
 from django.shortcuts import render, redirect, reverse, get_object_or_404
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import AuthenticationForm
-from .models import CustomUser, Teacher, Qualification, Publication, Department
+from .models import(CustomUser, Teacher, Qualification,  Department, 
+             Patents)
 from django.contrib.auth.decorators import login_required
-from .forms import UserRegistrationForm, TeacherForm, QualificationForm, PublicationForm # Import TeacherForm from forms.py
-from django.http import JsonResponse
+from .forms import (UserRegistrationForm, TeacherForm, 
+                   QualificationForm, PatentForm) 
+
+from django.http import Http404                   
+                   
 #from django.db import connection
 from django.db.models import F
 from django.contrib.auth.models import Group
 
 # Create your views here.
-
 
 
 def home(request):
@@ -150,76 +157,154 @@ def edit_personal_details(request):
     
 @login_required
 def add_qualification(request):
+
+    try:
+        # Fetch the Teacher object associated with the logged-in user
+        teacher = get_object_or_404(Teacher, user=request.user)
+    except Teacher.DoesNotExist:
+        messages.error(request, "You are not associated with a teacher profile.")
+        return redirect('teachers:profile')  # Redirect if user has no teacher profile
+
     if request.method == 'POST':
         form = QualificationForm(request.POST, request.FILES)
         if form.is_valid():
             qualification = form.save(commit=False)            
             qualification.teacher = get_object_or_404(Teacher, user=request.user)
+            qualification.dept_name = teacher.dept_name
             qualification.save()
             return redirect('teachers:profile')
     else:
         form = QualificationForm()
     return render(request, 'teachers/add_qualification.html', {'form': form})
 
+
+
 @login_required
-def edit_qualification(request, id):
-    qualification = Qualification.objects.get(id=id, teacher__user=request.user)
-    # print("Qualification ID:", qualification.id)
+def edit_qualification(request, signed_id):
+    # Initialize the signer
+    signer = Signer()
+
+    try:
+        # Unsign the token to get the original ID
+        id = signer.unsign(signed_id)
+        # Get the qualification object ensuring it belongs to the current user
+        qualification = get_object_or_404(Qualification, id=id, teacher__user=request.user)
+        
+        # Fetch the Teacher object associated with the logged-in user
+        teacher = get_object_or_404(Teacher, user=request.user)
+        
+    except BadSignature:
+        # If the token is invalid, deny access
+        #return HttpResponseForbidden("Invalid request.")
+        return render(request, 'teachers/403.html', status=403)
+
+    # Handle form submission
     if request.method == 'POST':
         form = QualificationForm(request.POST, request.FILES, instance=qualification)
-
         if form.is_valid():
-            form.save()
+            qualification = form.save(commit=False)
+            
+            qualification.dept_name = teacher.dept_name
+            qualification.save()            
             return redirect('teachers:profile')
+        else:
+            print("Error:", form.errors)
     else:
         form = QualificationForm(instance=qualification)
 
-    # Pass the qualification to the template
-    return render(request, 'teachers/edit_qualification.html', {'form': form, 'qualification': qualification})
+    # Render the edit template with the form
+    return render(request, 'teachers/edit_qualification.html', {'form': form, 'qualification': qualification, 'signed_id': signed_id})
 
 @login_required
-def delete_qualification(request, id):
-    qualification = Qualification.objects.get(id=id, teacher__user=request.user)
+def delete_qualification(request, signed_id):
+ # Initialize the signer
+    signer = Signer()
+
+    try:
+        # Unsign the token to get the original ID
+        id = signer.unsign(signed_id)
+        # Get the qualification object ensuring it belongs to the current user
+        qualification = get_object_or_404(Qualification, id=id, teacher__user=request.user)
+    except BadSignature:
+        # If the token is invalid, deny access
+        #return HttpResponseForbidden("<h2>Invalid request. Go back</h2>")
+        return render(request, 'teachers/403.html', status=403)
+        
     if request.method == 'POST':
         qualification.delete()
         return redirect('teachers:profile')
     return render(request, 'teachers/confirm_delete.html', {'object': qualification})
 
-# Similar functions for Publications...
 @login_required
-def add_publication(request):
+def patent_list(request):
+    teacher = get_object_or_404(Teacher, user=request.user)
+    patents = Patents.objects.filter(teacher=teacher)
+    return render(request, 'teachers/patent_list.html', {'patents': patents})
+
+@login_required
+def add_patent(request):
+
+    try:
+        # Fetch the Teacher object associated with the logged-in user
+        teacher = get_object_or_404(Teacher, user=request.user)
+    except Teacher.DoesNotExist:
+        messages.error(request, "You are not associated with a teacher profile.")
+        return redirect('teachers:patent_list')  # Redirect if user has no teacher profile
+
     if request.method == 'POST':
-        form = PublicationForm(request.POST)
+        form = PatentForm(request.POST, request.FILES)
         if form.is_valid():
-            publication = form.save(commit=False)
-            publication.teacher = Teacher.objects.get(user=request.user)
-            publication.save()
-            return redirect('teachers:profile')
+            patent = form.save(commit=False)
+            patent.teacher = get_object_or_404(Teacher, user=request.user)  # Associate the logged-in user with the patent
+            
+            # Check if title and status are empty
+            if not patent.title or not patent.status:
+                messages.error(request, "Title and Status cannot be empty.")
+                #return redirect('teachers:profile')  # Redirect to profile
+                return redirect(request.path)
+                
+            patent.dept_name = teacher.dept_name
+            patent.save()
+            return redirect('teachers:patent_list')
     else:
-        form = PublicationForm()
-    return render(request, 'teachers/add_publication.html', {'form': form})
+        form = PatentForm()
+    return render(request, 'teachers/add_patent.html', {'form': form})
+
 
 @login_required
-def edit_publication(request, id):
-    publication = Publication.objects.get(id=id, teacher__user=request.user)
+def edit_patent(request, pk):
+    patent = get_object_or_404(Patents, pk=pk, teacher__user=request.user)
+     
+    # Fetch the Teacher object associated with the logged-in user
+    teacher = get_object_or_404(Teacher, user=request.user)
+        
     if request.method == 'POST':
-        form = PublicationForm(request.POST, instance=publication)
+        form = PatentForm(request.POST, request.FILES, instance=patent)
         if form.is_valid():
-            form.save()
-            return redirect('teachers:profile')
+            patent = form.save(commit=False)
+            patent.dept_name = teacher.dept_name
+            patent.save()
+            messages.success(request, "Patent updated successfully.")
+            return redirect('teachers:patent_list')
     else:
-        form = PublicationForm(instance=publication)
-    return render(request, 'teachers/edit_publication.html', {'form': form, 'publication': publication})
+        form = PatentForm(instance=patent)
 
+    return render(request, 'teachers/edit_patent.html', {'form': form})
 
 
 @login_required
-def delete_publication(request, id):
-    publication = Publication.objects.get(id=id, teacher__user=request.user)
+def delete_patent(request, pk):
+    patent = get_object_or_404(Patents, pk=pk, teacher__user=request.user)
+    
     if request.method == 'POST':
-        publication.delete()
-        return redirect('profile')
-    return render(request, 'teachers/confirm_delete.html', {'object': publication})
+        patent.delete()
+        messages.success(request, "Patent deleted successfully.")
+        return redirect('teachers:patent_list')
+
+    return render(request, 'teachers/confirm_delete_patent.html', {'patent': patent})
+
+
+
 
 @login_required
 def group_table(request): 

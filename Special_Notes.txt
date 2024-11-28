@@ -1,0 +1,24 @@
+
+To use widget_tweaks, install it via pip:
+pip install django-widget-tweaks
+
+INSTALLED_APPS = [
+    # other apps...
+    'widget_tweaks',
+]
+
+Load it in your template:
+{% load widget_tweaks %}
+
+Common Use Cases
+Adding Bootstrap Classes:
+{{ form.username|add_class:"form-control" }}
+
+Custom Placeholders:
+{{ form.email|set_attr:"placeholder:Your Email" }}
+
+Dynamic Error Highlighting:
+{{ form.password|add_error_class:"is-invalid" }}
+
+Combining Multiple Filters:
+{{ form.username|add_class:"form-control"|set_attr:"placeholder:Enter username" }}

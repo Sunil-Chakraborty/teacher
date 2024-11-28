@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+{% load widget_tweaks %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="card shadow-sm">
+        <div class="card-header bg-primary text-white">
+            <h3 class="mb-0">Add New Patent</h3>
+        </div>
+        <div class="card-body">
+			{% if messages %}
+				<ul class="messages">
+					{% for message in messages %}
+						<li class="alert alert-{{ message.tags }}">{{ message }}</li>
+					{% endfor %}
+				</ul>
+			{% endif %}
+            <form method="post" action="{% url 'teachers:add_patent' %}" enctype="multipart/form-data">
+                {% csrf_token %}
+                
+                <div class="row g-3">
+                    {% for field in form %}
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                                {% if field.errors %}
+                                    <span class="text-danger">{{ field.errors|join:", " }}</span>
+                                {% endif %}
+                                {{ field|add_class:"form-control" }}
+                                {% if field.help_text %}
+                                    <small class="form-text text-muted">{{ field.help_text }}</small>
+                                {% endif %}
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+                
+                <div class="d-flex justify-content-end mt-4">
+                    <button type="submit" class="btn btn-success me-2">Submit</button>
+                    <a href="{% url 'teachers:patent_list' %}" class="btn btn-secondary">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<style>
+	label {
+        font-weight: bold;
+    }
+	.messages {
+        list-style-type: none;
+        padding: 0;
+    }
+    .messages li {
+        padding: 10px;
+        margin: 10px 0;
+        border-radius: 5px;
+    }
+    .messages .alert-error {
+        background-color: #f8d7da; /* Light red */
+        color: #721c24;           /* Dark red */
+        border: 1px solid #f5c6cb;
+    }
+    .messages .alert-success {
+        background-color: #d4edda; /* Light green */
+        color: #155724;           /* Dark green */
+        border: 1px solid #c3e6cb;
+    }
+    .messages .alert-info {
+        background-color: #d1ecf1; /* Light blue */
+        color: #0c5460;           /* Dark blue */
+        border: 1px solid #bee5eb;
+    }
+    .messages .alert-warning {
+        background-color: #fff3cd; /* Light yellow */
+        color: #856404;           /* Dark yellow */
+        border: 1px solid #ffeeba;
+    }
+</style>
+{% endblock %}
