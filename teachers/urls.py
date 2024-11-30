@@ -21,8 +21,5 @@ urlpatterns = [
     path('patents/add/', views.add_patent, name='add_patent'),
     path('patents/edit/<int:pk>/', views.edit_patent, name='edit_patent'),
     path('patents/delete/<int:pk>/', views.delete_patent, name='delete_patent'),
-    
-    path('group-table/', views.group_table, name='group_table'),  # Without table_id    
-    path('group-table/<str:group_id>/', views.group_table_with_id, name='group_table_with_id'),
-    
+   
 ]

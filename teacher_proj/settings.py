@@ -41,7 +41,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',    
     'teachers.apps.TeachersConfig', 
     'iqac.apps.IqacConfig',
-    'widget_tweaks',
+    'hod_group.apps.HodGroupConfig',
+    'widget_tweaks',    
+    
 ]
 
 MIDDLEWARE = [

@@ -209,6 +209,7 @@ class Department(models.Model):
     name    =   models.CharField(max_length=100,  null=True, blank=True)
     faculty =   models.CharField(max_length=100,  null=True, blank=True)
     program =   models.CharField(max_length=200,  null=True, blank=True)
+    prog_cd =   models.CharField(max_length=20,   null=True, blank=True)
  
     def __str__(self):
         #return f"{self.name} - {self.program}"  # Include program in the string representation

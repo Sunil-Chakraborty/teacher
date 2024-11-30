@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% load widget_tweaks %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="text-center">Edit Student Details</h2>
+    <form method="POST" action="{% url 'hod_group:student_edit' student.id %}">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <div class="text-center mt-4">
+            <button type="submit" class="btn btn-success">Save Changes</button>
+            <a href="{% url 'hod_group:students_list' %}" class="btn btn-secondary">Cancel</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

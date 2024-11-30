@@ -304,30 +304,3 @@ def delete_patent(request, pk):
     return render(request, 'teachers/confirm_delete_patent.html', {'patent': patent})
 
 
-
-
-@login_required
-def group_table(request): 
-    return render(request, 'teachers/group_table.html')
-    
-@login_required
-def group_table_with_id(request, group_id):
-    # Define a mapping of group IDs to their respective templates
-    group_templates = {
-        'group1': 'teachers/group1_details.html',
-        'group2': 'teachers/group2_details.html',
-        'group3': 'teachers/group3_details.html',
-    }
-
-    # Get the corresponding template or use a default one
-    #template = group_templates.get(group_id, 'default_group.html')
-    
-    template = group_templates.get(group_id)
-    
-    
-    # Optionally pass additional context
-    context = {'group_id': group_id}
-
-    return render(request, template, context)
-    
-    

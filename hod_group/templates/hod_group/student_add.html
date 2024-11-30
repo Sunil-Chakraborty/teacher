@@ -1,0 +1,72 @@
+{% extends 'grp_base.html' %}
+{% load static %}
+{% load widget_tweaks %}
+{% block content %}
+
+<style>
+input[type=number]::-webkit-inner-spin-button, 
+    input[type=number]::-webkit-outer-spin-button { 
+           -webkit-appearance: none; 
+           margin: 0; 
+    }
+	
+	
+</style>
+   
+<div class="container mt-5">
+    <div class="card shadow-lg">
+        <div class="card-header bg-primary text-white text-center">
+            <h2>Add New Student Record</h2>
+        </div>
+        <div class="card-body">
+            <form method="POST" class="needs-validation" novalidate>
+                {% csrf_token %}
+                
+                <!-- Program Field -->
+                <div class="mb-3">
+                    <label for="id_prog_name" class="form-label">Program</label>
+                    <select name="prog_name" id="id_prog_name" class="form-select">
+                        <option value="" disabled selected>-- Select Program --</option>
+                        {% for choice in form.fields.prog_name.queryset %}
+                        <option value="{{ choice.id }}" 
+                                {% if form.initial.prog_name and choice.id == form.initial.prog_name.id %}
+                                selected
+                                {% endif %}>
+                            {{ choice.program }}
+                        </option>
+                        {% endfor %}
+                    </select>
+                    {% for error in form.prog_name.errors %}
+                    <div class="text-danger small">{{ error }}</div>
+                    {% endfor %}
+                </div>
+                
+                <!-- Render remaining fields -->
+                <div class="row">
+                    {% for field in form %}
+                    {% if field.name != 'prog_name' %}
+                    <div class="col-md-6 mb-3">
+                        <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
+                        {{ field|add_class:"form-control" }}
+                        {% if field.help_text %}
+                        <small class="form-text text-muted">{{ field.help_text }}</small>
+                        {% endif %}
+                        {% for error in field.errors %}
+                        <div class="text-danger small">{{ error }}</div>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                    {% endfor %}
+                </div>
+                
+                <!-- Action buttons -->
+                <div class="text-center mt-4">
+                    <button type="submit" class="btn btn-success px-4">Add Student</button>
+                    <a href="{% url 'hod_group:group_table' %}" class="btn btn-secondary px-4">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

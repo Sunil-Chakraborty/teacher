@@ -1,5 +1,7 @@
-
 {% extends 'grp_base.html' %}
+
+{% load widget_tweaks %}
+{% load static %}
 
 {% block content %}
 
@@ -42,9 +44,9 @@
     <div class="sidebar">
 		<h3>Tables</h3>
 		<ul>
-			<li><a href="{% url 'teachers:group_table_with_id' 'group1' %}">Ph.D Scholars with JRF/SRF etc.</a></li>
-			<li><a href="{% url 'teachers:group_table_with_id' 'group2' %}">Group 2</a></li>
-			<li><a href="{% url 'teachers:group_table_with_id' 'group3' %}">Group 3</a></li>
+			<li><a href="{% url 'hod_group:group_table_with_id' 'group1' %}">Sanctioned and Admitted Students</a></li>
+			<li><a href="{% url 'hod_group:group_table_with_id' 'group2' %}">Group 2</a></li>
+			<li><a href="{% url 'hod_group:group_table_with_id' 'group3' %}">Group 3</a></li>
 		</ul>
 	
 	</div>

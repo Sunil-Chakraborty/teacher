@@ -10,6 +10,7 @@ urlpatterns = [
     path('', lambda request: redirect('/teachers/', permanent=False)),
     path('teachers/', include('teachers.urls', namespace='teachers')),
     path('iqac/', include('iqac.urls', namespace='iqac')),
+    path('hod/', include('hod_group.urls', namespace='hod_group')),
 ]
 
 if settings.DEBUG:
