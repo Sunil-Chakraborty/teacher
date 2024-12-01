@@ -87,21 +87,21 @@ class PatentsAdmin(admin.ModelAdmin):
 @admin.register(ResearchPub)
 class ResearchPubAdmin(admin.ModelAdmin):
     list_display = (
-        'title_of_paper',
-        'name_of_authors',
-        'name_of_journal',
-        'year_of_publication',
-        'issn_number',
-        'is_listed_in_ugc_care',
+        'title',
+        'authors_name',
+        'jrnl_name',
+        'yr_of_pub',
+        'issn_no',
+        'is_ugc_care',
     )
     search_fields = (
         'title_of_paper',
-        'name_of_authors',
-        'name_of_journal',
-        'year_of_publication',
-        'issn_number',
+        'authors_name',
+        'jrnl_name',
+        'yr_of_pub',
+        'issn_no',
     )
     list_filter = (
-        'is_listed_in_ugc_care',
-        'year_of_publication',
+        'is_ugc_care',
+        'yr_of_pub',
     )

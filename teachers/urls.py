@@ -23,5 +23,11 @@ urlpatterns = [
     path('patents/delete/<int:pk>/', views.delete_patent, name='delete_patent'),
         
     path('research/', views.research_list, name='research-list'),
-   
+    path('research/add/', views.add_research, name='add-research'),
+    path('research/edit/<str:signed_id>/', views.edit_research, name='edit-research'),
+    path('research/delete/<int:pk>/', views.delete_research, name='delete-research'),
+    
+    
+    
+    
 ]

@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load widget_tweaks %}
+{% block content %}
+<style>
+
+	label {
+		font-weight:bold;
+	}
+	
+</style>
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-sm">
+                <div class="card-header bg-primary text-white">
+                    <h2 class="mb-0">Edit Research Publication</h2>
+                </div>
+                <div class="card-body">
+                    <form method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    {{ form.title.label_tag }}
+                                    {{ form.title }}
+                                </div>
+								<div class="mb-3">
+                                    {{ form.authors_name.label_tag }}
+                                    {{ form.authors_name }}
+                                </div>
+								<div class="mb-3">
+                                    {{ form.jrnl_name.label_tag }}
+                                    {{ form.jrnl_name }}
+                                </div>
+								<div class="mb-3">
+                                    {{ form.yr_of_pub.label_tag }}
+                                    {{ form.yr_of_pub }}
+                                </div>
+                                
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    {{ form.issn_no.label_tag }}
+                                    {{ form.issn_no }}
+                                </div>
+								<div class="mb-3">
+                                    {{ form.jrnl_site.label_tag }}
+                                    {{ form.jrnl_site }}
+                                </div>
+								<div class="mb-3">
+                                    {{ form.article_site.label_tag }}
+                                    {{ form.article_site }}
+                                </div>
+								<div class="mb-3">
+                                    {{ form.is_ugc_care.label_tag }}
+                                    {{ form.is_ugc_care }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <button type="submit" class="btn btn-success">Save Changes</button>
+                            <a href="{% url 'teachers:research-list' %}" class="btn btn-secondary">Cancel</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.models import User
 from .models import (CustomUser, Department, Teacher, 
-             Qualification, Patents)
+             Qualification, Patents, ResearchPub)
 from django.contrib.auth.forms import AuthenticationForm
 from django.core.exceptions import ValidationError
 from django.forms import DateInput
@@ -174,6 +174,29 @@ class PatentForm(forms.ModelForm):
         # Set field requirements
         for field_name in ['status', 'title', 'ref_no', 'dt_award', 'awarding_agency']:
             self.fields[field_name].required = True
+
+
+class ResearchPubForm(forms.ModelForm):
+    class Meta:
+        model = ResearchPub
+        fields = [            
+            'title',
+            'authors_name',
+            'jrnl_name',
+            'yr_of_pub',
+            'issn_no',
+            'jrnl_site',
+            'article_site',
+            'is_ugc_care',
+        ]
+        
+       
+    
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field_name, field in self.fields.items():
+            field.widget.attrs['class'] = 'form-control'
             
-        #for field in self.fields.values():
-        #    field.widget.attrs['style'] = 'font-weight: bold;'    
+        for field_name in ['title', 'authors_name', 'jrnl_name', 
+                           'yr_of_pub', 'issn_no', 'is_ugc_care' ]:
+            self.fields[field_name].required = True    

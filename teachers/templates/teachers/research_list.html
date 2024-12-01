@@ -5,6 +5,7 @@
 {% block content %}
 <h1>Research Listing</h1>
 <a href="{% url 'teachers:profile' %}" class="btn btn-primary">Home</a>
+<a href="{% url 'teachers:add-research' %}" class="btn btn-primary">Add New Patent</a>
 
 <table class="table table-striped mt-3">
     <thead>
@@ -25,16 +26,39 @@
         {% for research in researches %}
         <tr>
             <td>{{ forloop.counter }}</td>
-            <td>{{ research.title_of_paper }}</td>
-            <td>{{ research.name_of_authors  }}</td>
-            <td>{{ research.name_of_journal  }}</td>
-			<td>{{ research.year_of_publication  }}</td>
-			<td>{{ research.issn_number  }}</td>
-			<td>{{ research.journal_website  }}</td>
-			<td>{{ research.article_website  }}</td>
-			<td>{{ research.is_listed_in_ugc_care  }}</td>
+            <td>{{ research.title }}</td>
+            <td>{{ research.authors_name  }}</td>
+            <td>{{ research.jrnl_name  }}</td>
+			<td>{{ research.yr_of_pub  }}</td>
+			<td>{{ research.issn_no   }}</td>			
+			<td>
+				{% if research.jrnl_site %}
+					<a href="{{ research.jrnl_site }}" target="_blank" class="btn-view">View</a>
+				{% else %}
+					No Document
+				{% endif %}
+			</td>
+			<td>
+				{% if research.article_site %}
+					<a href="{{ research.article_site }}" target="_blank" class="btn-view">View</a>
+				{% else %}
+					No Document
+				{% endif %}
+			</td>
+			
+			<td>{{ research.is_ugc_care  }}</td>
             <td>
-                
+                <a href="{% url 'teachers:edit-research' signed_id=research.id|sign_id %}" class="btn btn-sm btn-info">Edit</a>
+                <form action="{% url 'teachers:delete-research' research.id %}" method="post" style="display:inline;">
+                    {% csrf_token %}
+                    <button 
+						type="submit" 
+						class="btn btn-sm "
+						style="color: red;"						
+						onclick="return confirm('Are you sure you want to delete the Research Pub: {{ research.title|escapejs}}?');" >
+						Delete
+					</button>  
+                </form>
             </td>
         </tr>
         {% empty %}
@@ -45,3 +69,4 @@
     </tbody>
 </table>
 {% endblock %}
+

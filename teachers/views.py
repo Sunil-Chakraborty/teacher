@@ -9,7 +9,7 @@ from .models import(CustomUser, Teacher, Qualification,  Department,
              Patents, ResearchPub)
 from django.contrib.auth.decorators import login_required
 from .forms import (UserRegistrationForm, TeacherForm, 
-                   QualificationForm, PatentForm) 
+                   QualificationForm, PatentForm, ResearchPubForm) 
 
 from django.http import Http404                   
                    
@@ -323,4 +323,74 @@ def research_list(request):
     
     researches = ResearchPub.objects.filter(teacher=teacher)
     return render(request, 'teachers/research_list.html', {'researches': researches})
+
+@login_required
+def add_research(request):
+    try:
+        # Fetch the Teacher object associated with the logged-in user
+        teacher = get_object_or_404(Teacher, user=request.user)
+    except Teacher.DoesNotExist:
+        messages.error(request, "You are not associated with a teacher profile.")
+        return redirect('teachers:research_list')  # Redirect if user has no teacher profile
+
+    
+    if request.method == 'POST':
+        form = ResearchPubForm(request.POST, request.FILES)
+        if form.is_valid():
+            research = form.save(commit=False)
+            research.teacher = get_object_or_404(Teacher, user=request.user)  # Associate the logged-in user with the research                         
+            research.dept_name = teacher.dept_name
+            research.save()
+            return redirect('teachers:research-list')
+    else:
+        form = ResearchPubForm()
+    return render(request, 'teachers/add_research.html', {'form': form})
+
+
+
+@login_required
+def edit_research(request, signed_id):
+    # Initialize the signer
+    signer = Signer()
+
+    try:
+        # Unsign the token to get the original ID
+        id = signer.unsign(signed_id)
+        # Get the qualification object ensuring it belongs to the current user
+        research = get_object_or_404(ResearchPub, id=id, teacher__user=request.user)
+        
+        # Fetch the Teacher object associated with the logged-in user
+        teacher = get_object_or_404(Teacher, user=request.user)
+        
+    except BadSignature:
+        # If the token is invalid, deny access
+        #return HttpResponseForbidden("Invalid request.")
+        return render(request, 'teachers/403.html', status=403)
+
+    # Handle form submission
+    if request.method == 'POST':
+        form = ResearchPubForm(request.POST, request.FILES, instance=research)
+        if form.is_valid():
+            res = form.save(commit=False)            
+            res.dept_name = teacher.dept_name
+            res.save()            
+            return redirect('teachers:profile')
+        else:
+            print("Error:", form.errors)
+    else:
+        form = ResearchPubForm(instance=research)
+
+    # Render the edit template with the form
+    return render(request, 'teachers/edit_research.html', {'form': form, 'research': research, 'signed_id': signed_id})
+
+@login_required
+def delete_research(request, pk):
+    research = get_object_or_404(ResearchPub, pk=pk, teacher__user=request.user)
+    
+    if request.method == 'POST':
+        research.delete()
+        messages.success(request, "Research Pub record has been deleted successfully.")
+        return redirect('teachers:research-list')
+
+    return render(request, 'teachers/confirm_delete_research.html', {'research': research})
 
