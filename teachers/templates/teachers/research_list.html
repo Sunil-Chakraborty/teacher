@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% load widget_tweaks %}
+{% load signing_tags %}
+{% load static %}
+{% block content %}
+<h1>Research Listing</h1>
+<a href="{% url 'teachers:profile' %}" class="btn btn-primary">Home</a>
+
+<table class="table table-striped mt-3">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Title</th>
+            <th>Name of the Author</th>
+            <th>Name of the Journal</th>
+			<th>Year of Publication</th>
+			<th>ISSN Number</th>
+			<th>Journal Website</th>
+			<th>Article Website</th>
+            <th>Is in UGC care</th>
+			<th>Actions </th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for research in researches %}
+        <tr>
+            <td>{{ forloop.counter }}</td>
+            <td>{{ research.title_of_paper }}</td>
+            <td>{{ research.name_of_authors  }}</td>
+            <td>{{ research.name_of_journal  }}</td>
+			<td>{{ research.year_of_publication  }}</td>
+			<td>{{ research.issn_number  }}</td>
+			<td>{{ research.journal_website  }}</td>
+			<td>{{ research.article_website  }}</td>
+			<td>{{ research.is_listed_in_ugc_care  }}</td>
+            <td>
+                
+            </td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="10" style="text-align:center;" >No Research Publication found.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

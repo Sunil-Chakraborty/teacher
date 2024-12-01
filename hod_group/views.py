@@ -20,7 +20,14 @@ def group_table(request):
     
 @login_required
 def group_table_with_id(request, group_id):
-    students = StudentAdmitted.objects.select_related('teacher', 'prog_name').all()
+    # Get the currently logged-in user
+    user = request.user
+    
+    # Fetch the Teacher instance associated with the user
+    teacher = get_object_or_404(Teacher, user=user)
+    
+    # Filter students based on the teacher's department name
+    students = StudentAdmitted.objects.select_related('teacher', 'prog_name').filter(dept_name=teacher.dept_name)
     
     # Define a mapping of group IDs to their respective templates
     group_templates = {
@@ -52,7 +59,14 @@ def student_add(request):
         programs = Department.objects.filter(name=teacher.dept_name)
         form = StudentAdmittedForm(request.POST, programs=programs)
         if form.is_valid():
-            form.save()
+            student = form.save(commit=False)
+            student.dept_name = teacher.dept_name  # Assign dep_name from the teacher instance
+            student.teacher_id = teacher.id       # Assign teacher_id from the teacher instance
+            prog = Department.objects.get(pk=student.prog_name_id)
+            student.prog_cd = prog.prog_cd
+            student.course_name = prog.program
+            
+            student.save()
             return redirect('hod_group:group_table')  # Redirect to students list after adding a record
     else:
         programs = Department.objects.filter(name=teacher.dept_name)

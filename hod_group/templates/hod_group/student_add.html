@@ -4,12 +4,14 @@
 {% block content %}
 
 <style>
-input[type=number]::-webkit-inner-spin-button, 
+	input[type=number]::-webkit-inner-spin-button, 
     input[type=number]::-webkit-outer-spin-button { 
            -webkit-appearance: none; 
            margin: 0; 
     }
-	
+	label {
+		font-weight:bold;
+	}
 	
 </style>
    
@@ -68,5 +70,25 @@ input[type=number]::-webkit-inner-spin-button,
         </div>
     </div>
 </div>
+<script>
+    document.addEventListener('keydown', function(event) {
+        // Check if the Enter key is pressed
+        if (event.key === "Enter") {
+            // Prevent the default action (e.g., submitting the form)
+            event.preventDefault();
+
+            // Find the next focusable element
+            const focusable = Array.from(document.querySelectorAll('input, select, textarea, button')).filter(
+                el => !el.disabled && !el.readOnly
+            );
+            const index = focusable.indexOf(document.activeElement);
+
+            // Move focus to the next element if possible
+            if (index > -1 && index < focusable.length - 1) {
+                focusable[index + 1].focus();
+            }
+        }
+    });
+</script>
 
 {% endblock %}

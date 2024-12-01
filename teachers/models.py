@@ -289,4 +289,32 @@ class Patents(models.Model):
 
     class Meta:
         verbose_name = "Patent"
-        verbose_name_plural = "Patents"    
+        verbose_name_plural = "Patents" 
+
+
+class ResearchPub(models.Model):
+    teacher = models.ForeignKey(
+        Teacher, 
+        on_delete=models.CASCADE, 
+        null=True,
+        blank=True
+    )
+    
+    dept_name = models.CharField(max_length=100, blank=True, null=True)  # Move first_name here
+
+    title_of_paper          = models.CharField("Title of Paper", max_length=255)
+    name_of_authors         = models.CharField("Name of the Author(s)", max_length=255)
+    name_of_journal         = models.CharField("Name of Journal", max_length=255)
+    year_of_publication     = models.CharField("Year of Publication", max_length=4)
+    issn_number             = models.CharField("ISSN Number", max_length=50)
+    journal_website         = models.CharField("Link to Website of the Journal", max_length=500)
+    article_website         = models.CharField("Link to Website of Article/Paper/Abstract", max_length=500)
+    is_listed_in_ugc_care   = models.CharField("Is it Listed in UGC Care List", max_length=3, choices=[('Yes', 'Yes'), ('No', 'No')])
+
+    created_date = models.DateTimeField(default=timezone.now)
+
+    updated_date = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.title_of_paper
+        

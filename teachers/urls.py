@@ -19,7 +19,9 @@ urlpatterns = [
     
     path('patents/', views.patent_list, name='patent_list'),
     path('patents/add/', views.add_patent, name='add_patent'),
-    path('patents/edit/<int:pk>/', views.edit_patent, name='edit_patent'),
+    path('patents/edit/<str:signed_id>/', views.edit_patent, name='edit_patent'),
     path('patents/delete/<int:pk>/', views.delete_patent, name='delete_patent'),
+        
+    path('research/', views.research_list, name='research-list'),
    
 ]

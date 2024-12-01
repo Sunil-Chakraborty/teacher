@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from teachers.models import (CustomUser, Teacher, Qualification, 
-     Department, Patents)
+     Department, Patents, ResearchPub)
 
 
 # Register your models here.
@@ -83,3 +83,25 @@ class PatentsAdmin(admin.ModelAdmin):
 	list_display = (
      'status','title','ref_no','dt_award','awarding_agency'
      )
+
+@admin.register(ResearchPub)
+class ResearchPubAdmin(admin.ModelAdmin):
+    list_display = (
+        'title_of_paper',
+        'name_of_authors',
+        'name_of_journal',
+        'year_of_publication',
+        'issn_number',
+        'is_listed_in_ugc_care',
+    )
+    search_fields = (
+        'title_of_paper',
+        'name_of_authors',
+        'name_of_journal',
+        'year_of_publication',
+        'issn_number',
+    )
+    list_filter = (
+        'is_listed_in_ugc_care',
+        'year_of_publication',
+    )

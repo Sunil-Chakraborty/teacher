@@ -32,7 +32,11 @@ class StudentAdmittedForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         if programs:
             self.fields['prog_name'].queryset = programs  # Set queryset dynamically
-
+        
+        for field_name in ['prog_name', 'acad_year', 'sanc_seats','admit_seats','reserv_catg','seats_resrv_catg']:
+            self.fields[field_name].required = True
+    
+        
     def clean(self):
         """
         Add custom validation if needed (e.g., admit_seats cannot exceed sanc_seats).
@@ -40,8 +44,5 @@ class StudentAdmittedForm(forms.ModelForm):
         cleaned_data = super().clean()
         sanc_seats = cleaned_data.get("sanc_seats")
         admit_seats = cleaned_data.get("admit_seats")
-
-        if sanc_seats and admit_seats and admit_seats > sanc_seats:
-            self.add_error("admit_seats", "Admitted students cannot exceed sanctioned seats.")
 
         return cleaned_data

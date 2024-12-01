@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load widget_tweaks %}
+{% load signing_tags %}
 {% load static %}
 {% block content %}
 <h1>Patents Listing</h1>
@@ -37,7 +38,7 @@
 			</td>
 			
             <td>
-                <a href="{% url 'teachers:edit_patent' patent.id %}" class="btn btn-sm btn-info">Edit</a>
+                <a href="{% url 'teachers:edit_patent' signed_id=patent.id|sign_id %}" class="btn btn-sm btn-info">Edit</a>
                 <form action="{% url 'teachers:delete_patent' patent.id %}" method="post" style="display:inline;">
                     {% csrf_token %}
                     <button 

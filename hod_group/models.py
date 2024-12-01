@@ -3,7 +3,6 @@ from django.contrib.auth.models import AbstractUser, BaseUserManager
 from django.contrib.auth.models import User
 from django.conf import settings  # Import settings to access AUTH_USER_MODEL
 from django.utils import timezone
-from django.core.validators import RegexValidator
 from teachers.models import Teacher, Department
 
 import os
@@ -29,9 +28,12 @@ class StudentAdmitted(models.Model):
         max_length=20, null=True, blank=True,
         verbose_name="Programme Code"
     )
+    course_name = models.CharField(
+        max_length=100, null=True, blank=True,
+        verbose_name="Programme/Courses Name"
+    )     
     acad_year = models.CharField(
-        max_length=9,
-        validators=[RegexValidator(r'^\d{4}(/\d{4})?$', "Enter a valid academic year (e.g., '2023' or '2023/2024').")],
+        max_length=9,        
         verbose_name="Academic Year",
         null=True,
         blank=True

@@ -6,7 +6,7 @@ from django.shortcuts import render, redirect, reverse, get_object_or_404
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import AuthenticationForm
 from .models import(CustomUser, Teacher, Qualification,  Department, 
-             Patents)
+             Patents, ResearchPub)
 from django.contrib.auth.decorators import login_required
 from .forms import (UserRegistrationForm, TeacherForm, 
                    QualificationForm, PatentForm) 
@@ -272,11 +272,25 @@ def add_patent(request):
 
 
 @login_required
-def edit_patent(request, pk):
-    patent = get_object_or_404(Patents, pk=pk, teacher__user=request.user)
-     
-    # Fetch the Teacher object associated with the logged-in user
-    teacher = get_object_or_404(Teacher, user=request.user)
+def edit_patent(request, signed_id):
+
+    # Initialize the signer
+    signer = Signer()
+
+    try:
+        # Unsign the token to get the original ID
+        id = signer.unsign(signed_id)
+        # Get the qualification object ensuring it belongs to the current user
+        patent = get_object_or_404(Patents, id=id, teacher__user=request.user)
+        
+        # Fetch the Teacher object associated with the logged-in user
+        teacher = get_object_or_404(Teacher, user=request.user)
+        
+    except BadSignature:
+        # If the token is invalid, deny access
+        #return HttpResponseForbidden("Invalid request.")
+        return render(request, 'teachers/403.html', status=403)
+
         
     if request.method == 'POST':
         form = PatentForm(request.POST, request.FILES, instance=patent)
@@ -303,4 +317,10 @@ def delete_patent(request, pk):
 
     return render(request, 'teachers/confirm_delete_patent.html', {'patent': patent})
 
+@login_required
+def research_list(request):
+    teacher = get_object_or_404(Teacher, user=request.user)
+    
+    researches = ResearchPub.objects.filter(teacher=teacher)
+    return render(request, 'teachers/research_list.html', {'researches': researches})
 
