@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from django.conf import settings  # Import settings to access AUTH_USER_MODEL
 from django.utils import timezone
 from teachers.models import Teacher, Department
+from django.core.validators import RegexValidator
 
 import os
 from uuid import uuid4
@@ -36,7 +37,13 @@ class StudentAdmitted(models.Model):
         max_length=9,        
         verbose_name="Academic Year",
         null=True,
-        blank=True
+        blank=True,
+        validators=[
+            RegexValidator(
+                regex=r'^\d{4}-\d{2}$', 
+                message="Academic year must be in the format 'YYYY-YY', e.g., '2023-24'."
+            )
+        ]
     )
     sanc_seats = models.IntegerField(
         default=0, verbose_name="Number of Sanctioned Seats"
@@ -52,14 +59,16 @@ class StudentAdmitted(models.Model):
         ('cast-4', 'OBC-B'),
         ('cast-5', 'GEN'),
     )
-    reserv_catg = models.CharField(
-        max_length=7, choices=CAST_CATG, null=True, blank=True,
-        verbose_name="Reserved Category Students"
-    )
+   
     seats_resrv_catg = models.IntegerField(
         default=0, verbose_name="Number of Reserved Category Students"
     )
-
+    group_id    = models.CharField(
+        max_length=10,        
+        verbose_name="Group Table index",
+        null=True,
+        blank=True
+    )
     def __str__(self):
         return f"{self.dept_name} - {self.prog_name} ({self.teacher})"
         

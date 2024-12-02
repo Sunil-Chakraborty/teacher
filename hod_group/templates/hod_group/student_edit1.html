@@ -18,31 +18,31 @@
 <div class="container mt-5">
     <div class="card shadow-lg">
         <div class="card-header bg-primary text-white text-center">
-            <h2>Add New Student Record</h2>
+            <h2>Edit Student Record</h2>
         </div>
         <div class="card-body">
             <form method="POST" class="needs-validation" novalidate>
                 {% csrf_token %}
                 
-                <!-- Program Field -->
-                <div class="mb-3">
-                    <label for="id_prog_name" class="form-label">Program</label>
-                    <select name="prog_name" id="id_prog_name" class="form-select">
-                        <option value="" disabled selected>-- Select Program --</option>
-                        {% for choice in form.fields.prog_name.queryset %}
-                        <option value="{{ choice.id }}" 
-                                {% if form.initial.prog_name and choice.id == form.initial.prog_name.id %}
-                                selected
-                                {% endif %}>
-                            {{ choice.program }}
-                        </option>
-                        {% endfor %}
-                    </select>
-                    {% for error in form.prog_name.errors %}
-                    <div class="text-danger small">{{ error }}</div>
-                    {% endfor %}
-                </div>
-                
+				<!-- Program Field -->
+				<div class="mb-3">
+					<label for="id_prog_name" class="form-label">Program</label>
+					<select name="prog_name" id="id_prog_name" class="form-select">
+						<option value="" disabled>-- Select Program --</option>
+						{% for choice in programs %}
+						<option value="{{ choice.id }}" 
+								{% if form.instance.prog_name and choice.id == form.instance.prog_name.id %}
+								selected
+								{% endif %}>
+							{{ choice.program }} <!-- Adjust 'name' based on the actual field for program display -->
+						</option>
+						{% endfor %}
+					</select>
+					{% for error in form.prog_name.errors %}
+					<div class="text-danger small">{{ error }}</div>
+					{% endfor %}
+				</div>
+
                 <!-- Render remaining fields -->
                 <div class="row">
                     {% for field in form %}
@@ -62,7 +62,7 @@
                 </div>
                 <!-- Action buttons -->
                 <div class="text-center mt-4">
-                    <button type="submit" class="btn btn-success px-4">Add Student</button>
+                    <button type="submit" class="btn btn-success px-4">Edit Record</button>
                     <a href="{% url 'hod_group:group_table_with_id' grp_id %}" class="btn btn-secondary px-4">Cancel</a>
                 </div>
             </form>

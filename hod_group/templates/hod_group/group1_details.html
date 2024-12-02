@@ -12,14 +12,13 @@
         <thead>
             <tr>
                 <th>#</th>
-                <th>Department Name</th>
-                <th>Programme Name</th>
-                <th>Programme Code</th>
-                <th>Academic Year</th>
-                <th>Sanctioned Seats</th>
-                <th>Admitted Students</th>
-                <th>Reserved Category</th>
-                <th>Reserved Seats</th>
+                <th>Department<br> Name</th>
+                <th>Programme<br> Name</th>
+                <th>Programme<br> Code</th>
+                <th>Academic<br> Year</th>
+                <th>Sanctioned<br> Seats</th>
+                <th>Admitted<br> Students</th>                
+                <th>Reserved<br> Seats</th>
                 
                 <th>Actions</th>
             </tr>
@@ -33,18 +32,18 @@
                 <td>{{ student.prog_name.prog_cd }}</td>
                 <td>{{ student.acad_year }}</td>
                 <td>{{ student.sanc_seats }}</td>
-                <td>{{ student.admit_seats }}</td>
-                <td>{{ student.get_reserv_catg_display }}</td>
+                <td>{{ student.admit_seats }}</td>                
                 <td>{{ student.seats_resrv_catg }}</td>                
 				
                 <td>
                     <a href="{% url 'hod_group:student_edit' student.id %}" class="btn btn-sm btn-primary">Edit</a>
                     <a href="{% url 'hod_group:student_delete' student.id %}" class="btn btn-sm btn-danger">Delete</a>
+
                 </td>
             </tr>
             {% empty %}
             <tr>
-                <td colspan="11" class="text-center">No students found.</td>
+                <td colspan="9" class="text-center">No students found.</td>
             </tr>
             {% endfor %}
         </tbody>
