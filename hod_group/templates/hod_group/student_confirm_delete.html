@@ -1,12 +1,13 @@
 {% extends "base.html" %}
 {% load widget_tweaks %}
+{% load signing_tags %}
 {% load static %}
 
 {% block content %}
 <div class="container mt-5">
     <h2 class="text-center text-danger">Delete Student Record</h2>
-    <p class="text-center">Are you sure you want to delete the record for <strong>{{ student.course_name }} - {{ student.acad_year }}</strong>?</p>
-    <form method="POST" action="{% url 'hod_group:student_delete' student.id %}">
+    <p class="text-center">Are you sure you want to delete the record for <strong>{{ student.course_name }} - {{ student.acad_year }}</strong></p>
+    <form method="POST" action="{% url 'hod_group:student_delete' signed_id=student.id|sign_id %}">
         {% csrf_token %}
         <div class="text-center mt-4">
             <button type="submit" class="btn btn-danger">Yes, Delete</button>

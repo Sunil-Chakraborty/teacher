@@ -5,6 +5,7 @@ from django.contrib import messages
 from django.conf import settings
 from .models import StudentAdmitted
 from teachers.models import Teacher, Department
+from django.core.signing import Signer, BadSignature
 
 from .forms import StudentAdmittedForm
 
@@ -82,14 +83,24 @@ def student_add(request):
     return render(request, 'hod_group/student_add.html', {'form': form, 'grp_id': grp_id })
 
 @login_required
-def student_edit(request, pk):
-    student = get_object_or_404(StudentAdmitted, pk=pk)
-    grp_id = request.session.get('grp_id', None)
-    user = request.user
-    teacher = get_object_or_404(Teacher, user=user)
-
-    # Filter programs by teacher's department
-    programs = Department.objects.filter(name=teacher.dept_name)
+def student_edit(request, signed_id):
+    # Initialize the signer
+    signer = Signer()
+    
+    try:
+        # Unsign the token to get the original ID
+        id = signer.unsign(signed_id)
+        # Get the qualification object ensuring it belongs to the current user
+        #qualification = get_object_or_404(Qualification, id=id, teacher__user=request.user)
+        student = get_object_or_404(StudentAdmitted, id=id)
+        # Fetch the Teacher object associated with the logged-in user
+        teacher = get_object_or_404(Teacher, user=request.user)
+        grp_id = request.session.get('grp_id', None)
+        programs = Department.objects.filter(name=teacher.dept_name)
+    except BadSignature:
+        # If the token is invalid, deny access
+        #return HttpResponseForbidden("Invalid request.")
+        return render(request, 'teachers/403.html', status=403)
 
     if request.method == 'POST':
         form = StudentAdmittedForm(request.POST, instance=student, programs=programs)
@@ -103,13 +114,25 @@ def student_edit(request, pk):
         'form': form,
         'grp_id': grp_id,
         'programs': programs,
+        'signed_id': signed_id
     })
     
 @login_required
-def student_delete(request, pk):
-    # Retrieve the student object
-    student = get_object_or_404(StudentAdmitted, pk=pk)
-    grp_id = student.group_id
+def student_delete(request, signed_id):
+    # Initialize the signer
+    signer = Signer()
+
+    try:
+        # Unsign the token to get the original ID
+        id = signer.unsign(signed_id)
+        # Get the qualification object ensuring it belongs to the current user
+        #qualification = get_object_or_404(Qualification, id=id, teacher__user=request.user)
+        student = get_object_or_404(StudentAdmitted, id=id)
+        grp_id = student.group_id
+    except BadSignature:
+        # If the token is invalid, deny access
+        #return HttpResponseForbidden("<h2>Invalid request. Go back</h2>")
+        return render(request, 'teachers/403.html', status=403)
     
     if request.method == 'POST':
          
@@ -120,4 +143,4 @@ def student_delete(request, pk):
         return redirect('hod_group:group_table_with_id', group_id=grp_id)
     
     
-    return render(request, 'hod_group/student_confirm_delete.html', {'student': student, 'grp_id': grp_id})
+    return render(request, 'hod_group/student_confirm_delete.html', {'student': student, 'grp_id': grp_id, 'signed_id': signed_id})

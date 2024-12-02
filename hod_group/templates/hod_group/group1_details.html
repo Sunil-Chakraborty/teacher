@@ -1,5 +1,6 @@
 {% extends 'hod_group/group_table.html' %}
 {% load widget_tweaks %}
+{% load signing_tags %}
 {% load static %}
 {% block group_table_details %}
  
@@ -36,8 +37,8 @@
                 <td>{{ student.seats_resrv_catg }}</td>                
 				
                 <td>
-                    <a href="{% url 'hod_group:student_edit' student.id %}" class="btn btn-sm btn-primary">Edit</a>
-                    <a href="{% url 'hod_group:student_delete' student.id %}" class="btn btn-sm btn-danger">Delete</a>
+                    <a href="{% url 'hod_group:student_edit' signed_id=student.id|sign_id %}" class="btn btn-sm btn-primary">Edit</a>
+                    <a href="{% url 'hod_group:student_delete' signed_id=student.id|sign_id %}" class="btn btn-sm btn-danger">Delete</a>
 
                 </td>
             </tr>
