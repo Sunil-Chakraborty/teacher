@@ -90,14 +90,20 @@ def student_edit(request, signed_id):
     try:
         # Unsign the token to get the original ID
         id = signer.unsign(signed_id)
-        # Get the qualification object ensuring it belongs to the current user
-        #qualification = get_object_or_404(Qualification, id=id, teacher__user=request.user)
+        
         student = get_object_or_404(StudentAdmitted, id=id)
         # Fetch the Teacher object associated with the logged-in user
         teacher = get_object_or_404(Teacher, user=request.user)
         grp_id = request.session.get('grp_id', None)
         programs = Department.objects.filter(name=teacher.dept_name)
+        # Capture the data_row from query parameters
+        data_row = request.GET.get('data_row')
+        print(data_row)
+        if data_row is None:
+            return HttpResponseBadRequest("Missing data_row parameter.")
+            
     except BadSignature:
+    
         # If the token is invalid, deny access
         #return HttpResponseForbidden("Invalid request.")
         return render(request, 'teachers/403.html', status=403)
@@ -110,11 +116,12 @@ def student_edit(request, signed_id):
     else:
         form = StudentAdmittedForm(instance=student, programs=programs)
 
-    return render(request, 'hod_group/student_edit1.html', {
+    return render(request, 'hod_group/student_edit.html', {
         'form': form,
         'grp_id': grp_id,
         'programs': programs,
-        'signed_id': signed_id
+        'signed_id': signed_id,
+        'data_row': data_row,  # Pass data_row to the template
     })
     
 @login_required

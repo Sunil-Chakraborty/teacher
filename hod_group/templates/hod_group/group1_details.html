@@ -12,7 +12,7 @@
     <table id="studentsTable" class="table table-striped table-bordered">
         <thead>
             <tr>
-                <th>#</th>
+                <th>Srl</th>
                 <th>Department<br> Name</th>
                 <th>Programme<br> Name</th>
                 <th>Programme<br> Code</th>
@@ -37,8 +37,11 @@
                 <td>{{ student.seats_resrv_catg }}</td>                
 				
                 <td>
-                    <a href="{% url 'hod_group:student_edit' signed_id=student.id|sign_id %}" class="btn btn-sm btn-primary">Edit</a>
-                    <a href="{% url 'hod_group:student_delete' signed_id=student.id|sign_id %}" class="btn btn-sm btn-danger">Delete</a>
+                    <a href="{% url 'hod_group:student_edit' signed_id=student.id|sign_id %}?data_row={{ forloop.counter }}" 
+					   class="btn btn-sm btn-primary">Edit
+					</a>
+					
+					<a href="{% url 'hod_group:student_delete' signed_id=student.id|sign_id %}" class="btn btn-sm btn-danger">Delete</a>
 
                 </td>
             </tr>

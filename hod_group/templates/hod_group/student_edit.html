@@ -1,17 +1,93 @@
-{% extends "base.html" %}
-{% load widget_tweaks %}
+{% extends 'grp_base.html' %}
 {% load static %}
-
+{% load widget_tweaks %}
 {% block content %}
+
+<style>
+	input[type=number]::-webkit-inner-spin-button, 
+    input[type=number]::-webkit-outer-spin-button { 
+           -webkit-appearance: none; 
+           margin: 0; 
+    }
+	label {
+		font-weight:bold;
+	}
+	
+</style>
+   
 <div class="container mt-5">
-    <h2 class="text-center">Edit Student Details</h2>
-    <form method="POST" action="">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <div class="text-center mt-4">
-            <button type="submit" class="btn btn-success">Save Changes</button>
-            <a href="{% url 'hod_group:group_table_with_id' grp_id %}" class="btn btn-secondary">Cancel</a>
+    <div class="card shadow-lg">
+        <div class="card-header bg-primary text-white text-center">
+            <h2>Edit Student Record of Srl. {{ data_row }} </h2>
         </div>
-    </form>
+        <div class="card-body">
+            <form method="POST" class="needs-validation" novalidate>
+                {% csrf_token %}
+                
+				<!-- Program Field -->
+				<div class="mb-3">
+					<label for="id_prog_name" class="form-label">Program</label>
+					<select name="prog_name" id="id_prog_name" class="form-select">
+						<option value="" disabled>-- Select Program --</option>
+						{% for choice in programs %}
+						<option value="{{ choice.id }}" 
+								{% if form.instance.prog_name and choice.id == form.instance.prog_name.id %}
+								selected
+								{% endif %}>
+							{{ choice.program }} <!-- Adjust 'name' based on the actual field for program display -->
+						</option>
+						{% endfor %}
+					</select>
+					{% for error in form.prog_name.errors %}
+					<div class="text-danger small">{{ error }}</div>
+					{% endfor %}
+				</div>
+
+                <!-- Render remaining fields -->
+                <div class="row">
+                    {% for field in form %}
+                    {% if field.name != 'prog_name' %}
+                    <div class="col-md-6 mb-3">
+                        <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
+                        {{ field|add_class:"form-control" }}
+                        {% if field.help_text %}
+                        <small class="form-text text-muted">{{ field.help_text }}</small>
+                        {% endif %}
+                        {% for error in field.errors %}
+                        <div class="text-danger small">{{ error }}</div>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                    {% endfor %}
+                </div>
+                <!-- Action buttons -->
+                <div class="text-center mt-4">
+                    <button type="submit" class="btn btn-success px-4">Edit Record</button>
+                    <a href="{% url 'hod_group:group_table_with_id' grp_id %}" class="btn btn-secondary px-4">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </div>
 </div>
+<script>
+    document.addEventListener('keydown', function(event) {
+        // Check if the Enter key is pressed
+        if (event.key === "Enter") {
+            // Prevent the default action (e.g., submitting the form)
+            event.preventDefault();
+
+            // Find the next focusable element
+            const focusable = Array.from(document.querySelectorAll('input, select, textarea, button')).filter(
+                el => !el.disabled && !el.readOnly
+            );
+            const index = focusable.indexOf(document.activeElement);
+
+            // Move focus to the next element if possible
+            if (index > -1 && index < focusable.length - 1) {
+                focusable[index + 1].focus();
+            }
+        }
+    });
+</script>
+
 {% endblock %}
