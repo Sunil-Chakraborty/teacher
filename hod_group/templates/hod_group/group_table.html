@@ -13,12 +13,13 @@
     <title>Group Table</title>
     <style>
         .sidebar {
-            width: 250px;
-            background-color: #f4f4f4;
-            padding: 1rem;
-            height: 100vh;
-            position: fixed;
-        }
+			width: 250px;               /* Sets the width of the sidebar to 250px */
+			background-color: #f4f4f4;  /* Applies a light gray background color */
+			padding: 1rem;              /* Adds padding of 1 rem unit around the content inside the sidebar */
+			height: 100vh;              /* Ensures the sidebar takes up the full height of the viewport */
+			position: fixed;            /* Fixes the sidebar to the viewport so it doesn't scroll with the content */
+		}
+
 
         .sidebar a {
             display: block;
@@ -41,7 +42,7 @@
 </head>
 <body>
     <!-- Sidebar Section -->
-    <div class="sidebar">
+    <div class="sidebar" >
 		<h3>Tables</h3>
 		<ul>
 			<li><a href="{% url 'hod_group:group_table_with_id' 'group1' %}">Sanctioned and Admitted Students</a></li>
