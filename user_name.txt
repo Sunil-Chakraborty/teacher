@@ -1,0 +1,10 @@
+admin@gmail.com
+pwd: admin123
+
+teacher1@gmail.com
+teacher2@gmail.com
+teacher3@gmail.com
+
+teacher4@gmail.com
+
+pwd: teacher

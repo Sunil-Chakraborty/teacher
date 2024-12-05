@@ -6,6 +6,8 @@ from django.conf import settings
 from .models import StudentAdmitted
 from teachers.models import Teacher, Department
 from django.core.signing import Signer, BadSignature
+from django.http import JsonResponse
+
 
 from .forms import StudentAdmittedForm
 
@@ -26,7 +28,7 @@ def group_table_with_id(request, group_id):
     
     # Fetch the Teacher instance associated with the user
     teacher = get_object_or_404(Teacher, user=user)
-    
+    programs = Department.objects.filter(name=teacher.dept_name)
     # Filter students based on the teacher's department name
     students = StudentAdmitted.objects.select_related('teacher', 'prog_name').filter(dept_name=teacher.dept_name)
     
@@ -44,44 +46,50 @@ def group_table_with_id(request, group_id):
     grp_id = next((key for key, value in group_templates.items() if value == template), None)
     request.session['grp_id'] = grp_id
     
+    if request.session['grp_id'] == 'group1':
+       form = StudentAdmittedForm(programs=programs)
+    else:
+       form="" 
+    
     # Optionally pass additional context
-    context = {'group_id': group_id, 'grp_id':grp_id, 'students':students}
+    context = {'group_id': group_id, 'grp_id':grp_id, 'students':students,'form':form}
 
     return render(request, template, context)
     
 
+
 @login_required
 def student_add(request):
     user = request.user
-    # Fetch the Teacher instance associated with the user
     teacher = get_object_or_404(Teacher, user=user)
-    grp_id = request.session.get('grp_id', None)
+    programs = Department.objects.filter(name=teacher.dept_name)
+    
     if request.method == 'POST':
-        # Pass the queryset of Department instances to the form
-        programs = Department.objects.filter(name=teacher.dept_name)
         form = StudentAdmittedForm(request.POST, programs=programs)
         if form.is_valid():
             student = form.save(commit=False)
-            student.dept_name = teacher.dept_name  # Assign dep_name from the teacher instance
-            student.teacher_id = teacher.id       # Assign teacher_id from the teacher instance
+            student.dept_name = teacher.dept_name
+            student.teacher_id = teacher.id
             prog = Department.objects.get(pk=student.prog_name_id)
             student.prog_cd = prog.prog_cd
             student.course_name = prog.program
-            
-            # Retrieve grp_id from session
-            student.group_id = request.session.get('grp_id', None)          
-            
+            student.group_id = request.session.get('grp_id', None)
             student.save()
-            #return redirect('hod_group:group_table')  # Redirect to students list after adding a record
+
+            if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+                return JsonResponse({'success': True, 'message': 'Student added successfully!'})
+
             return redirect('hod_group:group_table_with_id', group_id=student.group_id)
-    
-    
+
+        if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+            return JsonResponse({'success': False, 'errors': form.errors}, status=400)
+
     else:
-        programs = Department.objects.filter(name=teacher.dept_name)
         form = StudentAdmittedForm(programs=programs)
 
-    return render(request, 'hod_group/student_add.html', {'form': form, 'grp_id': grp_id })
-
+    #return render(request, 'hod_group/student_add.html', {'form': form, 'grp_id': request.session.get('grp_id', None)})
+    return render(request, 'hod_group/group1_details.html', {'form': form, 'grp_id': request.session.get('grp_id', None)})
+    
 @login_required
 def student_edit(request, signed_id):
     # Initialize the signer

@@ -46,22 +46,15 @@ class StudentAdmitted(models.Model):
         ]
     )
     sanc_seats = models.IntegerField(
-        default=0, verbose_name="Number of Sanctioned Seats"
+         verbose_name="Number of Sanctioned Seats"
     )
     admit_seats = models.IntegerField(
-        default=0, verbose_name="Number of Admitted Students"
+         verbose_name="Number of Admitted Students"
     )
-    CAST_CATG = (
-        ('', 'Select Category'),
-        ('cast-1', 'SC'),
-        ('cast-2', 'ST'),
-        ('cast-3', 'OBC-A'),
-        ('cast-4', 'OBC-B'),
-        ('cast-5', 'GEN'),
-    )
+    
    
     seats_resrv_catg = models.IntegerField(
-        default=0, verbose_name="Number of Reserved Category Students"
+         verbose_name="Number of Reserved Category Students"
     )
     group_id    = models.CharField(
         max_length=10,        

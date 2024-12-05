@@ -19,18 +19,28 @@ class StudentAdmittedForm(forms.ModelForm):
             "admit_seats",
             "seats_resrv_catg",
         ]
+        
         widgets = {
-            "acad_year": forms.TextInput(attrs={"placeholder": "e.g., 2023-24"}),
-            "sanc_seats": forms.NumberInput(attrs={"min": 0}),
-            "admit_seats": forms.NumberInput(attrs={"min": 0}),
-            "seats_resrv_catg": forms.NumberInput(attrs={"min": 0}),
+            "acad_year": forms.TextInput(attrs={"placeholder": "e.g., 2023-24", "required": "required"}),
+            "sanc_seats": forms.NumberInput(attrs={"min": 0, "required": "required"}),
+            "admit_seats": forms.NumberInput(attrs={"min": 0, "required": "required"}),
+            "seats_resrv_catg": forms.NumberInput(attrs={"min": 0, "required": "required"}),
         }
 
-    def __init__(self, *args, **kwargs):
-        # Fetch filtered queryset from kwargs
-        programs = kwargs.pop("programs", None)
+    def __init__(self, *args, programs=None, **kwargs):
         super().__init__(*args, **kwargs)
+
+        # Dynamically update the queryset for prog_name
         if programs:
-            self.fields["prog_name"].queryset = programs  # Update queryset dynamically
+            self.fields["prog_name"].queryset = programs
         else:
             self.fields["prog_name"].queryset = Department.objects.none()
+
+        # Set all fields as required
+        self.fields["prog_name"].required = True
+        self.fields["acad_year"].required = True
+        self.fields["sanc_seats"].required = True
+        self.fields["admit_seats"].required = True
+        self.fields["seats_resrv_catg"].required = True
+        
+        
