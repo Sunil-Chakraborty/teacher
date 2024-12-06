@@ -7,7 +7,7 @@ from .models import StudentAdmitted
 from teachers.models import Teacher, Department
 from django.core.signing import Signer, BadSignature
 from django.http import JsonResponse
-
+import re
 
 from .forms import StudentAdmittedForm
 
@@ -45,25 +45,34 @@ def group_table_with_id(request, group_id):
     # Reverse lookup to find the key (group_id) from the template
     grp_id = next((key for key, value in group_templates.items() if value == template), None)
     request.session['grp_id'] = grp_id
-    
+        
     if request.session['grp_id'] == 'group1':
        form = StudentAdmittedForm(programs=programs)
+       success = request.session.get('success', None)      
     else:
-       form="" 
-    
+       form=""
+       success=""
+       
+    # Handle success session
+    success = request.session.get('success', False)
+    if 'success' in request.session:
+        del request.session['success']  # Remove the success session variable
+  
+       
     # Optionally pass additional context
-    context = {'group_id': group_id, 'grp_id':grp_id, 'students':students,'form':form}
+    context = {'group_id': group_id, 'grp_id':grp_id, 'students':students,'form':form, 'success':success}
 
     return render(request, template, context)
     
-
+from django.http import JsonResponse
 
 @login_required
 def student_add(request):
     user = request.user
     teacher = get_object_or_404(Teacher, user=user)
     programs = Department.objects.filter(name=teacher.dept_name)
-    
+    success = False
+    request.session['success'] = success
     if request.method == 'POST':
         form = StudentAdmittedForm(request.POST, programs=programs)
         if form.is_valid():
@@ -75,21 +84,23 @@ def student_add(request):
             student.course_name = prog.program
             student.group_id = request.session.get('grp_id', None)
             student.save()
-
-            if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
-                return JsonResponse({'success': True, 'message': 'Student added successfully!'})
-
+            success = True
+            request.session['success'] = success
+            
+            
+            # For non-AJAX requests, redirect
             return redirect('hod_group:group_table_with_id', group_id=student.group_id)
 
-        if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
-            return JsonResponse({'success': False, 'errors': form.errors}, status=400)
+        # Return form errors if the form is invalid
+        if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+            return JsonResponse({'errors': form.errors}, status=400)
 
     else:
         form = StudentAdmittedForm(programs=programs)
-
-    #return render(request, 'hod_group/student_add.html', {'form': form, 'grp_id': request.session.get('grp_id', None)})
-    return render(request, 'hod_group/group1_details.html', {'form': form, 'grp_id': request.session.get('grp_id', None)})
     
+    return render(request, 'hod_group/group1_details.html', 
+                 {'form': form, 'grp_id': request.session.get('grp_id', None)})
+
 @login_required
 def student_edit(request, signed_id):
     # Initialize the signer
