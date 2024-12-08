@@ -4,8 +4,7 @@ from django.contrib.auth.models import User
 from django.conf import settings  # Import settings to access AUTH_USER_MODEL
 from django.utils import timezone
 from teachers.models import Teacher, Department
-from django.core.validators import RegexValidator
-import re
+
 
 import os
 from uuid import uuid4
@@ -35,9 +34,9 @@ class StudentAdmitted(models.Model):
         verbose_name="Programme/Courses Name"
     )     
     acad_year = models.CharField(
-        max_length=7,        
+        max_length=7,
         verbose_name="Academic Year",        
-        
+        help_text="The range must be in  1990-91 to 2024-25.",
     )
     sanc_seats = models.IntegerField(
          verbose_name="Number of Sanctioned Seats"

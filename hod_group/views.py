@@ -70,9 +70,11 @@ from django.http import JsonResponse
 def student_add(request):
     user = request.user
     teacher = get_object_or_404(Teacher, user=user)
+    
     programs = Department.objects.filter(name=teacher.dept_name)
     success = False
     request.session['success'] = success
+    
     if request.method == 'POST':
         form = StudentAdmittedForm(request.POST, programs=programs)
         if form.is_valid():
@@ -90,10 +92,7 @@ def student_add(request):
             
             # For non-AJAX requests, redirect
             return redirect('hod_group:group_table_with_id', group_id=student.group_id)
-
-        # Return form errors if the form is invalid
-        if request.headers.get('x-requested-with') == 'XMLHttpRequest':
-            return JsonResponse({'errors': form.errors}, status=400)
+        
 
     else:
         form = StudentAdmittedForm(programs=programs)
