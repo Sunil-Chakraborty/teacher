@@ -13,6 +13,11 @@
 		font-weight:bold;
 	}
 	
+	.help-text-error {
+		color: red !important; /* Highlights the help text in red */
+		font-weight: bold; /* Optional: make the text bold */
+	}
+	
 </style>
    
 <div class="container mt-5">
@@ -21,7 +26,7 @@
             <h2>Edit Student Record of Srl. {{ data_row }} </h2>
         </div>
         <div class="card-body">
-            <form method="POST" class="needs-validation" novalidate>
+            <form method="POST" class="needs-validation" id="studentAdmittedForm" novalidate>
                 {% csrf_token %}
                 
 				<!-- Program Field -->
@@ -51,11 +56,11 @@
                         <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
                         {{ field|add_class:"form-control" }}
                         {% if field.help_text %}
-                        <small class="form-text text-muted">{{ field.help_text }}</small>
-                        {% endif %}
-                        {% for error in field.errors %}
-                        <div class="text-danger small">{{ error }}</div>
-                        {% endfor %}
+							<small id="{{ field.id_for_label }}_helptext" class="form-text text-muted">{{ field.help_text }}</small>
+						{% endif %}
+						{% for error in field.errors %}
+							<div class="text-danger small">{{ error }}</div>
+						{% endfor %}
                     </div>
                     {% endif %}
                     {% endfor %}
@@ -69,6 +74,9 @@
         </div>
     </div>
 </div>
+
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+	
 <script>
     document.addEventListener('keydown', function(event) {
         // Check if the Enter key is pressed
@@ -88,6 +96,50 @@
             }
         }
     });
+	
+		$(document).ready(function () {
+			
+
+			// Define valid academic years
+			const validYears = [];
+			for (let year = 1990; year <= 2024; year++) {
+				const nextYear = String(year + 1).slice(-2);
+				validYears.push(`${year}-${nextYear}`);
+			}
+
+			// Add validation on form submission
+			$('#studentAdmittedForm').on('submit', function (e) {
+				const acadYear = $('#id_acad_year').val().trim(); // Get the input value
+				const helpText = $('#id_acad_year_helptext'); // Select the help text element
+				console.log("Academic Year Entered:", acadYear);
+
+				// Check if the academic year is valid
+				if (!validYears.includes(acadYear)) {
+					e.preventDefault(); // Prevent form submission
+					console.log("Invalid academic year: Applying red color to help text.");
+					helpText.addClass('help-text-error'); // Apply red color
+				} else {
+					console.log("Valid academic year: Resetting help text color.");
+					helpText.removeClass('help-text-error'); // Reset to default
+				}
+			});
+
+			// Validate dynamically on input change
+			$('#id_acad_year').on('input', function () {
+				const acadYear = $(this).val().trim(); // Get the input value
+				const helpText = $('#id_acad_year_helptext'); // Select the help text element
+
+				if (!validYears.includes(acadYear)) {
+					
+					helpText.addClass('help-text-error'); // Apply red color
+				} else {
+					
+					helpText.removeClass('help-text-error'); // Reset to default
+				}
+			});
+		});
+
+
 </script>
 
 {% endblock %}

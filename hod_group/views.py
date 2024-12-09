@@ -141,7 +141,8 @@ def student_edit(request, signed_id):
         'signed_id': signed_id,
         'data_row': data_row,  # Pass data_row to the template
     })
-    
+ 
+ 
 @login_required
 def student_delete(request, signed_id):
     # Initialize the signer
