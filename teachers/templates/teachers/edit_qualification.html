@@ -1,180 +1,82 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load widget_tweaks %}
 {% block content %}
-<div class="container">
-    <div class="form-container">
-        <h2 class="form-heading">Edit Qualification Details</h2>
-        <!-- <form action="{% url 'teachers:edit_qualification' qualification.id %}" method="post" enctype="multipart/form-data" class="form-grid"> -->
-		
-		<form method="post" enctype="multipart/form-data" action="{% url 'teachers:edit_qualification' signed_id=signed_id %}" class="form-grid">
-            {% csrf_token %}
-            <div class="form-row">
-                <div class="form-group">
-                    <label for="id_degree">Degree/Certificate</label>
-                    {{ form.degree }}
-                </div>
-                <div class="form-group">
-                    <label for="id_subject">Subject</label>
-                    {{ form.subject }}
-                </div>
-                <div class="form-group">
-                    <label for="id_institution">Institution</label>
-                    {{ form.institution }}
-                </div>
-            </div>
-            <div class="form-row">
-                <div class="form-group">
-                    <label for="id_thesis">Title of Dissertation/Thesis</label>
-                    {{ form.thesis }}
-                </div>
-				
-                <div class="form-group" style="margin-top:8px;">
-                    <label for="id_dt_award">Date of Award</label>
-                    {{ form.dt_award }}
-                </div>
-				<div class="form-group" style="margin-top:8px;" >
-                    <label for="id_award_doc">Award Document</label>
-                    {% if qualification.award_doc %}
-                        <p>
-                            Current Document: 
-                            <a href="{{ qualification.award_doc.url }}" target="_blank" class="btn-view">View Document</a>
-                        
-                        <button type="button" class="btn-toggle" onclick="toggleReplaceDocument()">Replace Document</button>
-                        </p>
-						<div id="replace-document-section" style="display: none; margin-top: 10px;">
-                            {{ form.award_doc }}
-                        </div>
-                    {% else %}
-                        <p><strong>Upload Award Document:</strong></p>
-                        {{ form.award_doc }}
-                    {% endif %}
-                </div>
-            </div>
-            <div class="form-actions">
-                <button type="submit" class="btn-save">Save Changes</button>
-                <button type="button" onclick="window.location.href='{% url 'teachers:profile' %}'" class="btn-cancel">Cancel</button>
-            </div>
-        </form>
-    </div>
-</div>
 <style>
-    .container {
-        max-width: 800px;
-        margin: 20px auto;
-        background-color: #f9f9f9;
-        border: 1px solid #ddd;
-        border-radius: 8px;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        padding: 20px;
-    }
 
-    .form-container {
-        padding: 20px;
-    }
-
-    .form-heading {
-        text-align: center;
-        font-size: 24px;
-        font-weight: bold;
-        margin-bottom: 20px;
-        color: #333;
-    }
-
-    .form-grid {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 15px;
-    }
-
-    .form-group {
-        display: flex;
-        flex-direction: column;
-    }
-
-    .form-group label {
-        font-weight: bold;
-        margin-bottom: 5px;
-    }
-
-    .form-actions {
-        margin-top: 20px;
-        display: flex;
-        justify-content: center;
-        gap: 20px;
-    }
-
-    .btn-save {
-        background-color: #28a745;
-        color: white;
-        padding: 10px 20px;
-        font-size: 14px;
-        border: none;
-        border-radius: 2px;
-        cursor: pointer;
-    }
-
-    .btn-save:hover {
-        background-color: #218838;
-    }
-
-    .btn-cancel {
-        background-color: #dc3545;
-        color: white;
-        padding: 10px 20px;
-        font-size: 14px;
-        border: none;
-        border-radius: 2px;
-        cursor: pointer;
-    }
-
-    .btn-cancel:hover {
-        background-color: #c82333;
-    }
-
-    .btn-view {
-        background-color: #007bff;
-        color: white;
-        padding: 8px 15px;
-        font-size: 14px;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-    }
-
-    .btn-view:hover {
-        background-color: #0056b3;
-    }
-
-    @media (max-width: 768px) {
-        .form-grid {
-            grid-template-columns: 1fr;
-        }
-
-        .form-actions {
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .btn-save,
-        .btn-cancel {
-            width: 100%;
-        }
-    }
-	.btn-toggle {
-        background-color: #ffc107;
-        color: #212529;
-        padding: 8px 15px;
-        font-size: 14px;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-    }
-
-    .btn-toggle:hover {
-        background-color: #e0a800;
-    }
+	label {
+		font-weight:bold;
+	}
 	
 </style>
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-sm">
+                <div class="card-header bg-primary text-white">
+                    <h2 class="mb-0">Edit Qualification Details</h2>
+                </div>
+                <div class="card-body">
+                    <form method="post" enctype="multipart/form-data" action="{% url 'teachers:edit_qualification' signed_id=signed_id %}" class="form-grid">
+                        {% csrf_token %}
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="id_degree">Degree/Certificate</label>
+                    		    {{ form.degree |add_class:"form-control" }}
+                                </div>
+                                <div class="mb-3">
+                                    <label for="id_subject">Subject</label>
+                    		    {{ form.subject |add_class:"form-control" }}
+                                </div>
+                                <div class="mb-3">
+                                    <label for="id_institution">Institution</label>
+                    		    {{ form.institution |add_class:"form-control"}}
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="id_thesis">Title of Dissertation/Thesis</label>
+                    		    {{ form.thesis |add_class:"form-control"}}
+                                </div>
+                                <div class="mb-3">
+                                    <label for="id_dt_award">Date of Award</label>
+                    		    {{ form.dt_award |add_class:"form-control"}}
+                                </div>
+
+                                <div class="mb-3" >
+                    			<label for="id_award_doc">Award Document</label>
+                    			{% if qualification.award_doc %}
+                        			<p>
+                            			Current Document: 
+                            			<a href="{{ qualification.award_doc.url }}" target="_blank" class="btn-view">View Document</a>
+                        
+                        			<button type="button" class="btn-toggle" onclick="toggleReplaceDocument()">Replace Document</button>
+                        			</p>
+						<div id="replace-document-section" style="display: none; margin-top: 10px;">
+                            				{{ form.award_doc |add_class:"form-control"}}
+                        			</div>
+                    			{% else %}
+                        			<p><strong>Upload Award Document:</strong></p>
+                        			{{ form.award_doc |add_class:"form-control"}}
+                    			{% endif %}
+                		</div>
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <button type="submit" class="btn btn-success">Save Changes</button>
+                            <a href="{% url 'teachers:patent_list' %}" class="btn btn-danger">Cancel</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+   
 
 <script>
     function toggleReplaceDocument() {

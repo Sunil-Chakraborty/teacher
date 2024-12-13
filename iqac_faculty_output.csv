@@ -1,0 +1,509 @@
+age,gender,asso_type,cur_wkg,doj,dol,dsg,exp_mm,quali,name
+46.0,Male,Regular,Yes,08-11-2021,,Associate Professor,105.0,Ph.D,Emdad Hossain
+41.0,Male,Regular,Yes,08-03-2021,,Assistant Professor,91.0,Ph.D,Kajal Ghosal
+35.0,Male,Regular,Yes,29-06-2020,,Assistant Professor,48.0,M. Pharm,Kaushik Mukherjee
+36.0,Male,Regular,Yes,25-02-2021,,Assistant Professor,86.0,Ph.D,Nilanjan Adhikari
+39.0,Male,Regular,Yes,28-06-2021,,Assistant Professor,95.0,Ph.D,Nilanjan Ghosh
+46.0,Male,Regular,Yes,02-03-2007,,Professor,168.0,Ph.D,Pallab Kanti Haldar
+41.0,Male,Regular,Yes,06-07-2020,,Associate Professor,25.0,Ph.D,Probir Kumar Ojha
+38.0,Female,Regular,Yes,03-11-2021,,Assistant Professor,100.0,Ph.D,Ranu Biswas
+38.0,Female,Regular,Yes,25-10-2021,,Assistant Professor,91.0,Ph.D,Sanchita Das
+40.0,Male,Regular,Yes,16-03-2021,,Assistant Professor,95.0,Ph.D,Shovanlal Gayen
+46.0,Male,Regular,Yes,06-07-2020,,Associate Professor,25.0,Ph.D,Tapan Kumar Giri
+61.0,Male,Regular,Yes,01-10-2002,,Professor,343.0,Ph.D,Ambikesh Mahapatra
+51.0,Male,Regular,Yes,04-04-2000,,Professor,247.0,Ph.D,Sisir Kanti Mondal
+43.0,Female,Regular,Yes,23-12-2008,,Assistant Professor,156.0,Ph.D,Tanurima Bhaumik
+63.0,Male,Regular,Yes,02-01-1995,,Professor,312.0,Ph.D,Swapam kumar Bhattacharya
+40.0,Male,Regular,Yes,12-12-2008,,Professor,156.0,Ph.D,Partha Ray
+51.0,Male,Regular,Yes,16-06-2005,,Professor,177.0,Ph.D,Tuhin Ghosh
+50.0,Male,Regular,Yes,01-08-2003,,Professor,215.0,Ph.D,Umasish Jana
+49.0,Female,Regular,Yes,01-12-2005,,Assistant Professor,177.0,Ph.D,Sarmistha Mandal
+48.0,Female,Regular,Yes,01-02-2005,,Professor,176.0,Ph.D,Alaka Das
+45.0,Female,Adhoc / Contractual,Yes,27-06-2014,,Assistant Professor,84.0,Ph.D,Subarna Bhattacharyya
+52.0,Male,Regular,Yes,01-09-2005,,Assistant Professor,178.0,Ph.D,Saubhik Haldar
+35.0,Male,Regular,No,27-05-2014,,Assistant Professor,84.0,Ph.D,Tridib Kumar Mondal
+59.0,Male,Regular,Yes,12-09-2002,,Associate Professor,228.0,Ph.D,Pradip Kumar Mahapatra
+43.0,Male,Regular,Yes,29-07-2009,,Professor,144.0,Ph.D,Pabitra Kumar Paul
+37.0,Female,Regular,Yes,16-05-2008,,Assistant Professor,156.0,Ph.D,Bharati Tudu
+45.0,Male,Regular,Yes,05-09-2005,,Professor,175.0,Ph.D,Arup Gayen
+51.0,Male,Regular,Yes,17-01-2005,,Professor,178.0,Ph.D,Kallol Paul
+57.0,Male,Regular,Yes,13-09-1990,,Professor,372.0,Ph.D,Pulak Sengupta
+54.0,Male,Regular,Yes,04-07-2001,,Professor,240.0,Ph.D,Shamik Ghosh
+50.0,Male,Regular,Yes,15-11-2002,,Professor,228.0,Ph.D,Farook Rahaman
+57.0,Male,Regular,Yes,01-08-2003,,Professor,213.0,Ph.D,Umesh Chandra Halder
+57.0,Male,Regular,Yes,02-04-1996,,Professor,300.0,Ph.D,Debasish Lohar
+50.0,Male,Regular,Yes,01-07-2002,,Professor,228.0,Ph.D,Kausikisankar Pramanik
+62.0,Male,Regular,Yes,31-03-1984,,Professor,444.0,Ph.D,Prakash Chandra Mali
+54.0,Male,Regular,Yes,03-02-2001,,Professor,240.0,Ph.D,Dipak Kumar Kesh
+47.0,Male,Regular,Yes,24-11-2015,,Assistant Professor,72.0,Ph.D,Abhijit Samanta
+44.0,Female,Regular,Yes,09-03-2016,,Professor,60.0,Ph.D,Mitali Mondal
+63.0,Female,Regular,Yes,20-01-1998,,Professor,273.0,Ph.D,Rina Ghosh
+49.0,Male,Regular,Yes,24-11-2015,,Professor,72.0,Ph.D,Joydeep Chowdhury
+63.0,Male,Regular,Yes,02-07-2009,,Professor,144.0,Ph.D,Basudev Ghosh
+54.0,Male,Regular,Yes,01-03-2005,,Professor,176.0,Ph.D,Sujit Kumar Sardar
+48.0,Male,Regular,Yes,20-11-2002,,Professor,228.0,Ph.D,Dipak Chandra Pal
+53.0,Male,Regular,Yes,20-01-2005,,Professor,176.0,Ph.D,Bibhas Chandra Giri
+40.0,Male,Regular,Yes,02-02-2010,,Assistant Professor,132.0,Ph.D,Santosh Biswas
+45.0,Male,Regular,Yes,06-01-2009,,Professor,144.0,Ph.D,Partha Pratim Parui
+50.0,Male,Regular,Yes,13-01-2004,,Professor,204.0,Ph.D,Chandan Kumar Mondal
+61.0,Male,Regular,Yes,18-09-1991,,Professor,360.0,Ph.D,Nitin Chattopadhyay
+47.0,Male,Regular,Yes,21-10-2005,,Professor,175.0,Ph.D,Partha Pratim Ray
+38.0,Male,Regular,Yes,15-01-2016,,Associate Professor,60.0,Ph.D,Saikat Kumar Seth
+56.0,Male,Regular,Yes,29-04-1997,,Associate Professor,292.0,Ph.D,Subhankar Ray
+43.0,Male,Regular,No,30-04-2008,,Assistant Professor,160.0,Ph.D,Dipankar Mandal
+57.0,Male,Regular,Yes,17-08-1992,,Professor,348.0,Ph.D,Nibir Mondal
+52.0,Male,Regular,Yes,06-10-2005,,Professor,175.0,Ph.D,Sujay Baitalik
+60.0,Male,Regular,Yes,04-02-2004,,Professor,204.0,Ph.D,Chittaranjan Sinha
+46.0,Male,Regular,Yes,01-08-2008,,Associate Professor,155.0,Ph.D,Puspendu Sahu
+44.0,Male,Regular,Yes,08-08-2010,,Assistant Professor,130.0,Ph.D,Dhruba Banerjee
+57.0,Male,Regular,Yes,26-02-1996,,Professor,300.0,Ph.D,Kalyan Kumar Chattopadhyay
+63.0,Female,Regular,Yes,06-09-1991,,Associate Professor,351.0,Ph.D,Sulava Bhattacharyya
+59.0,Male,Regular,Yes,05-03-1993,,Professor,341.0,Ph.D,Sagnik Sinha
+51.0,Male,Regular,Yes,26-11-2002,,Professor,228.0,Ph.D,Buddhadeb Sau
+56.0,Male,Regular,Yes,01-02-2005,,Professor,177.0,Ph.D,Anup Bandyopadhyay
+50.0,Male,Regular,Yes,06-05-2008,,Associate Professor,152.0,Ph.D,Subhadipta Mukhopadhyay
+44.0,Female,Regular,Yes,16-09-2009,,Assistant Professor,144.0,Ph.D,Sadhana  Chatterjee
+51.0,Male,Regular,Yes,21-06-2014,,Assistant Professor,84.0,Ph.D,Babar Ali Shah
+63.0,Female,Regular,Yes,18-01-1993,,Professor,343.0,Ph.D,Swapna Debnath
+37.0,Male,Regular,Yes,19-01-2010,,Assistant Professor,132.0,Ph.D,Abiral Tamang
+52.0,Male,Regular,Yes,01-08-2003,,Professor,216.0,Ph.D,Debasish Biswas
+48.0,Male,Regular,Yes,01-09-1999,,Professor,264.0,Ph.D,Kajal Krishna Rajak
+56.0,Male,Regular,Yes,14-01-2005,,Professor,175.0,Ph.D,Abhijit Lahiri
+52.0,Female,Regular,Yes,30-04-2008,,Professor,156.0,Ph.D,Ruma Ray
+57.0,Male,Regular,Yes,02-09-2003,,Professor,213.0,Ph.D,Sukhen Das
+50.0,Male,Regular,Yes,01-01-2001,,Professor,247.0,Ph.D,Ajay Kumar Ghosh
+43.0,Male,Regular,Yes,06-01-2009,,Assistant Professor,144.0,Ph.D,Bhibhuti Bhusan Show
+47.0,Female,Regular,Yes,28-08-2003,,Professor,216.0,Ph.D,Jayoti Das
+58.0,Male,Regular,Yes,24-05-1995,,Professor,315.0,Ph.D,Subhas Chandra Mondal
+60.0,Male,Regular,Yes,31-03-1992,,Professor,353.0,Ph.D,Samaresh Bhattacharya
+39.0,Male,Regular,Yes,02-07-2014,,Assistant Professor,84.0,Ph.D,Sachindranath Das
+47.0,Female,Regular,Yes,06-01-2009,,Associate Professor,144.0,Ph.D,Amrita Saha
+41.0,Male,Regular,Yes,06-01-2009,,Professor,144.0,Ph.D,Shouvik Chattopadhyay
+55.0,Male,Regular,Yes,22-04-1997,,Professor,288.0,Ph.D,Argha Deb
+58.0,Male,Regular,Yes,08-10-1999,,Professor,264.0,Ph.D,Subrata Nath Koner
+59.0,Male,Regular,Yes,25-07-1998,,Professor,275.0,Ph.D,Brajadulal Chattopadhyay
+59.0,Male,Regular,Yes,01-08-1997,,Associate Professor,288.0,Ph.D,Narayan Chandra Majee
+61.0,Male,Regular,Yes,05-09-1991,,Associate Professor,360.0,Ph.D,Tapas Kumar Ballabh
+51.0,Male,Regular,Yes,15-09-2001,,Professor,238.0,Ph.D,Soumen Ghosh
+53.0,Male,Regular,Yes,20-01-2005,,Professor,179.0,Ph.D,Arindam Bhattacharyya
+47.0,Female,Regular,Yes,17-11-2009,,Associate Professor,144.0,Ph.D,Nilanjana Mahata
+60.0,Male,Regular,Yes,16-01-1993,,Professor,336.0,Ph.D,Ashis Kumar Sarkar
+59.0,Male,Regular,Yes,20-12-2002,,Professor,228.0,Ph.D,Prabir Kumar Kundu
+50.0,Male,Regular,Yes,01-10-2002,,Professor,228.0,Ph.D,Jnan Prakash Naskar
+35.0,Male,Regular,Yes,20-11-2013,,Assistant Professor,96.0,Ph.D,Debajit Dutta
+51.0,Male,Regular,Yes,27-09-1997,,Professor,287.0,Ph.D,Nabin Baran Manik
+42.0,Male,Regular,Yes,23-04-2008,,Professor,156.0,Ph.D,Gopal Chandra Shit
+48.0,Male,Regular,Yes,28-08-2002,,Professor,228.0,Ph.D,Supriya Mondal
+54.0,Male,Regular,Yes,20-03-2001,,Professor,240.0,Ph.D,Nandadulal Bairagi
+38.0,Male,Regular,Yes,18-10-2014,,Assistant Professor,84.0,Ph.D,Paltu Kumar Dhal
+51.0,Male,Regular,Yes,04-06-2006,,Professor,190.0,Ph.D,Asim Kumar Ghosh
+41.0,Female,Regular,Yes,20-05-2008,,Associate Professor,156.0,Ph.D,Manasi Mandal
+46.0,Male,Regular,Yes,22-12-2009,,Professor,144.0,Ph.D,Sukhendu Kar
+61.0,Female,Regular,Yes,09-09-2014,,Professor,84.0,Ph.D,Lakshmi Sivaramakrishnan
+55.0,Male,Regular,Yes,10-01-2005,,Professor,175.0,Ph.D,Samantak Das
+49.0,Male,Regular,Yes,29-11-2001,,Professor,234.0,Ph.D,Susanta Kumar Samanta
+53.0,Male,Regular,Yes,01-09-1999,,Professor,264.0,Ph.D,Gourhari Maiti
+45.0,Male,Regular,Yes,21-08-2008,,Associate Professor,151.0,Ph.D,Sk Saiyad Ali
+56.0,Male,Regular,Yes,05-04-2010,,Associate Professor,132.0,Ph.D,Avijit Mukherjee
+57.0,Male,Regular,Yes,29-05-1995,,Associate Professor,313.0,Ph.D,Biplab Bhattacharjee
+43.0,Male,Regular,Yes,01-04-2016,,Associate Professor,60.0,Ph.D,Soumen Mondal
+58.0,Female,Regular,Yes,02-07-1993,,Professor,337.0,Ph.D,Sudeshna Banerjea
+53.0,Male,Regular,Yes,01-08-2003,,Professor,216.0,Ph.D,Sanjoy Kumar
+44.0,Male,Regular,Yes,31-10-2005,,Professor,176.0,Ph.D,Sanat Karmakar
+59.0,Male,Regular,Yes,18-03-2005,,Associate Professor,178.0,Ph.D,Anup Kumar Ghosh
+59.0,Male,Regular,Yes,29-09-2000,,Professor,252.0,Ph.D,Mahammad Ali
+41.0,Female,Regular,Yes,27-05-2014,,Assistant Professor,84.0,Ph.D,Sunipa Mandal
+53.0,Male,Regular,Yes,19-01-2006,,Professor,180.0,Ph.D,Sourav Das
+54.0,Male,Regular,Yes,21-07-1995,,Professor,312.0,Ph.D,Sanjay Bhar
+40.0,Male,Regular,Yes,23-12-2008,,Professor,156.0,Ph.D,Tapan Kumar Mondal
+62.0,Male,Regular,Yes,20-09-1991,,Professor,359.0,Ph.D,Kalyan Kumar Das
+49.0,Male,Regular,Yes,23-12-2008,,Professor,153.0,Ph.D,Suman Das
+62.0,Male,Regular,Yes,31-03-1984,,Professor,449.0,Ph.D,Subenoy Chakraborty
+50.0,Male,Regular,Yes,28-07-1997,,Professor,289.0,Ph.D,Pratulananda Das
+54.0,Male,Regular,Yes,01-07-2008,,Professor,152.0,Ph.D,Priti Kumar Roy
+39.0,Male,Regular,Yes,02-05-2008,,Assistant Professor,156.0,Ph.D,Subrata Sarkar
+63.0,Male,Regular,Yes,23-09-1991,,Professor,359.0,Ph.D,Sugata Hazra
+56.0,Male,Regular,Yes,08-11-2005,,Professor,179.0,Ph.D,Subrata Karmakar
+58.0,Male,Regular,Yes,08-06-1995,,Professor,314.0,Ph.D,Subrata Mukhopadhyay
+57.0,Female,Regular,Yes,05-12-1991,,Associate Professor,356.0,M. Phil,Rochona Das Poddar
+50.0,Male,Regular,Yes,06-07-2004,,Assistant Professor,204.0,M.A,Anindya Sengupta
+52.0,Male,Regular,Yes,10-04-2002,,Assistant Professor,232.0,NET,Saswata Bhattacharya
+39.0,Male,Regular,Yes,22-02-2010,,Assistant Professor,132.0,Ph.D,Chinmay Mandal
+47.0,Male,Regular,Yes,14-01-2010,,Assistant Professor,155.0,Ph.D,Bhagaban Behera
+36.0,Male,Regular,Yes,29-08-2012,,Assistant Professor,108.0,Ph.D,Atanu Saha
+38.0,Male,Regular,Yes,02-08-2010,,Assistant Professor,133.0,Ph.D,Abhishek Sarkar
+58.0,Female,Regular,Yes,18-04-1991,,Professor,421.0,Ph.D,Arpita Ghose Dhar
+62.0,Male,Regular,Yes,19-04-2004,,Professor,204.0,Ph.D,Tapan Sankar Bhattacharya
+60.0,Female,Regular,Yes,21-09-1989,,Professor,384.0,Ph.D,Madhumita Chattopadhyay
+40.0,Male,Regular,Yes,21-09-2017,,Assistant Professor,48.0,Ph.D,Partha Mahata
+31.0,Male,Regular,Yes,24-08-2017,,Assistant Professor,47.0,M. Phil,Subhajit Naskar
+37.0,Male,Regular,Yes,13-08-2009,,Assistant Professor,144.0,Ph.D,Gopi Nath Mondal
+60.0,Male,Regular,Yes,03-11-1987,,Professor,405.0,Ph.D,Om Prakash Mishra
+55.0,Male,Regular,Yes,03-12-1998,,Professor,276.0,Ph.D,Rajat Acharyya
+61.0,Female,Regular,Yes,30-08-1996,,Professor,299.0,Ph.D,Suchorita Chattopadhyay
+44.0,Female,Regular,Yes,01-02-2006,,Associate Professor,180.0,Ph.D,Shiuli Ghosh Basu
+38.0,Male,Regular,Yes,10-11-2015,,Assistant Professor,127.0,Ph.D,Debajit Dutta
+46.0,Male,Regular,Yes,03-05-2007,,Associate Professor,168.0,Ph.D,Herken Neadan Toppo
+47.0,Female,Regular,Yes,05-08-2009,,Assistant Professor,143.0,Ph.D,Sutanuka Ghosh
+61.0,Male,Regular,Yes,09-01-2001,,Professor,237.0,Ph.D,Sekhar Kumar Samaddar
+56.0,Male,Regular,Yes,30-07-2010,,Professor,132.0,Ph.D,Biswadip Das
+37.0,Male,Regular,Yes,09-08-2017,,Assistant Professor,48.0,Ph.D,Arunabha Thakur
+53.0,Male,Regular,Yes,02-12-1996,,Professor,296.0,Ph.D,Udayan Bhattacharjya
+46.0,Male,Regular,Yes,11-07-2002,,Professor,229.0,Ph.D,Rup Kumar Barman
+44.0,Male,Regular,Yes,29-10-2009,,Associate Professor,144.0,Ph.D,Joydeep Ghosh
+50.0,Female,Regular,Yes,10-09-2012,,Assistant Professor,105.0,Ph.D,Nandita Banerjee Dhawan
+52.0,Male,Regular,Yes,17-08-2000,,Professor,252.0,Ph.D,Subarna Kumar Das
+59.0,Female,Regular,Yes,19-02-2004,,Professor,191.0,Ph.D,Rupa Bandyopadhyay
+62.0,Female,Regular,Yes,05-06-1991,,Professor,460.0,Ph.D,Mahua Sarkar
+47.0,Female,Regular,Yes,05-10-2004,,Professor,191.0,Ph.D,Tanmoyee Banerjee
+53.0,Male,Regular,Yes,01-11-2013,,Professor,103.0,Ph.D,Amites Mukhopadhyay
+55.0,Male,Regular,Yes,07-01-2002,,Professor,228.0,Ph.D,Sanjay Sanyal
+42.0,Male,Regular,Yes,17-08-2017,,Assistant Professor,48.0,Ph.D,Mohabul Alam Mondal
+39.0,Male,Adhoc / Contractual,Yes,11-09-2017,,Assistant Professor,96.0,Ph.D,Sridip Chatterjee
+43.0,Male,Regular,Yes,20-08-2013,,Assistant Professor,96.0,Ph.D,Atanu Ghosh
+58.0,Male,Regular,Yes,04-09-1995,,Professor,311.0,Ph.D,Anindya Jyoti Majumdar
+64.0,Male,Regular,No,21-09-1995,,Professor,366.0,Ph.D,Amlan Das Gupta
+46.0,Male,Regular,Yes,18-04-2007,,Associate Professor,164.0,Ph.D,Partha Sarathi Bhowmik
+32.0,Female,Regular,Yes,09-12-2013,,Assistant Professor,96.0,M. Phil,Nutan Marian Tigga
+52.0,Male,Regular,Yes,07-10-2005,,Assistant Professor,179.0,Ph.D,Nandan Bhattacharjee
+60.0,Male,Regular,Yes,04-03-1993,,Professor,341.0,Ph.D,Sunil Kumar Chatterjee
+51.0,Male,Regular,Yes,09-07-2008,,Professor,156.0,Ph.D,Muktipada Sinha
+46.0,Male,Regular,Yes,05-07-2007,,Professor,178.0,Ph.D,Barendu Mandal
+56.0,Male,Regular,Yes,01-08-2017,,Associate Professor,48.0,Ph.D,Ashok Kumar Mahata
+44.0,Male,Regular,Yes,03-07-2008,,Professor,155.0,Ph.D,Rajayeswar Sinha
+60.0,Male,Regular,Yes,20-03-1998,,Professor,281.0,Ph.D,Subir Sarkar
+44.0,Male,Regular,Yes,04-08-2004,,Associate Professor,192.0,Ph.D,Rafat Ali
+60.0,Female,Regular,Yes,10-07-1991,,Professor,361.0,Ph.D,Nilanjana Gupta
+47.0,Male,Regular,Yes,07-10-2005,,Assistant Professor,178.0,Ph.D,Abdul Kafi
+42.0,Male,Adhoc / Contractual,Yes,29-04-2013,,Assistant Professor,96.0,M. Phil,Hardik Brata Biswas
+49.0,Male,Regular,Yes,01-08-1997,,Professor,298.0,Ph.D,Proyash Sarkar
+47.0,Female,Regular,Yes,01-04-2005,,Professor,175.0,Ph.D,Suchetana Chattopadhyay
+56.0,Male,Regular,Yes,01-09-2005,,Professor,176.0,Ph.D,Saikat Sinha Roy
+43.0,Female,Regular,Yes,07-05-2008,,Professor,156.0,Ph.D,Kakali Ghosh
+42.0,Male,Regular,Yes,11-08-2017,,Associate Professor,48.0,Ph.D,Preetam Ghoshal
+41.0,Female,Regular,Yes,01-09-2009,,Assistant Professor,144.0,Ph.D,Gargi Goswami
+51.0,Male,Regular,Yes,01-08-1997,,Professor,286.0,Ph.D,Kanak Chandra Sarkar
+55.0,Male,Regular,Yes,20-10-1993,,Professor,335.0,Ph.D,Santanu Biswas
+58.0,Male,Regular,Yes,01-04-1998,,Associate Professor,360.0,Ph.D,Jugaratan Barman
+45.0,Male,Adhoc / Contractual,Yes,01-02-2007,,Assistant Professor,168.0,Ph.D,Subhajit Chatterjee
+50.0,Female,Regular,Yes,09-06-2005,,Professor,177.0,Ph.D,Dalia Chakraborty
+57.0,Male,Regular,Yes,01-11-2006,,Associate Professor,180.0,Ph.D,Tarun Kumar Mondal
+59.0,Male,Regular,Yes,07-08-1993,,Professor,382.0,Ph.D,Moinak Biswas
+57.0,Female,Regular,Yes,06-08-2009,,Professor,144.0,Ph.D,Sucheta Bhattacharya
+52.0,Male,Regular,Yes,24-04-2013,,Associate Professor,96.0,Ph.D,Asish Paul
+33.0,Female,Regular,Yes,20-12-2017,,Assistant Professor,48.0,Ph.D,Doyeeta Majumder
+50.0,Male,Regular,Yes,01-11-2010,,Professor,163.0,Ph.D,Siddhartha Mitra
+58.0,Female,Regular,Yes,01-10-1996,,Professor,394.0,Ph.D,Malabika Roy
+47.0,Female,Regular,Yes,12-08-2009,,Professor,147.0,Ph.D,Maitreyee Datta
+62.0,Female,Regular,Yes,04-04-2007,,Professor,163.0,Ph.D,Anuradha Roy
+46.0,Female,Regular,Yes,23-12-2002,,Associate Professor,228.0,Ph.D,Saswati Halder
+41.0,Female,Regular,Yes,04-05-2007,,Associate Professor,168.0,Ph.D,Debashree Datta Ray
+60.0,Female,Regular,Yes,02-11-1989,,Professor,381.0,Ph.D,Kavita Panjabi
+58.0,Male,Regular,Yes,15-03-2005,,Professor,176.0,Ph.D,Sudip Sundar Das
+46.0,Female,Regular,Yes,12-10-2010,,Associate Professor,132.0,Ph.D,Kakoli Sengupta
+44.0,Female,Regular,Yes,25-05-2010,,Associate Professor,131.0,Ph.D,Poulomi Roy
+43.0,Female,Adhoc / Contractual,Yes,07-06-2010,,Assistant Professor,132.0,M. Phil,Antara Mitra
+53.0,Male,Regular,Yes,01-12-2017,,Professor,48.0,Ph.D,Sanjib Mridha
+55.0,Male,Regular,Yes,29-09-2004,,Professor,204.0,Ph.D,Sushil Kumar Haldar
+51.0,Male,Regular,Yes,01-12-2005,,Professor,177.0,Ph.D,Amit Kundu
+57.0,Male,Regular,Yes,18-03-2013,,Professor,96.0,Ph.D,Ashoke Kumar Biswas
+40.0,Male,Regular,Yes,12-02-2008,,Assistant Professor,156.0,M. Phil,Samir Das
+36.0,Male,Regular,Yes,01-07-2010,,Assistant Professor,132.0,Ph.D,Ramit Samaddar
+63.0,Female,Regular,Yes,12-04-1991,,Professor,360.0,Ph.D,Joyashree Roy
+64.0,Male,Regular,Yes,20-04-1981,,Professor,482.0,Ph.D,Ajitava Raychaudhuri
+63.0,Female,Regular,Yes,10-03-1994,,Professor,329.0,Ph.D,Debarchana Sarkar
+45.0,Male,Regular,Yes,01-10-2012,,Assistant Professor,117.0,Ph.D,Samir Karmakar
+64.0,Male,Regular,Yes,06-02-1996,,Professor,300.0,Ph.D,Prodosh Bhattacharya
+58.0,Male,Regular,Yes,17-10-2001,,Professor,240.0,Ph.D,Ratan Gachhui
+41.0,Female,Regular,Yes,05-09-2017,,Assistant Professor,48.0,Ph.D,Simontini Das
+49.0,Male,Regular,Yes,05-09-2003,,Professor,213.0,Ph.D,Subhashis Biswas
+59.0,Male,Regular,Yes,08-10-2013,,Professor,109.0,Ph.D,Bishnupada Nanda
+62.0,Female,Regular,Yes,01-10-1988,,Professor,421.0,Ph.D,Sampa Chaudhuri
+36.0,Male,Regular,Yes,19-08-2013,,Assistant Professor,97.0,Ph.D,Papan Mondal
+44.0,Male,Regular,Yes,30-04-2007,,Professor,167.0,Ph.D,Imankalyan Lahiri
+53.0,Male,Regular,Yes,01-06-2007,,Assistant Professor,168.0,Ph.D,Kaushik Sen
+45.0,Male,Regular,Yes,15-03-2005,,Professor,189.0,Ph.D,Monojit Mondal
+47.0,Female,Regular,Yes,22-03-2007,,Associate Professor,163.0,Ph.D,Epsita Halder
+46.0,Male,Regular,Yes,18-04-2013,,Professor,98.0,Ph.D,Gopal Chandra Saha
+51.0,Male,Regular,Yes,01-08-1997,,Professor,286.0,Ph.D,Shibashis Chatterjee
+53.0,Male,Regular,Yes,04-06-2014,,Assistant Professor,84.0,Ph.D,Susanta Chaudhuri
+47.0,Male,Regular,Yes,28-09-2018,,Associate Professor,35.0,Ph.D,Prokash Biswas
+51.0,Female,Regular,Yes,30-04-2013,,Professor,96.0,Ph.D,Aishika Chakraborty
+54.0,Male,Regular,Yes,06-10-2009,,Professor,144.0,Ph.D,Goutam Maity
+52.0,Female,Regular,Yes,01-10-2004,,Professor,204.0,Ph.D,Rimi Barnali Chatterjee
+43.0,Female,Regular,Yes,30-10-2009,,Associate Professor,144.0,Ph.D,Bidisha Chakraborty
+45.0,Female,Adhoc / Contractual,No,01-07-2013,,Assistant Professor,96.0,Ph.D,Nandini Mukherjee
+62.0,Male,Regular,Yes,07-08-2003,,Professor,418.0,Ph.D,Gangadhar Kar
+62.0,Male,Regular,Yes,08-07-1991,,Professor,361.0,Ph.D,Ranjan Chakrabarti
+35.0,Male,Regular,Yes,15-07-2009,,Associate Professor,144.0,Ph.D,Sumit Kumar Barua
+56.0,Male,Regular,Yes,16-06-2014,,Associate Professor,84.0,Ph.D,Tarit Roychowdhury
+37.0,Female,Regular,Yes,06-09-2017,,Assistant Professor,48.0,Ph.D,Payel Basu
+61.0,Male,Regular,Yes,01-04-2002,,Professor,228.0,Ph.D,Sadhan Chakraborti
+49.0,Female,Regular,Yes,03-03-2008,,Associate Professor,156.0,Ph.D,Tilottoma Mukherjee
+61.0,Male,Regular,Yes,20-01-1984,,Professor,464.0,Ph.D,Kunal Chattopadhyay
+52.0,Female,Adhoc / Contractual,Yes,04-08-2008,,Assistant Professor,156.0,Ph.D,Maya Gupta
+54.0,Female,Regular,Yes,01-07-2011,,Professor,120.0,Ph.D,Madhuchhanda Sen
+61.0,Male,Regular,Yes,25-10-1990,,Professor,370.0,Ph.D,Soumitra Basu
+62.0,Female,Regular,Yes,12-09-1986,,Associate Professor,419.0,Ph.D,Sudeshna Banerjee
+42.0,Male,Regular,Yes,03-11-2009,,Assistant Professor,144.0,Ph.D,Vikas Dixit
+50.0,Male,Adhoc / Contractual,Yes,16-01-2007,,Assistant Professor,168.0,Ph.D,Manas Kumar Ghosh
+40.0,Male,Regular,Yes,30-09-2008,,Associate Professor,156.0,Ph.D,Anupam Ghosh
+40.0,Male,Regular,Yes,11-08-2017,,Assistant Professor,93.0,Ph.D,Amit Saha
+39.0,Male,Adhoc / Contractual,Yes,22-09-2017,,Assistant Professor,48.0,M. Phil,Puneet Bhattacharya
+41.0,Male,Regular,Yes,17-11-2015,,Associate Professor,70.0,Ph.D,Kaustav Bakshi
+57.0,Female,Regular,Yes,08-10-1993,,Professor,334.0,Ph.D,Chandreyee Niyogi
+46.0,Female,Regular,Yes,08-08-2014,,Assistant Professor,84.0,Ph.D,Amrita Basu
+53.0,Female,Regular,Yes,24-04-2007,,Professor,164.0,Ph.D,Atashee Chatterjee
+45.0,Female,Regular,Yes,08-12-2005,,Professor,176.0,Ph.D,Maroona Murmu
+36.0,Female,Regular,Yes,31-01-2014,,Assistant Professor,84.0,Ph.D,Shradhanjali Tamang
+50.0,Male,Regular,Yes,08-11-2002,,Professor,228.0,Ph.D,Vivekananda Mukherjee
+58.0,Female,Regular,No,01-04-2006,,Professor,188.0,Ph.D,Samita Sen
+59.0,Female,Regular,Yes,01-03-2005,,Professor,177.0,Ph.D,Jhuma Chakraborty
+48.0,Male,Regular,Yes,27-08-1997,,Professor,286.0,Ph.D,Abhijit Roy
+43.0,Male,Regular,Yes,13-12-2005,,Professor,177.0,Ph.D,Debajyoti Ghoshal
+46.0,Male,Regular,Yes,01-08-2017,,Assistant Professor,73.0,M. Phil,Arup Bhattacharyya
+55.0,Male,Regular,Yes,08-03-1996,,Assistant Professor,305.0,M.A,Aveek Majumder
+47.0,Male,Regular,Yes,27-12-2002,,Associate Professor,282.0,Ph.D,Sayantan Dasgupta
+55.0,Female,Regular,Yes,02-09-2009,,Professor,144.0,Ph.D,Aparajita Mukhopadhyay
+38.0,Male,Regular,Yes,24-09-2013,,Assistant Professor,95.0,Ph.D,Lalit Lalitav Mohakud
+52.0,Female,Regular,Yes,03-11-1997,,Professor,288.0,Ph.D,Paromita Chakravarti
+60.0,Female,Regular,Yes,07-12-1993,,Professor,333.0,Ph.D,Ipshita Chanda
+59.0,Female,Regular,Yes,07-10-2005,,Associate Professor,179.0,M. Phil,Sutapa Sengupta
+46.0,Female,Regular,Yes,16-02-2005,,Professor,178.0,Ph.D,Maushumi Guha
+48.0,Female,Regular,Yes,19-12-2008,,Associate Professor,156.0,Ph.D,Chandrani Banerjee
+49.0,Male,Regular,Yes,30-10-2009,,Professor,144.0,Ph.D,Swapnendu Bandyopadhyay
+50.0,Female,Regular,Yes,20-09-2013,,Professor,96.0,Ph.D,Piyali Sur
+38.0,Female,Regular,Yes,05-09-2017,,Assistant Professor,46.0,Ph.D,Rilina Basu Banerjee
+48.0,Female,Regular,Yes,08-11-2005,,Assistant Professor,178.0,NET,Soma Mondal
+45.0,Male,Regular,Yes,01-06-2007,,Associate Professor,168.0,Ph.D,Sanmitra Ghosh
+60.0,Female,Regular,No,28-09-1989,,Professor,383.0,Ph.D,Piyali Praharaj
+50.0,Male,Regular,Yes,14-05-2007,,Assistant Professor,168.0,Ph.D,Bijaya Kumar Das
+50.0,Male,Regular,Yes,24-11-2009,,Professor,144.0,Ph.D,Kaushik Roy
+45.0,Female,Regular,Yes,23-12-2002,,Associate Professor,228.0,Ph.D,Nilanjana Deb
+61.0,Male,Regular,Yes,28-02-2006,,Professor,179.0,Ph.D,Ambar Nath Ghosh
+39.0,Male,Regular,Yes,26-06-2009,,Assistant Professor,146.0,Ph.D,Debdas Mandal
+59.0,Female,Regular,Yes,10-03-1999,,Professor,269.0,Ph.D,Lopamudra Choudhury
+43.0,Male,Regular,Yes,14-07-2008,,Assistant Professor,157.0,M.A,Debashis Mirdha
+62.0,Male,Regular,Yes,06-06-2002,,Professor,228.0,Ph.D,Parimal Karmakar
+30.0,Male,Regular,Yes,04-09-2017,,Assistant Professor,46.0,M. Phil,Arijeet Mandal
+52.0,Female,Regular,Yes,01-02-2007,,Associate Professor,168.0,Ph.D,Madhuja Mukherjee
+47.0,Female,Regular,Yes,07-09-2004,,Professor,204.0,Ph.D,Sonia Sahoo
+40.0,Female,Adhoc / Contractual,No,29-04-2013,,Assistant Professor,96.0,M.A,Panchali Ray
+47.0,Male,Regular,Yes,27-04-2007,,Associate Professor,170.0,M. Phil,Arun Mahata
+64.0,Female,Regular,Yes,01-01-1992,,Professor,355.0,Ph.D,Sumita Sen
+61.0,Female,Regular,Yes,10-06-1991,,Professor,362.0,Ph.D,Nupur Dasgupta
+51.0,Female,Regular,Yes,01-07-2009,,Professor,154.0,Ph.D,Nandini Saha
+44.0,Female,Adhoc / Contractual,Yes,05-08-2008,,Assistant Professor,156.0,M. Phil,Soma Dutta
+49.0,Female,Regular,Yes,24-03-2005,,Assistant Professor,179.0,M.A,Rubai Saha
+46.0,Female,Regular,Yes,13-06-2011,,Assistant Professor,120.0,Ph.D,Samarpita Mitra
+40.0,Male,Regular,Yes,02-07-2014,,Associate Professor,84.0,Ph.D,Soumik Mukhopadhyay
+30.0,Male,Regular,Yes,01-11-2017,,Assistant Professor,48.0,M. Phil,Ishan Chakraborty
+46.0,Female,Regular,Yes,16-02-2005,,Professor,175.0,Ph.D,Sashi Nungla
+43.0,Female,Regular,Yes,07-01-2014,,Assistant Professor,84.0,Ph.D,Utsa Ray
+44.0,Male,Regular,Yes,27-12-2002,,Associate Professor,267.0,Ph.D,Sujit Kumar Mandal
+51.0,Female,Regular,Yes,10-12-2004,,Professor,204.0,Ph.D,Ananya Baruya
+53.0,Male,Regular,Yes,08-03-2000,,Associate Professor,252.0,Ph.D,Joydeep Mukherjee
+47.0,Male,Regular,Yes,20-08-2009,,Professor,159.0,Ph.D,Samar Kumar Mondal
+59.0,Male,Regular,Yes,17-10-2001,,Professor,271.0,Ph.D,Partha Pratim Basu
+53.0,Male,Regular,Yes,01-02-1999,,Professor,269.0,Ph.D,Abhijit Gupta
+36.0,Female,Adhoc / Contractual,No,31-05-2013,,Assistant Professor,96.0,M.A,Rimple Mehta
+59.0,Male,Regular,Yes,04-09-2009,,Professor,144.0,Ph.D,Dipayan Pattanayak
+40.0,Male,Regular,Yes,10-08-2017,,Assistant Professor,48.0,Ph.D,Samit Guha
+40.0,Male,Regular,Yes,04-01-2019,,Assistant Professor,24.0,Ph.D,Tamoghna Sarkar
+63.0,Male,Regular,Yes,24-07-1992,,Professor,392.0,Ph.D,Subir Mukhopadhyay
+31.0,Female,Regular,Yes,08-02-2019,,Assistant Professor,37.0,M.A,Urbi Das
+43.0,Female,Regular,Yes,20-02-2019,,Assistant Professor,24.0,Ph.D,Sukanya Ray
+32.0,Male,Regular,Yes,22-01-2019,,Assistant Professor,24.0,M. Phil,Sk Abdul Matin
+43.0,Male,Regular,Yes,22-01-2019,,Associate Professor,24.0,Ph.D,Kamaran M K Mondal
+39.0,Male,Regular,Yes,01-07-2019,,Assistant Professor,26.0,Ph.D,ASAMANJOY BHUNIA
+41.0,Male,Regular,Yes,25-06-2019,,Assistant Professor,24.0,Ph.D,MANAS KUMAR PANDA
+27.0,Male,Regular,Yes,02-08-2019,,Assistant Professor,33.0,NET,SATYADEEP WAIBA
+37.0,Male,Regular,Yes,11-07-2019,,Assistant Professor,28.0,Ph.D,ARIJIT MAJUMDER
+37.0,Female,Regular,Yes,01-03-2019,,Assistant Professor,24.0,Ph.D,RAHI SOREN
+36.0,Female,Regular,Yes,13-02-2019,,Assistant Professor,24.0,Ph.D,ABHRA CHANDA
+37.0,Male,Regular,Yes,13-02-2020,,Assistant Professor,16.0,Ph.D,Tamal Krishna Kayal
+32.0,Male,Regular,Yes,20-12-2019,,Assistant Professor,24.0,Ph.D,Bikash Sardar
+48.0,Male,Regular,Yes,24-06-2020,,Professor,12.0,Ph.D,Indranil Dutta
+31.0,Female,Regular,Yes,07-01-2020,,Assistant Professor,12.0,Ph.D,Nabanita Das
+36.0,Male,Regular,Yes,13-09-2021,,Assistant Professor,56.0,Ph.D,Raj Kumar Das
+31.0,Male,Regular,Yes,22-06-2021,,Assistant Professor,59.0,Ph.D,Arjun Paul
+33.0,Male,Regular,Yes,22-06-2021,,Assistant Professor,69.0,Ph.D,Riddhick Birbonshi
+33.0,Male,Regular,Yes,29-06-2021,,Assistant Professor,71.0,Ph.D,Molla Basir Ahamed
+45.0,Female,Adhoc / Contractual,Yes,25-06-2019,,Assistant Professor,79.0,Ph.D,Kaberi Samanta
+34.0,Female,Adhoc / Contractual,Yes,01-07-2019,,Assistant Professor,81.0,Ph.D,Ismail Mondal
+36.0,Female,Regular,Yes,08-10-2021,,Assistant Professor,36.0,Ph.D,Broti Gayen
+37.0,Female,Regular,Yes,01-03-2021,,Assistant Professor,73.0,Ph.D,Dipty Subba
+48.0,Female,Regular,Yes,11-02-2021,,Professor,86.0,Ph.D,Ishani Naskar
+30.0,Male,Regular,Yes,19-02-2021,,Assistant Professor,57.0,Ph.D,Manikanta Paria
+42.0,Male,Regular,Yes,01-10-2021,,Associate Professor,55.0,Ph.D,Selim Box Mondal
+35.0,Female,Regular,Yes,01-02-2021,,Assistant Professor,56.0,Ph.D,Sreya Maitra
+32.0,Male,Regular,Yes,22-02-2021,,Assistant Professor,49.0,Ph.D,Tausif Biswas
+29.0,Female,Regular,Yes,29-09-2021,,Assistant Professor,51.0,M. Phil,Mughda Majumder
+38.0,Female,Regular,Yes,19-02-2021,,Assistant Professor,50.0,M. Phil,Suparna Mondal
+42.0,Male,Regular,Yes,19-02-2021,,Assistant Professor,88.0,Ph.D,Samir Chattopadhyay
+66.0,Female,Visiting,Yes,06-08-2014,,Professor,89.0,Ph.D,Saswati Mookherjee
+65.0,Male,Visiting,Yes,01-10-2014,,Professor,84.0,Ph.D,Subha Roy Choudhury
+33.0,Male,Visiting,Yes,02-02-2019,,Assistant Professor,43.0,Ph.D,Kapil Ghosh
+45.0,Female,Visiting,Yes,01-05-2017,,Associate Professor,87.0,Ph.D,Sayanti Poddar
+32.0,Male,Visiting,Yes,01-09-2019,,Assistant Professor,57.0,Ph.D,Joydeep Saha
+66.0,Female,Visiting,Yes,01-02-2014,,Professor,84.0,Ph.D,Manisha Deb Sarkar
+48.0,Female,Visiting,Yes,12-01-2018,,Assistant Professor,90.0,Ph.D,Bhaswati Ray
+34.0,Male,Visiting,Yes,01-05-2019,,Assistant Professor,43.0,Ph.D,Anindya Basu
+33.0,Male,Visiting,Yes,01-07-2019,,Assistant Professor,49.0,Ph.D,Aznarul Islam
+35.0,Female,Visiting,Yes,31-12-2020,,Assistant Professor,41.0,Ph.D,Susmita Bhowmik
+37.0,Male,Visiting,Yes,30-07-2016,,Assistant Professor,53.0,Ph.D,Arnab Kundu
+32.0,Male,Visiting,Yes,19-07-2020,,Assistant Professor,55.0,Ph.D,Satiprasad Sahoo
+36.0,Female,Visiting,Yes,21-01-2019,,Assistant Professor,56.0,Ph.D,Debasree Sinha
+52.0,Female,Visiting,Yes,01-08-2014,,Professor,93.0,Ph.D,Aparajita Sen
+45.0,Male,Visiting,Yes,21-09-2019,,Assistant Professor,67.0,Ph.D,Soumya Pandit
+46.0,Male,Visiting,Yes,01-05-2018,,Assistant Professor,63.0,Ph.D,Subhankar Bhattacharjee
+41.0,Male,Visiting,Yes,03-08-2020,,Assistant Professor,70.0,Ph.D,Ashutosh Mukherjee
+46.0,Male,Visiting,Yes,01-12-2020,,Assistant Professor,72.0,Ph.D,Kaushik Sengupta
+52.0,Male,Visiting,Yes,30-07-2018,,Assistant Professor,91.0,Ph.D,Bedadyuti Chakraborty
+35.0,Male,Visiting,Yes,12-06-2018,,Assistant Professor,63.0,Ph.D,Shantanu Roy
+52.0,Female,Visiting,Yes,12-07-2017,,Assistant Professor,84.0,Ph.D,Satarupa Law Das
+34.0,Male,Regular,Yes,26-07-2010,,Assistant Professor,132.0,Ph.D,Ayan Kumar Tudu
+38.0,Male,Regular,Yes,03-07-2008,,Assistant Professor,156.0,Ph.D,Bhimsen Tudu
+44.0,Male,Regular,Yes,22-06-2005,,Associate Professor,176.0,Ph.D,Biplab Ranjan Sarkar
+56.0,Male,Regular,Yes,09-05-1996,,Professor,300.0,Ph.D,Buddhadev Oraon
+38.0,Male,Regular,Yes,14-03-2014,,Assistant Professor,84.0,Ph.D,Dipten Maity
+64.0,Male,Regular,Yes,19-10-1982,,Associate Professor,468.0,Ph.D,Goutam Nandi
+44.0,Male,Adhoc / Contractual,Yes,09-12-2009,,Associate Professor,144.0,M.Tech,Joydeep Mukherjee
+39.0,Male,Regular,Yes,02-04-2007,,Associate Professor,168.0,Ph.D,Kalyan Kumar Mondal
+56.0,Male,Regular,Yes,13-08-1990,,Associate Professor,372.0,Ph.D,Kalyan Majumdar
+55.0,Male,Regular,Yes,01-07-1995,,Associate Professor,312.0,Ph.D,Madhab Roy
+53.0,Female,Regular,Yes,07-03-2001,,Professor,240.0,Ph.D,Madhumita Roy
+43.0,Female,Regular,Yes,10-03-2005,,Professor,177.0,Ph.D,Monisha Chakraborty
+34.0,Male,Regular,Yes,23-02-2016,,Assistant Professor,60.0,M.E.,Narayan Roy
+40.0,Male,Regular,Yes,14-07-2006,,Professor,177.0,Ph.D,Nibaran Das
+43.0,Male,Regular,Yes,10-01-2007,,Professor,174.0,Ph.D,Nipu Modak
+30.0,Male,Regular,Yes,04-02-2016,,Assistant Professor,83.0,Ph.D,Nirmoy Modak
+61.0,Male,Regular,Yes,14-07-2001,,Professor,289.0,Ph.D,Palash Kumar Kundu
+45.0,Female,Regular,Yes,29-07-2005,,Professor,176.0,Ph.D,Runu Banerjee
+58.0,Female,Regular,Yes,30-07-1991,,Professor,407.0,Ph.D,Runu Chakraborty
+41.0,Male,Regular,Yes,21-01-2016,,Assistant Professor,60.0,Ph.D,Santosh Kumar Das
+59.0,Male,Regular,Yes,01-03-1991,,Professor,421.0,Ph.D,Shibnath Chakrabarty
+34.0,Male,Regular,Yes,10-04-2014,,Assistant Professor,84.0,Ph.D,Siddhartha Patra
+48.0,Female,Regular,Yes,07-03-2014,,Professor,84.0,Ph.D,Sudipta Debnath
+43.0,Male,Regular,Yes,24-02-2005,,Associate Professor,179.0,Ph.D,Sumit Biswas
+38.0,Male,Regular,Yes,11-08-2017,,Assistant Professor,48.0,Ph.D,Tanmoy Bandyopadhyay
+39.0,Male,Regular,Yes,09-04-2008,,Professor,157.0,Ph.D,Tapan Kumar Barman
+41.0,Male,Regular,Yes,06-01-2012,,Assistant Professor,132.0,M.Tech,Abhijan Bhattacharyya
+52.0,Male,Regular,Yes,29-09-2000,,Professor,252.0,Ph.D,Abhijit Chanda
+35.0,Male,Regular,Yes,06-08-2014,,Assistant Professor,84.0,Ph.D,Abhijit Chandra
+63.0,Male,Regular,Yes,16-04-1984,,Professor,444.0,Ph.D,Abhijit Mukherjee
+60.0,Male,Regular,Yes,01-07-1987,,Associate Professor,408.0,Ph.D,Abhijit Mukhopadhyay
+31.0,Male,Regular,Yes,10-05-2021,,Assistant Professor,39.0,M.Tech,Abhisek Roy
+34.0,Male,Regular,Yes,25-01-2022,,Assistant Professor,101.0,Ph.D,Abhishek Das
+32.0,Male,Regular,Yes,30-01-2019,,Assistant Professor,24.0,M.Tech,Abhishek Mandal
+53.0,Male,Regular,Yes,02-12-1991,,Professor,360.0,Ph.D,Achintya Mukhopadhyay
+36.0,Female,Adhoc / Contractual,Yes,05-01-2015,,Assistant Professor,74.0,Ph.D,Aditi Chatterjee
+59.0,Male,Regular,Yes,14-10-1989,,Professor,438.0,Ph.D,Ajoy Kumar Dutta
+53.0,Male,Regular,Yes,11-06-1999,,Professor,264.0,Ph.D,Akshay Kumar Pramanick
+37.0,Female,Adhoc / Contractual,Yes,01-04-2019,,Assistant Professor,24.0,Ph.D,Alokananda Banerjee Mukherjee
+60.0,Male,Regular,Yes,02-05-2007,,Professor,168.0,Ph.D,Amalesh Samanta
+58.0,Male,Regular,Yes,25-11-2009,,Professor,144.0,Ph.D,Amit Dutta
+59.0,Male,Regular,Yes,31-12-1987,,Associate Professor,408.0,Ph.D,Amit Karmakar
+58.0,Male,Regular,Yes,19-08-1985,,Professor,432.0,Ph.D,Amit Konar
+35.0,Male,Regular,Yes,28-01-2016,,Associate Professor,68.0,Ph.D,Amit Shiuly
+59.0,Male,Regular,Yes,02-03-2020,,Associate Professor,12.0,Ph.D,Amitabha Das
+52.0,Male,Regular,Yes,26-03-1997,,Professor,288.0,Ph.D,Amitava Chatterjee
+55.0,Male,Regular,Yes,16-08-1990,,Professor,372.0,Ph.D,Amitava Datta
+53.0,Male,Regular,Yes,31-07-1997,,Professor,288.0,Ph.D,Amitava Gupta
+38.0,Female,Regular,Yes,01-02-2014,,Associate Professor,84.0,Ph.D,Amrita Kundu
+45.0,Female,Adhoc / Contractual,Yes,08-07-2015,,Assistant Professor,72.0,Ph.D,Anamika Basu
+46.0,Male,Regular,Yes,29-12-2008,,Professor,156.0,Ph.D,Ananda Shankar Chowdhury
+38.0,Female,Adhoc / Contractual,Yes,06-01-2016,,Assistant Professor,68.0,Ph.D,Ananya Barui
+28.0,Female,Adhoc / Contractual,Yes,08-03-2018,,Assistant Professor,36.0,M.Tech,Ananya Dasgupta
+42.0,Female,Regular,Yes,17-02-2016,,Assistant Professor,60.0,Ph.D,Anasua Sarkar
+55.0,Female,Adhoc / Contractual,Yes,11-01-2017,,Professor,84.0,Ph.D,Angshumitra Ghosh
+33.0,Male,Regular,Yes,04-03-2020,,Assistant Professor,12.0,M.E.,Anil Tudu
+40.0,Female,Adhoc / Contractual,Yes,27-11-2018,,Assistant Professor,58.0,M.E.,Anindita Munshi
+41.0,Male,Regular,Yes,16-05-2014,,Assistant Professor,84.0,Ph.D,Anindya Sundar Das
+38.0,Male,Regular,Yes,05-05-2014,,Assistant Professor,84.0,Ph.D,Anirban Mitra
+32.0,Male,Regular,Yes,28-05-2021,,Assistant Professor,24.0,M.Tech,Ankush Majumdar
+49.0,Male,Regular,Yes,20-04-1999,,Associate Professor,264.0,Ph.D,Anupam Deb Sarkar
+59.0,Male,Regular,Yes,10-07-1989,,Professor,384.0,Ph.D,Anupam Sinha
+52.0,Male,Regular,Yes,08-10-2002,,Professor,230.0,Ph.D,Apurba Kumar Santra
+54.0,Male,Regular,Yes,07-01-1999,,Professor,264.0,Ph.D,Arabinda Das
+32.0,Male,Regular,Yes,12-06-2020,,Assistant Professor,12.0,Ph.D,Aranyak Chakravarty
+62.0,Male,Regular,Yes,03-04-1986,,Professor,420.0,Ph.D,Ardhendu Ghosal
+36.0,Male,Regular,Yes,29-09-2021,,Assistant Professor,81.0,Ph.D,Arghadeep Biswas
+32.0,Male,Adhoc / Contractual,Yes,01-07-2017,,Assistant Professor,48.0,Ph.D,Arghya Ghosh
+52.0,Male,Regular,Yes,15-07-1993,,Professor,336.0,Ph.D,Arghya Nandi
+39.0,Male,Adhoc / Contractual,Yes,02-05-2016,,Assistant Professor,104.0,M.Tech,Arijit Sil
+47.0,Male,Regular,Yes,28-08-2009,,Associate Professor,138.0,Ph.D,Arindam Kumar Sil
+30.0,Male,Adhoc / Contractual,Yes,01-07-2018,,Assistant Professor,24.0,Ph.D,Arindam Sikdar
+30.0,Male,Adhoc / Contractual,Yes,28-02-2018,,Assistant Professor,36.0,Ph.D,Arnab Ghosh
+36.0,Male,Regular,Yes,03-05-2018,,Assistant Professor,36.0,Ph.D,Arpan Kumar Pradhan
+40.0,Female,Regular,Yes,29-08-2012,,Assistant Professor,108.0,M.E.,Arpita Sarkar
+42.0,Male,Regular,Yes,24-06-2008,,Assistant Professor,156.0,Ph.D,Arpitam Chatterjee
+58.0,Male,Regular,Yes,17-11-1990,,Professor,372.0,Ph.D,Arun Kiran Pal
+49.0,Male,Regular,Yes,22-03-1999,,Professor,264.0,Ph.D,Arunansu Sekhar Kuar
+42.0,Male,Adhoc / Contractual,Yes,07-03-2005,,Assistant Professor,179.0,M.E.,Arunasish Acharya
+55.0,Male,Regular,Yes,02-09-1991,,Professor,360.0,Ph.D,Arunava Chanda
+59.0,Male,Regular,Yes,08-08-1990,,Professor,372.0,Ph.D,Arup Guha Niyogi
+65.0,Male,Regular,Yes,01-05-2006,,Assistant Professor,132.0,M.Tech,Ashoke Kumar Bandyopadhyay
+63.0,Male,Adhoc / Contractual,Yes,01-05-2007,,Assistant Professor,168.0,Ph.D,Ashoke Majumdar
+60.0,Male,Regular,Yes,04-10-1989,,Professor,384.0,Ph.D,Asis Majumder
+63.0,Male,Regular,Yes,16-11-1987,,Professor,408.0,Ph.D,Asish Bandyopadhyay
+63.0,Male,Regular,Yes,19-08-1985,,Professor,432.0,Ph.D,Atal Chaudhuri
+50.0,Male,Adhoc / Contractual,Yes,12-05-2009,,Assistant Professor,144.0,Ph.D,Atanu Mitra
+30.0,Female,Adhoc / Contractual,Yes,02-05-2017,,Assistant Professor,48.0,Ph.D,Atriya Chowdhury
+53.0,Male,Regular,Yes,12-06-1991,,Professor,360.0,Ph.D,Avijit  Bhowal
+39.0,Male,Adhoc / Contractual,Yes,08-03-2018,,Assistant Professor,36.0,Ph.D,Avijit Paul
+35.0,Male,Adhoc / Contractual,Yes,05-03-2016,,Assistant Professor,60.0,Ph.D,Avik Hazra
+53.0,Male,Regular,Yes,20-01-2003,,Professor,216.0,Ph.D,Balaram Kundu
+54.0,Female,Adhoc / Contractual,Yes,07-08-2011,,Assistant Professor,111.0,M.Tech,Banashree Sarkar
+62.0,Female,Adhoc / Contractual,Yes,06-09-2017,,Professor,89.0,Ph.D,Barnali Kar
+61.0,Male,Regular,Yes,19-08-1985,,Professor,432.0,Ph.D,Bhaskar Gupta
+43.0,Male,Regular,Yes,06-12-2006,,Professor,173.0,Ph.D,Bhaskar Sardar
+64.0,Female,Regular,No,08-11-1995,,Professor,307.0,Ph.D,Bhaswati Goswami
+45.0,Male,Regular,Yes,14-11-2005,,Professor,178.0,Ph.D,Bibhas Chandra Dhara
+60.0,Male,Regular,Yes,19-07-1985,,Professor,432.0,Ph.D,Bijan Sarkar
+62.0,Male,Regular,Yes,05-03-1991,,Professor,360.0,Ph.D,Bijoy Bhattacharyya
+66.0,Male,Adhoc / Contractual,Yes,17-05-2010,,Assistant Professor,99.0,M.Tech,Biman Kanti Nandy
+44.0,Male,Regular,Yes,05-12-2001,,Professor,240.0,Ph.D,Bipan Tudu
+63.0,Male,Regular,Yes,05-12-1995,,Professor,312.0,Ph.D,Bireswar Majumdar
+50.0,Male,Regular,Yes,19-12-2000,,Associate Professor,252.0,Ph.D,Biswajit Bhattacharyya
+55.0,Male,Regular,Yes,12-03-2002,,Professor,230.0,Ph.D,Biswajit Mukherjee
+45.0,Male,Adhoc / Contractual,Yes,01-07-2016,,Assistant Professor,60.0,Ph.D,Biswajit Thakur
+52.0,Male,Regular,Yes,06-09-1993,,Professor,336.0,Ph.D,Biswanath Doloi
+52.0,Male,Regular,Yes,17-11-2000,,Professor,252.0,Ph.D,Biswanath Roy
+48.0,Male,Regular,Yes,11-07-2008,,Professor,144.0,Ph.D,Biswendu Chatterjee
+57.0,Male,Regular,Yes,02-04-1990,,Professor,372.0,Ph.D,Bivas Dam
+50.0,Male,Regular,Yes,11-09-1998,,Associate Professor,276.0,Ph.D,Chanchal Mondal
+64.0,Male,Adhoc / Contractual,Yes,01-01-2014,,Assistant Professor,179.0,Ph.D,Chandan Guha
+40.0,Male,Regular,Yes,20-09-2017,,Assistant Professor,48.0,Ph.D,Chandan Kumar Ghosh
+61.0,Male,Regular,Yes,19-08-1985,,Professor,432.0,Ph.D,Chandan Majumdar
+34.0,Male,Adhoc / Contractual,Yes,09-03-2020,,Assistant Professor,60.0,M.E.,Chandan Nandi
+41.0,Female,Regular,Yes,20-09-2006,,Associate Professor,177.0,Ph.D,Chandreyee Chowdhury
+36.0,Female,Regular,Yes,20-11-2013,,Assistant Professor,96.0,Ph.D,Chandrima Mondal
+63.0,Female,Regular,Yes,31-05-1999,,Professor,264.0,Ph.D,Chayanika Bose Majumder
+43.0,Male,Regular,Yes,18-03-2014,,Assistant Professor,84.0,Ph.D,Chintan Kumar Mandal
+54.0,Male,Regular,Yes,24-06-1991,,Professor,360.0,Ph.D,Chiranjib Bhattacharya
+62.0,Female,Regular,Yes,24-08-2001,,Associate Professor,240.0,Ph.D,Chitrita Chaudhuri
+42.0,Female,Adhoc / Contractual,Yes,09-06-2019,,Assistant Professor,52.0,M.E.,Debabani Chowdhury
+45.0,Male,Regular,Yes,23-12-2015,,Associate Professor,70.0,Ph.D,Debabrata Bera
+42.0,Male,Regular,Yes,10-09-2009,,Professor,144.0,Ph.D,Debabrata Das
+54.0,Male,Regular,Yes,02-12-2002,,Professor,228.0,Ph.D,Debabrata Nag
+41.0,Male,Regular,Yes,18-08-2009,,Associate Professor,147.0,Ph.D,Debanghsu Dey
+52.0,Male,Regular,Yes,24-04-2002,,Professor,228.0,Ph.D,Debashis Chatterjee
+46.0,Male,Regular,Yes,18-07-2008,,Assistant Professor,156.0,Ph.D,Debashis Palit
+54.0,Male,Regular,Yes,16-09-1998,,Professor,276.0,Ph.D,Debashis Roy
+42.0,Male,Regular,Yes,25-07-2005,,Associate Professor,178.0,Ph.D,Debashish Das
+56.0,Male,Regular,Yes,27-12-1997,,Professor,288.0,Ph.D,Debasish Bandyopadhyay
+55.0,Male,Regular,Yes,23-09-1989,,Professor,384.0,Ph.D,Debasish Roy
+31.0,Male,Adhoc / Contractual,Yes,01-03-2018,,Assistant Professor,36.0,Ph.D,Debayan Bose
+62.0,Male,Adhoc / Contractual,Yes,25-02-2016,,Assistant Professor,60.0,Ph.D,Debesh Kumar Das
+51.0,Male,Regular,Yes,12-03-1999,,Professor,264.0,Ph.D,Debmalya Banerjee
+50.0,Male,Regular,Yes,01-03-2007,,Professor,168.0,Ph.D,Debotosh Bhattacharjee
+34.0,Female,Regular,Yes,14-11-2017,,Assistant Professor,48.0,M.A,Dechen Donka Bhutia
+32.0,Male,Adhoc / Contractual,Yes,01-01-2020,,Assistant Professor,24.0,Ph.D,Deepanjan Majumdar
+27.0,Female,Adhoc / Contractual,Yes,01-01-2020,,Assistant Professor,24.0,M.E.,Dhriti Chakraborty
+60.0,Male,Adhoc / Contractual,Yes,14-11-2014,,Assistant Professor,176.0,Ph.D,Dibyendu Nath
+48.0,Male,Regular,Yes,17-08-2001,,Professor,240.0,Ph.D,Diganta Saha
+68.0,Male,Adhoc / Contractual,Yes,21-01-2015,,Assistant Professor,72.0,Ph.D,Dinabandhu Ghosh
+61.0,Male,Regular,Yes,10-07-1987,,Professor,408.0,Ph.D,Dipak  Laha
+52.0,Male,Regular,Yes,16-01-1995,,Professor,312.0,Ph.D,Dipankar Chakraborty
+38.0,Male,Regular,Yes,01-04-2014,,Assistant Professor,84.0,Ph.D,Dipankar Das

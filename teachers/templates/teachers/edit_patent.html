@@ -21,6 +21,10 @@
                         {% csrf_token %}
                         <div class="row">
                             <div class="col-md-6">
+								<div class="mb-3">
+                                     <label for="id_inv_name" class="form-label">Inventor's Name </label>
+                                     {{ form.inv_name|add_class:"form-control" }}
+                                </div>
                                 <div class="mb-3">
                                     <label for="id_dept_name" class="form-label">Department Name</label>
                                     {{ form.dept_name|add_class:"form-control" }}

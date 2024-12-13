@@ -81,7 +81,7 @@ class QualificationAdmin(admin.ModelAdmin):
 @admin.register(Patents)
 class PatentsAdmin(admin.ModelAdmin):
 	list_display = (
-     'status','title','ref_no','dt_award','awarding_agency'
+     'inv_name','status','title','ref_no','dt_award','awarding_agency'
      )
 
 @admin.register(ResearchPub)

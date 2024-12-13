@@ -29,26 +29,35 @@
 
     /* Modal Styles */
     .modal {
-        display: none;
-        position: fixed;
-        z-index: 1000;
-        left: 0;
-        top: 0;
-        width: 100%;
-        height: 100%;
-        overflow: auto;
-        background-color: rgba(0, 0, 0, 0.5);
-    }
+    display: none; /* Hidden by default */
+    position: fixed; /* Fixed to viewport */
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto; /* Enable scrolling if needed */
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+	}
 
-    .modal-content {
-        background-color: #f9f9f9;
-        margin: 10% auto;
-        padding: 20px;
-        border-radius: 8px;
-        width: 60%;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-        animation: fadeIn 0.3s ease-in-out;
-    }
+	.modal-content {
+		position: absolute; /* Positioned relative to the modal */
+		top: 50%; /* Center vertically */
+		left: 50%; /* Center horizontally */
+		transform: translate(-50%, -50%); /* Adjust for content's own dimensions */
+		background-color: #f9f9f9;
+		padding: 20px;
+		border-radius: 8px;
+		width: 60%; /* Adjust width as needed */
+		box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+		animation: fadeIn 0.3s ease-in-out;
+	}
+	#editPersonalDetailsModal .modal-content {
+		/* Add your custom styles here */
+		
+		width: 40%;
+		
+	}
 
     .modal-header {
         margin-bottom: 20px;
@@ -223,6 +232,9 @@
         padding: 10px 15px;
         text-decoration: none;
         border-radius: 3px;
+		font-weight: bold; 
+		font-size: large;
+		width:18%;
     }
 
     </style>
@@ -320,12 +332,12 @@
     <!-- Other modals and their functionality remain the same -->
 	<!-- Qualifications Modal -->
 	<div id="qualificationModal" class="modal" data-backdrop="static">
-		<div class="modal-content" style="max-width: 100%; margin: auto;"> <!-- Adjust width to 90% -->
+		<div class="modal-content">
 			<span class="close" id="closeQualificationModal">&times;</span>
 			<h2 class="modal-header">Qualifications</h2>
-			<a href="{% url 'teachers:add_qualification' %}" class="btn-add">Add Qualification</a>
+			<a href="{% url 'teachers:add_qualification' %}" class="btn-add">Add Qualification + </a>
 
-			<table  class="qualification-table" style="width: 100%; border-collapse: collapse;">
+			<table class="qualification-table" style="width: 100%; border-collapse: collapse;">
 				<thead>
 					<tr>
 						<th style="width: 12%;">Degree</th>
@@ -352,11 +364,9 @@
 									No Document
 								{% endif %}
 							</td>
-							<td>								
+							<td>                                
 								<a href="{% url 'teachers:edit_qualification' signed_id=qualification.id|sign_id %}">Edit</a>
-								
-								<a href="{% url 'teachers:delete_qualification' signed_id=qualification.id|sign_id %}" class="btn-delete">Delete</a>								
-								
+								<a href="{% url 'teachers:delete_qualification' signed_id=qualification.id|sign_id %}" class="btn-delete">Delete</a>                                
 							</td>
 						</tr>
 					{% empty %}
@@ -368,7 +378,6 @@
 			</table>
 		</div>
 	</div>
-
 	
 	
 

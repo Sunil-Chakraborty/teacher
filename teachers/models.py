@@ -225,6 +225,7 @@ class Patents(models.Model):
     )
     
     dept_name = models.CharField(max_length=100, blank=True, null=True)  # Move first_name here
+    inv_name = models.CharField(verbose_name='Name of the Inventors',max_length=200, blank=True, null=True)  # inventor's name
 
     STATUS_CHOICES = (
         ('', 'Select Status'),  # Using an empty string as a default choice for better handling

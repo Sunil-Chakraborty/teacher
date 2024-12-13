@@ -140,9 +140,7 @@ class QualificationForm(forms.ModelForm):
         
         widgets = {
             'thesis': forms.Textarea(attrs={
-                'rows': 3,  # Adjust the number of rows
-                'cols': 60, # Adjust the number of columns
-                'placeholder': 'Enter the title of your dissertation or thesis here...'
+                'placeholder': 'Enter the title of your dissertation or thesis here...',
             }),
             
             'dt_award': forms.DateInput(attrs={
@@ -163,7 +161,7 @@ class PatentForm(forms.ModelForm):
     class Meta:
         model = Patents
         #fields = '__all__'
-        fields = ['dept_name','status', 'title', 'ref_no', 'dt_award', 'awarding_agency', 'patent_ecopy']
+        fields = ['inv_name','dept_name','status', 'title', 'ref_no', 'dt_award', 'awarding_agency', 'patent_ecopy']
         widgets = {
             'dt_award': forms.DateInput(attrs={'type': 'date'}),
         } 
@@ -172,7 +170,7 @@ class PatentForm(forms.ModelForm):
         user = kwargs.pop('user', None)  # Optional: pass user if needed
         super(PatentForm, self).__init__(*args, **kwargs)
         # Set field requirements
-        for field_name in ['status', 'title', 'ref_no', 'dt_award', 'awarding_agency']:
+        for field_name in ['inv_name','status', 'title', 'ref_no', 'dt_award', 'awarding_agency']:
             self.fields[field_name].required = True
 
 
