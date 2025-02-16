@@ -1,0 +1,6 @@
+https://learn.aifortechies.in/login/
+user : to.sunilc@gmail.com
+pwd: aifortechies@123
+
+https://colab.research.google.com/#
+

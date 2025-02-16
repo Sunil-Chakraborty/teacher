@@ -1,0 +1,63 @@
+Infinityfree.com
+
+Account if0_37913891 (Website for tosunilc.kesug.com) created!
+
+Your account has been created with username if0_37913891! 
+Here are some things you need to know:
+
+
+https://dash.infinityfree.com/accounts/if0_37913891
+
+Website for tosunilc.kesug.com
+
+Account pwd : zY05ZoORk47gX
+
+It can take up to 72 hours for new domains to be accessible everywhere!
+This is caused by DNS caching, which InfinityFree cannot control,
+but there are some workarounds you can try. Learn more.
+
+For your convenience your account information is below:
+
+________________________________________________
+
+Cpanel URL: http://cpanel.infinityfree.com
+Username:   if0_37913891
+Password:   zdwgtr86
+
+FTP Username:  if0_37913891
+FTP Password:  zdwgtr86
+FTP HostName:  ftp.infinityfree.com
+
+MySQL Host Name: sql208.infinityfree.com
+MySQL Password:  zdwgtr86
+
+
+MySQL UserName:  if0_37913891
+
+-------------------------------------------------
+
+WordPess(WP)
+Admin user : wpadmin
+pwd : admin@wp24
+email : to.sunilc@gmail.com
+
+
+Choose Installation URL
+Please choose the URL to install the software
+
+Your installation URL : http://tosunilc.kesug.com
+Choose the version you want to install 6.6.2
+
+Site URL: e.g., http://tosunilc.kesug.com – This is your live WordPress site.
+Admin URL: e.g., http://tosunilc.kesug.com/wp-admin – This is the login page for your WordPress admin dashboard.
+WordPess(WP)
+Admin user : wpadmin
+pwd : admin@wp24
+email : to.sunilc@gmail.com
+
+my website (http://tosunilc.kesug.com/wp-admin) is being blocked as a suspicious site. I am the owner of the site and it is safe.
+
+https://web.whatsapp.com/
+
+
+

@@ -1,3 +1,6 @@
+Google ইনপুট সরঞ্জাম
+https://www.google.com/intl/bn/inputtools/try/
+
 
 To use widget_tweaks, install it via pip:
 pip install django-widget-tweaks

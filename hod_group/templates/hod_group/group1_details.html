@@ -111,8 +111,7 @@
     <table id="studentsTable" class="table table-striped table-bordered">
         <thead class="table-dark">
             <tr>
-                <th>Srl</th>
-                <th>Department<br> Name</th>
+                <th>Srl</th>                
                 <th>Programme<br> Name</th>
                 <th>Programme<br> Code</th>
                 <th>Academic<br> Year</th>
@@ -126,8 +125,7 @@
         <tbody>
             {% for student in students %}
             <tr>
-                <td>{{ forloop.counter }}</td>
-                <td>{{ student.prog_name.name }}</td>
+                <td>{{ forloop.counter }}</td>                
                 <td>{{ student.prog_name.program|default:"No Data" }}</td>
                 <td>{{ student.prog_name.prog_cd }}</td>
                 <td>{{ student.acad_year }}</td>
