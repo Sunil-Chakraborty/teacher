@@ -1,0 +1,65 @@
+{% extends 'hod_group/group_table.html' %}
+{% load widget_tweaks %}
+{% load static %}
+{% block group_table_details %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Links File</title>
+</head>
+<div class="container mt-3">
+    <p><a href="{% url 'hod_group:group_table_with_id' 'group4' %}">Back</a></p>
+    
+    <h2>Upload Extracted Links</h2>
+    <form id="uploadForm" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <input type="file" name="links_file" required>
+        <button type="submit">Upload & Download</button>
+    </form>
+    
+    <h3>Download Status:</h3>
+    <ul id="downloadList"></ul>
+    
+    <div class="progress mt-3" style="display: none;">
+        <div id="progressBar" class="progress-bar" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">0%</div>
+    </div>
+
+    <script>
+        document.getElementById("uploadForm").onsubmit = async function(event) {
+            event.preventDefault();
+            let formData = new FormData(this);
+            
+            let progressBar = document.querySelector(".progress");
+            let progress = document.getElementById("progressBar");
+            progressBar.style.display = "block";
+            progress.style.width = "0%";
+            progress.textContent = "0%";
+
+            let response = await fetch("{% url 'util:upload_links' %}", {
+                method: "POST",
+                body: formData
+            });
+            
+            let result = await response.json();
+            if (result.status === "success") {
+                let list = document.getElementById("downloadList");
+                list.innerHTML = "";
+                
+                let totalFiles = result.downloaded_files.length;
+                let count = 0;
+                
+                for (let file of result.downloaded_files) {
+                    let li = document.createElement("li");
+                    li.textContent = file;
+                    list.appendChild(li);
+                    
+                    count++;
+                    let progressPercent = Math.round((count / totalFiles) * 100);
+                    progress.style.width = progressPercent + "%";
+                    progress.textContent = progressPercent + "%";
+                }
+            }
+        };
+    </script>
+</div>
+{% endblock %}

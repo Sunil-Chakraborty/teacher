@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'teachers.apps.TeachersConfig', 
     'iqac.apps.IqacConfig',
     'hod_group.apps.HodGroupConfig',
+    'util.apps.UtilConfig',
     'widget_tweaks',    
     
 ]

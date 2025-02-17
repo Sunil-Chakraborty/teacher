@@ -1,0 +1,25 @@
+{% extends 'hod_group/group_table.html' %}
+{% load widget_tweaks %}
+{% load static %}
+{% block group_table_details %}
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload PDF for Link Extraction</title>
+</head>
+
+<div class="container mt-3">
+	<p><a href="{% url 'hod_group:group_table_with_id' 'group4' %}">Back</a></p>
+	
+    <h2>Upload a PDF File</h2>
+    <form action="" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <input type="file" name="pdf_file" accept="application/pdf" required>
+        <button type="submit">Upload and Extract Links</button>
+    </form>
+</div>
+
+
+
+{% endblock %}

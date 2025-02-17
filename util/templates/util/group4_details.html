@@ -1,0 +1,17 @@
+{% extends 'hod_group/group_table.html' %}
+{% load widget_tweaks %}
+{% load static %}
+{% block group_table_details %}
+
+
+<div class="container mt-3">
+    <h2>Details of Utilities</h2>
+    <p><a href="{% url 'util:upload_pdf_extract_links'%}">Extract links from PDF</a></p>
+	<p><a href="{% url 'util:upload_links'%}">Upload links for download</a></p>
+
+
+</div>
+
+
+
+{% endblock %}

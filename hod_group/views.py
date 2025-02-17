@@ -37,6 +37,7 @@ def group_table_with_id(request, group_id):
         'group1': 'hod_group/group1_details.html',
         'group2': 'hod_group/group2_details.html',
         'group3': 'hod_group/group3_details.html',
+        'group4': 'util/group4_details.html',
     }
 
     #template = group_templates.get(group_id)
