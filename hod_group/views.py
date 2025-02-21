@@ -65,7 +65,7 @@ def group_table_with_id(request, group_id):
 
     return render(request, template, context)
     
-from django.http import JsonResponse
+
 
 @login_required
 def student_add(request):

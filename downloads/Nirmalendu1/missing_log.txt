@@ -1,0 +1,10 @@
+403 Forbidden: https://journals.sagepub.com/home/PIC
+Skipped HTML Page: https://www.emerald.com/insight/content/doi/10.1108/HFF-07-2018-0414/full/html?casa_token=9Hjzss5DIEIAAAAA:1pKBlT2RLX1ZMBVkRoD5L15IhNFuR1vffviZVNE0hU9R3fwL-fbDXdtSKe1fX48vPJY_uxqESvpEqlyow47zelgkO0g-1azpRT_Zc06dkraJBU-ql5e6
+Download Error: https://www.sciencedirect.com/journal/journal-of-magnetism-and-magnetic-materials
+403 Forbidden: https://pubs.aip.org/aip/pof/pages/about
+Skipped HTML Page: https://link.springer.com/article/10.1007/s10973-020-10123-0
+Skipped HTML Page: https://www.emerald.com/insight/content/doi/10.1108/HFF-03-2021-0190/full/html
+Skipped HTML Page: https://www.emeraldgrouppublishing.com/journal/hff?distinct_id=%24device%3A18789def5e2146b-0e2c91dac09e22-26031b51-c0000-18789def5e36d7&_ga=2.175618082.1475778004.1688747829-761767360.1637242243&_gl=1*no7zo8*_ga*NzYxNzY3MzYwLjE2MzcyNDIyNDM.*_ga_45RWY1YP1V*MTY4ODc0NzgyOS40NS4xLjE2ODg3NDkxNjIuMC4wLjA.
+Skipped HTML Page: https://www.igi-global.com/chapter/fluid-mechanics-in-arterial-diseases/300495
+Skipped HTML Page: https://link.springer.com/article/10.1007/s42452-019-1712-9#:~:text=These%20two%20unequal%20flow%20vortices,from%20buoyancy%2Dinduced%20flow).
+Skipped HTML Page: https://www.inderscience.com/jhome.php?jcode=pcfd

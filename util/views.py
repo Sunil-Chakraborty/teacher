@@ -13,7 +13,7 @@ import mimetypes
 import magic  # pip install python-magic-bin  
               # Python-magic for detecting file types
 from urllib.parse import urlparse
-
+import urllib3
 
 # Create your views here.
 
@@ -70,7 +70,8 @@ def upload_pdf_extract_links(request):
 # Downloading file following extract_link.txt
  
 # Disable SSL warnings (Optional, but recommended for production)
-import urllib3
+
+# Disable SSL warnings (Optional but useful for debugging)
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 # Headers to mimic a real browser request
@@ -82,18 +83,22 @@ HEADERS = {
 }
 
 def log_missing_links(save_dir, message, url):
-    """Logs missing links (skipped HTML pages and 403 errors) to a file."""
+    """Logs skipped or failed links to a file."""
     log_file = os.path.join(save_dir, "missing_log.txt")
     with open(log_file, "a") as log:
         log.write(f"{message}: {url}\n")
 
 def convert_google_drive_link(url):
-    """Convert Google Drive view links to direct download links"""
+    """Convert Google Drive view links to direct download links."""
     if "drive.google.com" in url and "/file/d/" in url:
         file_id = url.split("/file/d/")[1].split("/")[0]
         return f"https://drive.google.com/uc?export=download&id={file_id}"
     return url
-
+    
+def is_doi_link(url):
+    """Checks if the URL is a DOI link and should be skipped."""
+    return "doi.org" in url
+    
 def get_file_extension(response, url, file_bytes):
     """Determines the correct file extension from headers, magic bytes, or URL."""
     content_type = response.headers.get("Content-Type", "")
@@ -123,10 +128,15 @@ def get_file_extension(response, url, file_bytes):
     if url_ext:
         return url_ext
 
-    return ".bin"
+    return ".txt"  # Save unknown types as .txt with the URL inside
 
 def download_file(url, save_dir, file_index):
     """Downloads a file and assigns the correct file extension."""
+    if is_doi_link(url):
+        print(f"⚠️ Skipping DOI link: {url}")
+        log_missing_links(save_dir, "Skipped DOI Link", url)
+        return None
+
     session = requests.Session()
     session.headers.update(HEADERS)
 
@@ -147,9 +157,15 @@ def download_file(url, save_dir, file_index):
         file_name = f"file_{file_index}{file_extension}"
         save_path = os.path.join(save_dir, file_name)
 
-        with open(save_path, "wb") as file:
-            file.write(response.content)
-        
+        if file_extension == ".txt":
+            # Save the URL inside the .txt file
+            with open(save_path, "w") as file:
+                file.write(f"Failed to determine file type. Original URL: {url}\n")
+        else:
+            # Save the actual downloaded file
+            with open(save_path, "wb") as file:
+                file.write(response.content)
+
         print(f"✅ Downloaded: {save_path}")
         return file_name
 
@@ -161,7 +177,7 @@ def download_file(url, save_dir, file_index):
             print(f"❌ Error downloading {url}: {e}")
             log_missing_links(save_dir, "Download Error", url)
         return None
-
+        
 def upload_links_and_download(request):
     if request.method == "POST" and request.FILES.get("links_file"):
         links_file = request.FILES["links_file"]

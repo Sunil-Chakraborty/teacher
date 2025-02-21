@@ -1,0 +1,7 @@
+Skipped DOI Link: https://doi.org/10.52305/CVRY6117
+Skipped HTML Page: https://link.springer.com/article/10.1007/s40032-021-00775-8#:~:text=With%20the%20porous%20domain%2C%20the,5%20both%20air%20and%20nanofluid.
+Skipped HTML Page: https://www.emerald.com/insight/content/doi/10.1108/HFF-10-2020-0668/full/html
+Skipped HTML Page: https://link.springer.com/article/10.1007/s10973-020-10109-y
+Skipped HTML Page: https://www.emerald.com/insight/content/doi/10.1108/HFF-08-2021-0555/full/html
+403 Forbidden: https://pubs.aip.org/aip/pof/article-abstract/33/5/053604/1076749/Effect-of-multibanded-magnetic-field-on-convective?redirectedFrom=fulltext
+Skipped HTML Page: https://link.springer.com/chapter/10.1007/978-981-16-2347-9_10
