@@ -12,8 +12,9 @@ import requests
 import mimetypes
 import magic  # pip install python-magic-bin  
               # Python-magic for detecting file types
-from urllib.parse import urlparse
+from urllib.parse import urlparse, parse_qs
 import urllib3
+
 
 # Create your views here.
 
@@ -88,11 +89,19 @@ def log_missing_links(save_dir, message, url):
     with open(log_file, "a") as log:
         log.write(f"{message}: {url}\n")
 
-def convert_google_drive_link(url):
-    """Convert Google Drive view links to direct download links."""
+def convert_google_links(url):
+    """Convert Google Docs and Google Drive links to direct download links."""
+    
+    # Convert Google Docs link to direct DOCX download
+    if "docs.google.com/document/d/" in url:
+        file_id = url.split("/d/")[1].split("/")[0]
+        return f"https://docs.google.com/document/d/{file_id}/export?format=docx"
+    
+    # Convert Google Drive link to direct download
     if "drive.google.com" in url and "/file/d/" in url:
         file_id = url.split("/file/d/")[1].split("/")[0]
         return f"https://drive.google.com/uc?export=download&id={file_id}"
+
     return url
     
 def is_doi_link(url):
@@ -137,10 +146,10 @@ def download_file(url, save_dir, file_index):
         log_missing_links(save_dir, "Skipped DOI Link", url)
         return None
 
+    url = convert_google_links(url)
+
     session = requests.Session()
     session.headers.update(HEADERS)
-
-    url = convert_google_drive_link(url)
 
     try:
         response = session.get(url, stream=True, allow_redirects=True, verify=False)
