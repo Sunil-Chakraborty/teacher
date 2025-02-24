@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Upload Links File</title>
 </head>
+
 <div class="container mt-3">
     <p><a href="{% url 'hod_group:group_table_with_id' 'group4' %}">Back</a></p>
     
@@ -20,44 +21,57 @@
     <h3>Download Status:</h3>
     <ul id="downloadList"></ul>
     
+    <!-- Progress Bar -->
     <div class="progress mt-3" style="display: none;">
-        <div id="progressBar" class="progress-bar" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">0%</div>
+        <div id="progressBar" class="progress-bar" role="progressbar" style="width: 0%;" 
+             aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">0%</div>
     </div>
 
     <script>
         document.getElementById("uploadForm").onsubmit = async function(event) {
             event.preventDefault();
             let formData = new FormData(this);
-            
+
             let progressBar = document.querySelector(".progress");
             let progress = document.getElementById("progressBar");
+            let list = document.getElementById("downloadList");
+
             progressBar.style.display = "block";
             progress.style.width = "0%";
             progress.textContent = "0%";
+            list.innerHTML = "";
 
+            // Fetch request to upload file & start downloading
             let response = await fetch("{% url 'util:upload_links' %}", {
                 method: "POST",
                 body: formData
             });
-            
+
             let result = await response.json();
             if (result.status === "success") {
-                let list = document.getElementById("downloadList");
-                list.innerHTML = "";
-                
                 let totalFiles = result.downloaded_files.length;
                 let count = 0;
-                
+
                 for (let file of result.downloaded_files) {
                     let li = document.createElement("li");
                     li.textContent = file;
                     list.appendChild(li);
-                    
+
                     count++;
                     let progressPercent = Math.round((count / totalFiles) * 100);
+                    
                     progress.style.width = progressPercent + "%";
                     progress.textContent = progressPercent + "%";
+                    progress.setAttribute("aria-valuenow", progressPercent);
                 }
+
+                if (totalFiles === 0) {
+                    progress.style.width = "100%";
+                    progress.textContent = "No files downloaded.";
+                }
+            } else {
+                progress.style.width = "100%";
+                progress.textContent = "Error processing files.";
             }
         };
     </script>

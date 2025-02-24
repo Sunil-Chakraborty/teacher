@@ -141,15 +141,10 @@ def get_file_extension(response, url, file_bytes):
 
 def download_file(url, save_dir, file_index):
     """Downloads a file and assigns the correct file extension."""
-    if is_doi_link(url):
-        print(f"⚠️ Skipping DOI link: {url}")
-        log_missing_links(save_dir, "Skipped DOI Link", url)
-        return None
-
-    url = convert_google_links(url)
-
     session = requests.Session()
     session.headers.update(HEADERS)
+
+    url = convert_google_links(url)  # Convert Google Docs/Drive links
 
     try:
         response = session.get(url, stream=True, allow_redirects=True, verify=False)
@@ -158,23 +153,18 @@ def download_file(url, save_dir, file_index):
         file_bytes = response.content[:2048]
         file_extension = get_file_extension(response, url, file_bytes)
 
-        if file_extension is None:
+        # ✅ FIX: Don't log Google Docs files as "Skipped HTML Page"
+        if file_extension is None and "docs.google.com/document/d/" not in url:
             print(f"⚠️ Skipping {url} (appears to be a webpage, not a document)")
             log_missing_links(save_dir, "Skipped HTML Page", url)
             return None
 
-        file_name = f"file_{file_index}{file_extension}"
+        file_name = f"file_{file_index}{file_extension or '.bin'}"
         save_path = os.path.join(save_dir, file_name)
 
-        if file_extension == ".txt":
-            # Save the URL inside the .txt file
-            with open(save_path, "w") as file:
-                file.write(f"Failed to determine file type. Original URL: {url}\n")
-        else:
-            # Save the actual downloaded file
-            with open(save_path, "wb") as file:
-                file.write(response.content)
-
+        with open(save_path, "wb") as file:
+            file.write(response.content)
+        
         print(f"✅ Downloaded: {save_path}")
         return file_name
 
@@ -186,6 +176,7 @@ def download_file(url, save_dir, file_index):
             print(f"❌ Error downloading {url}: {e}")
             log_missing_links(save_dir, "Download Error", url)
         return None
+
         
 def upload_links_and_download(request):
     if request.method == "POST" and request.FILES.get("links_file"):
