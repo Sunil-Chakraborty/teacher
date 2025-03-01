@@ -2,6 +2,8 @@ from django.http import JsonResponse, HttpResponse
 from django.shortcuts import render, get_object_or_404, redirect
 from django.conf import settings
 import os
+from django.contrib import messages
+
 
 import fitz  # PyMuPDF for extracting links from PDF
 from django.core.files.storage import default_storage
@@ -15,6 +17,12 @@ import magic  # pip install python-magic-bin
 from urllib.parse import urlparse, parse_qs
 import urllib3
 
+import subprocess
+
+from django.http import HttpResponse
+
+from .models import Task, UserAccess
+from .forms import UserAccessForm, TaskForm
 
 # Create your views here.
 
@@ -198,3 +206,122 @@ def upload_links_and_download(request):
         return JsonResponse({"status": "success", "downloaded_files": downloaded_files, "save_dir": save_dir})
 
     return render(request, "util/upload_links.html")
+
+
+def calculator_view(request):
+    # Start Streamlit app if not running
+    streamlit_script = os.path.join(os.path.dirname(__file__), "calculator.py")
+    
+    try:
+        subprocess.Popen(["streamlit", "run", streamlit_script, "--server.port", "8501", "--server.enableCORS", "false", "--server.enableXsrfProtection", "false", "--server.headless", "true"])
+    except Exception as e:
+        print(f"Error starting Streamlit: {e}")
+
+    return render(request, "util/calculator_embed.html")
+
+
+# Login/Register View
+def login_view(request):
+    if request.method == "POST":
+        access_id = request.POST.get("access_id")
+
+        # Check if access_id exists in the database
+        user = UserAccess.objects.filter(access_id=access_id).first()
+
+        if user:
+            # Store in session and redirect to task list
+            request.session["access_id"] = user.access_id
+            return redirect("util:task_list")
+        else:
+            return render(request, "util/login.html", {"error": "Invalid Access ID. Please Register."})
+
+    return render(request, "util/login.html")
+
+# Registration View (For first-time users)
+def register_view(request):
+    if request.method == "POST":
+        form = UserAccessForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect("util:login")  # Redirect to login after registration
+    else:
+        form = UserAccessForm()
+
+    return render(request, "util/register.html", {"form": form})
+
+# Task List View (Filtered by Session User)
+def task_list(request):
+    access_id = request.session.get("access_id")
+    if not access_id:
+        return redirect("util:login")
+
+    user = get_object_or_404(UserAccess, access_id=access_id)
+    tasks = Task.objects.filter(user=user)
+
+    return render(request, "util/task_list.html", {"tasks": tasks, "user": user})
+
+
+
+def add_task(request):
+    access_id = request.session.get("access_id")
+    print(f"Session Access ID: {access_id}")  # Debugging
+
+    if not access_id:
+        return redirect("util:login")
+        
+    user = get_object_or_404(UserAccess, access_id=access_id)    
+
+    if request.method == 'POST':
+        form = TaskForm(request.POST)
+        if form.is_valid():
+            task = form.save(commit=False)
+            task.user = user  
+            task.save()
+            messages.success(request, "Task added successfully!")  # ✅ Success Message
+            return redirect("util:task_list")  # ✅ Redirect to task list immediately
+
+        else:
+            print("Form errors:", form.errors.as_json())  # 🛠 Print form errors
+            messages.error(request, "There was an error adding the task. Please check the form inputs.")
+    
+    return redirect("util:task_list")  # ✅ Always redirect to task list
+    
+    
+ 
+# View to mark task as complete
+def complete_task(request, task_id):
+    task = Task.objects.get(id=task_id)
+    task.completed = True
+    task.save()
+    return redirect('util:task_list')
+
+# View to delete task
+def delete_task(request, task_id):
+    task = Task.objects.get(id=task_id)
+    task.delete()
+    return redirect('util:task_list')
+
+
+# View to edit a task
+
+def edit_task(request, task_id, verification_code):
+    task = get_object_or_404(Task, id=task_id, verification_code=verification_code)    
+    if request.method == "POST":
+        form = TaskForm(request.POST, instance=task)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Task updated successfully!")
+            return redirect("util:task_list")
+    else:
+        form = TaskForm(instance=task)
+
+    return render(request, "util/edit_task.html", {"form": form, "task": task})
+
+
+
+# View to undo task completion
+def undo_task(request, task_id):
+    task = Task.objects.get(id=task_id)
+    task.completed = False
+    task.save()
+    return redirect('util:task_list') 

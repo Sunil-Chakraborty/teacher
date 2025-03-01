@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do List</title>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+
+    <style>
+		body {
+			font-family: Arial, sans-serif;
+			background-color: #f4f4f4;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			height: 100vh;
+			margin: 0;
+		}
+
+		.todo-container {
+			width: 60%;
+			background: #ddd;
+			padding: 20px;
+			border-radius: 8px;
+			box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+			text-align: center;
+		}
+
+		.icon {
+			width: 20px;
+			margin-right: 5px;
+		}
+
+		.task-container {
+			max-height: 200px; /* Set fixed height for scroll */
+			overflow-y: auto;
+			background: white;
+			padding: 10px;
+			border-radius: 6px;
+			box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.1);
+		}
+
+		.task-list {
+			list-style-type: none;
+			padding: 0;
+			margin: 0;
+		}
+
+		.task {
+			display: flex;
+			justify-content: space-between;
+			align-items: left;
+			padding: 8px;
+			border-bottom: 1px solid #ccc;
+		}
+
+		.task:last-child {
+			border-bottom: none;
+		}
+
+		.completed {
+			text-decoration: line-through;
+			color: gray;
+		}
+
+		.task-actions a {
+			margin: 0 5px;
+			text-decoration: none;
+			font-size: 18px;
+			transition: 0.3s;
+		}
+
+		.task-actions a:hover {
+			transform: scale(1.2);
+		}
+
+		.add-btn {
+			background: green;
+			color: white;
+			border: none;
+			padding: 10px;
+			width: 100%;
+			cursor: pointer;
+			border-radius: 4px;
+			font-size: 16px;
+			margin-top:4px;
+		}
+
+		.add-btn:hover {
+			background: darkgreen;
+		}
+		
+		
+		.task-form {
+			background: #f4f4f4;
+			padding: 15px;
+			border-radius: 8px;
+			box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+			max-width: 100%;
+			margin: auto;
+			margin-bottom:5px;
+		}
+
+		.form-row {
+			display: flex;
+			align-items: center;
+			gap: 10px;
+			width: 100%;
+		}
+
+		.form-group {
+			display: flex;
+			align-items: center;
+		}
+
+
+		.title {
+			flex: 5; /* 50% */
+		}
+
+		.fpr {
+			flex: 2; /* 20% */
+		}
+
+		.target {
+			flex: 2; /* 20% */
+		}
+
+		.add-btn-container {
+			flex: 1; /* 10% */
+			display: flex;
+			justify-content: center;
+		}
+
+
+		textarea {
+			width: 100%;
+			padding: 8px;
+			border: 1px solid #ccc;
+			border-radius: 5px;
+			font-size: 14px;
+			resize: none;
+		}
+
+		input {
+			width: 100%;
+			padding: 8px;
+			border: 1px solid #ccc;
+			border-radius: 5px;
+			font-size: 14px;
+		}
+    </style>
+	
+	
+</head>
+
+<body>
+   
+	<div class="todo-container">
+		<p><a href="{% url 'util:login' %}" class="back-button" title="Go back">⬅ Back</a></p>
+			
+		<h1>📝 To-Do List</h1>
+		<h3>Welcome, {{ user.short_name }} ({{ user.access_id }})</h3>
+		
+		<form method="post" action="{% url 'util:add_task' %}" class="task-form">
+			{% csrf_token %}
+			{% if messages %}
+				{% for message in messages %}
+					<div class="alert alert-{{ message.tags }}">
+						{{ message }}
+					</div>
+				{% endfor %}
+			{% endif %}
+
+			<div class="form-row">
+				
+				<div class="form-group title">					
+					<textarea id="title" name="title" class="form-control" rows="3" placeholder="Enter your task here..." required ></textarea>
+				</div>
+				
+				<div class="form-group fpr">
+					<input type="text" name="fpr" placeholder="👤 FPR" required>
+				</div>
+
+				<div class="form-group target">
+					<input type="text" name="target_dt" placeholder="🎯 Target Date:" required>
+				</div>
+			</div>
+
+			
+
+			<button type="submit" class="add-btn">➕ Add Task</button>
+		</form>
+
+		<div class="task-container">
+		
+			<ul class="task-list">
+				{% for task in tasks %}
+					<li class="task">
+						<div style="text-align:left;" class="{% if task.completed %}completed{% endif %}">
+							<span><strong title="Task Title">{{ task.title }}</strong></span> <br>
+							<span title="First Person Responsible">👤 {{ task.fpr }}</span> |
+							<span title="Target Date">📅 {{ task.target_dt }}</span>
+						</div>						
+						<div class="task-actions">
+							{% if not task.completed %}
+								<a href="{% url 'util:complete_task' task.id %}" class="complete" title="Complete">✔</a>
+							{% else %}
+								<a href="{% url 'util:undo_task' task.id %}" class="undo" title="Undo">🔄</a>
+							{% endif %}
+							
+							<a href="{{ task.get_secure_edit_url }}" class="edit" title="Edit">✎</a>
+							
+							<a href="{% url 'util:delete_task' task.id %}" class="delete" title="Delete">❌</a>
+						</div>
+					</li>
+				{% endfor %}
+			</ul>
+			
+		</div>
+		
+	</div>
+
+</body>
+</html>

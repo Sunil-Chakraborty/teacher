@@ -1,0 +1,72 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+
+    <style>
+        body {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .register-container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            width: 400px;
+        }
+        .btn-success {
+            background-color: #28a745;
+            border: none;
+        }
+        .btn-success:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+<body>
+    <div class="register-container">
+        <h3 class="text-center">📝 Register</h3>
+        <form method="post">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label class="form-label">Access ID</label>
+                <input type="text" name="access_id" class="form-control" placeholder="Enter a unique Access ID" required>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Short Name</label>
+				<select name="short_name" class="form-select" required>
+					<option value="">Select Short Name</option>
+                    <option value="ADMIN">Admin</option>
+                    <option value="MANAGER">Manager</option>
+                    <option value="SUPERVISOR">Supervisor</option>
+                    <option value="OPERATOR">Operator</option>
+                    <option value="INSPECTOR">Inspector</option>
+				</select>              
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Full Name</label>
+                <select name="full_name" class="form-select" required>
+                    <option value="">Select Full Name</option>
+                    <option value="System Administrator">System Administrator</option>
+                    <option value="Production Manager">Production Manager</option>
+                    <option value="Quality Supervisor">Quality Supervisor</option>
+                    <option value="Machine Operator">Machine Operator</option>
+                    <option value="Quality Inspector">Quality Inspector</option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-success w-100">Register</button>
+        </form>
+        <p class="text-center mt-3">
+            Already have an account? <a href="{% url 'util:login' %}">Login here</a>
+        </p>
+    </div>
+</body>
+</html>

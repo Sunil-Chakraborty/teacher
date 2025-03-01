@@ -1,6 +1,7 @@
 Google ইনপুট সরঞ্জাম
 https://www.google.com/intl/bn/inputtools/try/
 
+https://www.colorhexa.com/ffc107
 
 To use widget_tweaks, install it via pip:
 pip install django-widget-tweaks
@@ -25,3 +26,56 @@ Dynamic Error Highlighting:
 
 Combining Multiple Filters:
 {{ form.username|add_class:"form-control"|set_attr:"placeholder:Enter username" }}
+
+{% load widget_tweaks %}
+
+<form method="post">
+    {% csrf_token %}
+    {{ form.username|add_class:"form-control" }}
+    {{ form.password|add_class:"form-control" }}
+    <button type="submit" class="btn btn-primary">Login</button>
+</form>
+
+{% load widget_tweaks %}
+<form method="post">
+    {% csrf_token %}
+    {{ form.username|attr:"placeholder:Username, autofocus:autofocus" }}
+    {{ form.password|attr:"placeholder:Password, minlength:8" }}
+    <button type="submit" class="btn btn-primary">Login</button>
+</form>
+
+{% load widget_tweaks %}
+<form method="post">
+    {% csrf_token %}
+    {% render_field form.username class="form-control" placeholder="Enter your username" %}
+    {% render_field form.password class="form-control" placeholder="Enter your password" minlength="8" %}
+    <button type="submit" class="btn btn-primary">Login</button>
+</form>
+
+Adding Error Classes: You can add classes to fields that have validation errors.
+{% load widget_tweaks %}
+<form method="post">
+    {% csrf_token %}
+    {{ form.username|add_error_class:"is-invalid" }}
+    {{ form.password|add_error_class:"is-invalid" }}
+    <button type="submit" class="btn btn-primary">Login</button>
+</form>
+
+Combining Filters: You can combine multiple filters for more complex customizations.
+{% load widget_tweaks %}
+<form method="post">
+    {% csrf_token %}
+    {{ form.username|add_class:"form-control"|attr:"placeholder:Username" }}
+    {{ form.password|add_class:"form-control"|attr:"placeholder:Password, minlength:8" }}
+    <button type="submit" class="btn btn-primary">Login</button>
+</form>
+
+when new migration fails:
+If not, force Django to apply all migrations again:
+python manage.py shell
+sh
+Copy
+Edit
+python manage.py migrate --fake util zero
+python manage.py migrate util
+

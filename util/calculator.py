@@ -1,5 +1,5 @@
 import streamlit as st
-
+# to run from dos prompt streamlit run calculater.py
 def calculate(num1, num2, operation):
     if operation == '+':
         return num1 + num2
