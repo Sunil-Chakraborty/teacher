@@ -21,9 +21,9 @@
             background: #b7b7b7;
             padding: 20px;
             border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            max-width: 600px;
-            width: 100%;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);            
+            width: auto;
+			height: 55vh;
         }
 
         h2 {
@@ -35,6 +35,7 @@
             display: flex;
             flex-direction: column;
             gap: 10px;
+			
         }
 
         .form-row {
@@ -42,6 +43,7 @@
             align-items: center;
             gap: 10px;
             width: 100%;
+			
         }
 
         .form-group {
@@ -54,7 +56,7 @@
         }
 
         .fpr {
-            flex: 2; /* 20% */
+            flex: 3; /* 30% */
         }
 
         .target {
@@ -108,7 +110,11 @@
             color: #dc3545;
             font-weight: bold;
         }
-
+		label{
+			color:green;
+			font-weight:bold;
+			margin-right:5px;
+		}
     </style>
 </head>
 <body>
@@ -120,14 +126,17 @@
 
             <div class="form-row">
                 <div class="form-group title">
-                    <textarea id="title" name="title" rows="3" required>{{ form.title.value }}</textarea>
+					<label class="form-label">Title</label>
+                    <textarea id="title" name="title" rows="10" required>{{ form.title.value }}</textarea>
                 </div>
 				
                 <div class="form-group fpr">
+					<label class="form-label">Responsible</label>
                     <input type="text" name="fpr" required value="{{ form.fpr.value }}">
                 </div>
 
                 <div class="form-group target">
+					<label class="form-label">Target</label>
                     <input type="text" name="target_dt" required value="{{ form.target_dt.value }}">
                 </div>
             </div>

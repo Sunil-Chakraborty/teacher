@@ -256,7 +256,7 @@ def task_list(request):
         return redirect("util:login")
 
     user = get_object_or_404(UserAccess, access_id=access_id)
-    tasks = Task.objects.filter(user=user)
+    tasks = Task.objects.filter(user=user).order_by('-created_at')
 
     return render(request, "util/task_list.html", {"tasks": tasks, "user": user})
 

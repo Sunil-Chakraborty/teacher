@@ -3,26 +3,10 @@ from django.db import models
 from django.urls import reverse
      
 # User Access Model
-class UserAccess(models.Model):
-    SHORT_NAME_CHOICES = [
-        ("ADMIN", "Admin"),
-        ("MANAGER", "Manager"),
-        ("SUPERVISOR", "Supervisor"),
-        ("OPERATOR", "Operator"),
-        ("INSPECTOR", "Inspector"),
-    ]
-
-    FULL_NAME_CHOICES = [
-        ("System Administrator", "System Administrator"),
-        ("Production Manager", "Production Manager"),
-        ("Quality Supervisor", "Quality Supervisor"),
-        ("Machine Operator", "Machine Operator"),
-        ("Quality Inspector", "Quality Inspector"),
-    ]
-
+class UserAccess(models.Model):   
     access_id  = models.CharField(max_length=10, unique=True)
-    short_name = models.CharField(max_length=50, choices=SHORT_NAME_CHOICES)
-    full_name  = models.CharField(max_length=100, choices=FULL_NAME_CHOICES)
+    short_name = models.CharField(max_length=50)
+    full_name  = models.CharField(max_length=100)
 
     def __str__(self):
         return f"{self.short_name} ({self.access_id})"
@@ -30,13 +14,15 @@ class UserAccess(models.Model):
         
 # Updated Task Model with ForeignKey
 class Task(models.Model):
-    user       = models.ForeignKey(UserAccess, on_delete=models.CASCADE)  # Links task to a user
-    title      = models.CharField(max_length=255)
-    fpr        = models.CharField(max_length=255, verbose_name="First Person Responsible")
-    target_dt  = models.CharField(max_length=50, verbose_name="Target Date")
-    completed  = models.BooleanField(default=False)
-    created_at = models.DateTimeField(auto_now_add=True)
-
+    user            = models.ForeignKey(UserAccess, on_delete=models.CASCADE)  # Links task to a user
+    title           = models.CharField(max_length=255)
+    fpr             = models.CharField(max_length=255, verbose_name="First Person Responsible")
+    target_dt       = models.CharField(max_length=50, verbose_name="Target Date")
+    completed       = models.BooleanField(default=False)
+    shared          = models.BooleanField(default=False)
+    created_at      = models.DateTimeField(auto_now_add=True)
+    updated_at      = models.DateTimeField(auto_now=True)
+    
     # Random verification code
     verification_code = models.UUIDField(default=uuid.uuid4, unique=True, editable=False)
 
