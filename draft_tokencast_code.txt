@@ -1,0 +1,131 @@
+# tokencast/models.py
+from django.db import models
+from django.contrib.auth.models import User
+import random
+
+class PollSession(models.Model):
+    teacher = models.ForeignKey(User, on_delete=models.CASCADE)
+    token_no = models.CharField(max_length=10, unique=True)
+    head_count = models.PositiveIntegerField()
+    start_time = models.DateTimeField(null=True, blank=True)
+    end_time = models.DateTimeField(null=True, blank=True)
+    is_active = models.BooleanField(default=False)
+
+    def generate_token(self):
+        self.token_no = str(random.randint(100000, 999999))
+        self.save()
+
+class StudentVote(models.Model):
+    poll_session = models.ForeignKey(PollSession, on_delete=models.CASCADE)
+    token_no = models.CharField(max_length=10)
+    vote = models.CharField(max_length=100)
+    submitted_at = models.DateTimeField(auto_now_add=True)
+
+# tokencast/forms.py
+from django import forms
+from .models import PollSession, StudentVote
+
+class PollSessionForm(forms.ModelForm):
+    class Meta:
+        model = PollSession
+        fields = ['head_count']
+
+class StudentVoteForm(forms.ModelForm):
+    class Meta:
+        model = StudentVote
+        fields = ['token_no', 'vote']
+
+# tokencast/views.py
+from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
+from django.utils.timezone import now
+from .models import PollSession, StudentVote
+from .forms import PollSessionForm, StudentVoteForm
+
+@login_required
+def initiate_poll(request):
+    if request.method == 'POST':
+        form = PollSessionForm(request.POST)
+        if form.is_valid():
+            poll = form.save(commit=False)
+            poll.teacher = request.user
+            poll.generate_token()
+            poll.is_active = True
+            poll.start_time = now()
+            poll.save()
+            return redirect('tokencast:poll_dashboard')
+    else:
+        form = PollSessionForm()
+    return render(request, 'tokencast/initiate_poll.html', {'form': form})
+
+@login_required
+def poll_dashboard(request):
+    polls = PollSession.objects.filter(teacher=request.user, is_active=True)
+    return render(request, 'tokencast/poll_dashboard.html', {'polls': polls})
+
+def cast_vote(request, poll_id):
+    poll = PollSession.objects.get(id=poll_id, is_active=True)
+    if request.method == 'POST':
+        form = StudentVoteForm(request.POST)
+        if form.is_valid():
+            vote = form.save(commit=False)
+            if vote.token_no == poll.token_no:
+                vote.poll_session = poll
+                vote.save()
+                return redirect('tokencast:vote_success')
+    else:
+        form = StudentVoteForm()
+    return render(request, 'tokencast/cast_vote.html', {'form': form, 'poll': poll})
+
+@login_required
+def end_poll(request, poll_id):
+    poll = PollSession.objects.get(id=poll_id, teacher=request.user, is_active=True)
+    poll.is_active = False
+    poll.end_time = now()
+    poll.save()
+    return redirect('tokencast:poll_dashboard')
+
+def vote_success(request):
+    return render(request, 'tokencast/vote_success.html')
+
+# tokencast/urls.py
+from django.urls import path
+from . import views
+
+app_name = 'tokencast'
+
+urlpatterns = [
+    path('initiate/', views.initiate_poll, name='initiate_poll'),
+    path('dashboard/', views.poll_dashboard, name='poll_dashboard'),
+    path('vote/<int:poll_id>/', views.cast_vote, name='cast_vote'),
+    path('end_poll/<int:poll_id>/', views.end_poll, name='end_poll'),
+    path('vote_success/', views.vote_success, name='vote_success'),
+]
+
+# tokencast/templates/tokencast/cast_vote.html
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Cast Your Vote</title>
+</head>
+<body>
+<h1>Vote in Poll (Token: {{ poll.token_no }})</h1>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Submit Vote</button>
+</form>
+</body>
+</html>
+
+# tokencast/templates/tokencast/vote_success.html
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Vote Submitted</title>
+</head>
+<body>
+<h1>Your vote has been submitted successfully!</h1>
+<a href="/">Back to Home</a>
+</body>
+</html>

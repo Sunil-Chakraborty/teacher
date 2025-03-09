@@ -1,0 +1,164 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vote Poll</title>
+	
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            text-align: center;
+        }
+        .container {
+            max-width: 500px;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            box-shadow: 2px 2px 12px rgba(0,0,0,0.1);
+        }
+        select, input, button {
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+            font-size: 16px;
+        }
+        button {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+        .error {
+            color: red;
+        }
+        .message {
+            color: green;
+        }
+		/* Style for the feedback label */
+		label[for="feedback"] {
+			font-size: 16px;
+			font-weight: bold;
+			color: #333;
+			display: block;
+			margin-bottom: 8px;
+		}
+
+		/* Style for the feedback input field */
+		input[name="feedback"] {
+			width: 100%;
+			max-width: 400px;
+			padding: 10px;
+			font-size: 14px;
+			border: 2px solid #ccc;
+			border-radius: 5px;
+			outline: none;
+			transition: border-color 0.3s ease-in-out;
+		}
+
+		/* Highlight input when focused */
+		input[name="feedback"]:focus {
+			border-color: #007bff;
+			box-shadow: 0px 0px 5px rgba(0, 123, 255, 0.5);
+		}
+
+		/* Placeholder styling */
+		input[name="feedback"]::placeholder {
+			color: #999;
+			font-style: italic;
+		}
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Vote for {{ poll.course_name }}</h2>
+	<!-- Display Faculty Name Deptt -->
+    <p><strong>Faculty:</strong> {{ faculty_name }}</p>
+	<p><strong>Department:</strong> {{ dept_name }}</p>
+	
+	<!-- Display Student Number -->
+    <p><strong>Student Number:</strong> {{ poll.student_no }}</p>
+
+    <!-- Display Session Start and End Time -->
+    <p><strong>Session Start:</strong> {{ poll.session_start }}</p>
+    <p><strong>Session End:</strong> {{ poll.session_end }}</p>
+	
+    {% if error %}
+        <p class="error">{{ error }}</p>
+    {% endif %}
+    {% if message %}
+        <p class="message">{{ message }}</p>
+    {% else %}
+        <form id="voteForm" method="POST">
+			{% csrf_token %}
+			
+			<label for="access_id">Select Access ID:</label>
+			<select id="access_id" name="access_id" required>
+				{% if access_ids %}
+					{% for access in access_ids %}
+						<option value="{{ access.access_id }}">{{ access.access_id }}</option>
+					{% endfor %}
+				{% else %}
+					<option disabled>No Access IDs available</option>
+				{% endif %}
+			</select>
+
+			<br><br>
+			
+			<label for="feedback">Your Feedback:</label>
+			<input type="text" name="feedback" placeholder="Enter your feedback" required>
+
+			<br><br>
+			
+			<button type="submit">Submit Vote</button>
+		</form>
+    {% endif %}
+	
+</div>
+		<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+		<script>
+		$(document).ready(function () {
+			$("#voteForm").on("submit", function (event) {
+				event.preventDefault(); // Prevent default form submission
+
+				var selectedAccessID = $("#access_id").val(); // Get selected Access ID
+				var csrfToken = $("input[name=csrfmiddlewaretoken]").val(); // Get CSRF token
+				
+				if (selectedAccessID) {
+					$.ajax({
+						url: "{% url 'polls:vote_poll' poll.token_no %}", 
+						type: "POST",
+						data: $(this).serialize(), // Serialize form data
+						dataType: "json", 
+						headers: { "X-CSRFToken": csrfToken }, // Include CSRF token
+						success: function (response) {
+							if (response.success) {
+								alert(response.message);
+								$("#access_id option[value='" + selectedAccessID + "']").prop("disabled", true);
+								$("#access_id").val("");
+							} else {
+								alert(response.error);
+							}
+						},
+						error: function (xhr) {
+							alert("Error: " + xhr.responseText);
+						}
+					});
+				} else {
+					alert("Please select an Access ID.");
+				}
+			});
+		});
+
+		</script>
+
+</body>
+</html>

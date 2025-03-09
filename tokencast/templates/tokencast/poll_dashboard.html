@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Poll Dashboard</title>
+    
+    <!-- Bootstrap 5 CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <script>
+        function copyToClipboard(link) {
+            navigator.clipboard.writeText(link)
+                .then(() => alert("Poll link copied to clipboard!"))
+                .catch(err => console.error("Error copying text: ", err));
+        }
+    </script>
+    
+    <style>
+        body {
+            background-color: #f8f9fa;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1000px;
+        }
+        .table th, .table td {
+            text-align: center;
+            vertical-align: middle;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2>Welcome, {{ faculty_name }}</h2>
+        <a href="{% url 'teachers:profile' %}" class="btn btn-primary">🏠 Home</a>
+    </div>
+
+    <h1 class="mb-4 text-center">📊 Poll Dashboard</h1>
+
+    {% if polls %}
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped">
+                <thead class="table-dark">
+                    <tr>
+                        <th>#</th>
+                        <th>Token No</th>
+                        <th>Course Name</th>
+                        <th>Head Count</th>
+                        <th>Start Time</th>
+                        <th>End Time</th>
+                        <th>Status</th>
+                        <th>Remaining</th>
+                        <th>Token Used</th>
+                        <th>Poll Link</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for poll in polls %}
+                    <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <td>{{ poll.token_no }}</td>
+                        <td>{{ poll.course_name }}</td>
+                        <td>{{ poll.head_count }}</td>
+                        <td>{{ poll.start_time|date:"d-m-Y h:i A" }}</td>
+                        <td>{{ poll.end_time|date:"d-m-Y h:i A"|default:"Ongoing" }}</td>
+                        <td>
+                            {% if poll.is_active %}
+                                <span class="badge bg-success">Active</span>
+                            {% else %}
+                                <span class="badge bg-danger">Ended</span>
+                            {% endif %}
+                        </td>
+                        <td>{{ poll.remaining_votes|default:0 }}</td>
+                        <td>
+                            {% if poll.token_used %}
+                                ✅ Used ({{ poll.used_token_count }})
+                            {% else %}
+                                ❌ Not Used
+                            {% endif %}
+                        </td>
+                        <td>
+                            <button class="btn btn-sm btn-outline-secondary" onclick="copyToClipboard('{{ poll.voting_link }}')">
+                                📋 Copy Link
+                            </button>
+                        </td>
+                        <td>
+                            {% if poll.is_active %}
+                                <a href="{% url 'tokencast:end_poll' poll.id %}" class="btn btn-sm btn-danger">End Poll</a>
+                            {% else %}
+                                <span class="text-muted">Poll Closed</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% else %}
+        <div class="alert alert-warning text-center">No active polls.</div>
+    {% endif %}
+
+    <div class="text-center mt-4">
+        <a href="{% url 'tokencast:initiate_poll' %}" class="btn btn-success">➕ Start New Poll</a>
+    </div>
+</div>
+
+<!-- Bootstrap JS (Optional, only needed for advanced Bootstrap components) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>

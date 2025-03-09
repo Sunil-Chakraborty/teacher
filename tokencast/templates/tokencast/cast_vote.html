@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Cast Your Vote</title>
+
+    <!-- Bootstrap 5 CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        body {
+            background-color: #f8f9fa;
+            padding: 20px;
+        }
+        .container {
+            max-width: 700px;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+        .error-message {
+            color: #dc3545;
+            font-weight: bold;
+            background-color: #f8d7da;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container mt-5">
+    <h2 class="text-center">🗳️ Cast Your Vote</h2>
+
+    {% if form.errors %}
+        <div class="error-message">
+            <strong>⚠️ Please correct the errors below:</strong>
+            <ul class="mt-2">
+                {% for field, errors in form.errors.items %}
+                    {% for error in errors %}
+                        <li>{{ error }}</li>
+                    {% endfor %}
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+
+    <h4 class="text-center mt-3">
+         {{ poll.course_name }} <br>
+        <small>{{ poll.start_time|date:"d-m-Y h:i A" }}</small>        
+    </h4>
+    <h5 class="text-center text-muted">
+		👥 {{ poll.head_count }}
+        🎓 {{ faculty_name }} | 🏢 Department: {{ dept_name }}
+    </h5>
+
+   <form method="post" class="mt-4">
+		{% csrf_token %}
+
+		<div class="mb-3">
+			{% for field in form %}
+				<div class="mb-3">
+					<label for="{{ field.id_for_label }}" class="form-label fw-bold">{{ field.label }}</label>
+					{{ field }}
+					{% if field.help_text %}
+						<div class="form-text text-muted">{{ field.help_text }}</div>
+					{% endif %}
+					{% for error in field.errors %}
+						<div class="text-danger small">{{ error }}</div>
+					{% endfor %}
+				</div>
+			{% endfor %}
+		</div>
+
+		<div class="text-center">
+			<button type="submit" class="btn btn-success w-100">✅ Submit Vote</button>
+		</div>
+	</form>
+
+</div>
+
+<!-- Bootstrap JS (Optional, only needed for advanced Bootstrap components) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>

@@ -43,6 +43,9 @@ INSTALLED_APPS = [
     'iqac.apps.IqacConfig',
     'hod_group.apps.HodGroupConfig',
     'util.apps.UtilConfig',
+    'polls.apps.PollsConfig',
+    'tokencast.apps.TokencastConfig',
+    
     'widget_tweaks',    
     
 ]
@@ -115,6 +118,9 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 
 USE_TZ = True
+
+TIME_ZONE = 'Asia/Kolkata'  # Change this to your timezone
+
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Initiate Poll</title>
+
+    <!-- Bootstrap 5 CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        body {
+            background-color: #f8f9fa;
+            padding: 20px;
+        }
+        .container {
+            max-width: 500px;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+        input[type=number]::-webkit-inner-spin-button,
+        input[type=number]::-webkit-outer-spin-button { 
+            -webkit-appearance: none;
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container mt-5">
+    <h2 class="text-center mb-4">📢 Initiate New Poll</h2>
+
+    <form method="POST">
+        {% csrf_token %}
+		
+        <div class="mb-3">
+            <label for="course_name" class="form-label">📚 Course Name:</label>
+            <input type="text" class="form-control" name="course_name" id="course_name" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="head_count" class="form-label">👥 Head Count:</label>
+            <input type="number" class="form-control" name="head_count" id="head_count" required>
+        </div>
+
+        <div class="text-center">
+            <button type="submit" class="btn btn-success w-100">🚀 Start Poll</button>
+        </div>
+    </form>
+
+    <div class="text-center mt-3">
+        <a href="{% url 'tokencast:poll_dashboard' %}" class="btn btn-outline-secondary w-100">⬅️ Back to Dashboard</a>
+    </div>
+</div>
+
+<!-- Bootstrap JS (Optional, only needed for advanced Bootstrap components) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>

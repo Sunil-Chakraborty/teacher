@@ -55,6 +55,14 @@ Admin user : wpadmin
 pwd : admin@wp24
 email : to.sunilc@gmail.com
 
+
+WordPress has been successfully installed at :sub domain
+http://softnook.ct.ws
+Administrative URL : http://softnook.ct.ws/wp-admin/
+
+
+
+
 my website (http://tosunilc.kesug.com/wp-admin) is being blocked as a suspicious site. I am the owner of the site and it is safe.
 
 https://web.whatsapp.com/

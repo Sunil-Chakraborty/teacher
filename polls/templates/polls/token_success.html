@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Poll Created</title>
+</head>
+<body>
+    <h2>Voting Session Created Successfully!</h2>
+    <p><strong>Your Voting Token:</strong> {{ token_no }}</p>
+    <p>Share this link with students:</p>
+    
+	<p>
+		<a href="{% url 'polls:vote_poll' token_no=token_no %}">
+			http://127.0.0.1:8000/polls/vote/{{ token_no }}/
+		</a>
+	</p>
+
+</body>
+</html>

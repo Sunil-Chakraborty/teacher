@@ -12,6 +12,9 @@ urlpatterns = [
     path('iqac/', include('iqac.urls', namespace='iqac')),
     path('hod/', include('hod_group.urls', namespace='hod_group')),
     path('util/', include('util.urls', namespace='util')),
+    path('polls/', include('polls.urls', namespace='polls')),
+    path('tokencast/', include('tokencast.urls', namespace='tokencast')),
+    
 ]
 
 if settings.DEBUG:

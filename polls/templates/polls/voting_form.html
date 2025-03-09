@@ -1,0 +1,10 @@
+<form method="post">
+    {% csrf_token %}
+    <label>Access ID:</label>
+    <input type="text" name="access_id" required>
+
+    <label>Feedback:</label>
+    <textarea name="feedback" required></textarea>
+
+    <button type="submit">Submit Vote</button>
+</form>
