@@ -108,7 +108,7 @@
 <body>
 
 <div class="container">
-    <a href="{% url 'teachers:profile' %}" class="btn btn-primary">🏠 Home</a>
+    <a href="{% url 'teachers:logout' %}" class="btn btn-primary">🏠 Home</a>
     <h2>Welcome,{{ faculty_name }} of {{ dept_name }}</h2>
 	{% for course in courses %}
 		{{course}}
