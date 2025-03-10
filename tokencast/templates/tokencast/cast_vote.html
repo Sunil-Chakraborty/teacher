@@ -1,3 +1,5 @@
+{% load widget_tweaks %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -50,30 +52,32 @@
 
     <h4 class="text-center mt-3">
          {{ poll.course_name }} <br>
-        <small>{{ poll.start_time|date:"d-m-Y h:i A" }}</small>        
+        <small>Dt.{{ poll.start_time|date:"d-m-Y h:i A" }}</small>        
     </h4>
     <h5 class="text-center text-muted">
-		👥 {{ poll.head_count }}
-        🎓 {{ faculty_name }} | 🏢 Department: {{ dept_name }}
+		🎓 {{ faculty_name }} 
+		👥 {{ poll.head_count }}-Students
+        		
+		
     </h5>
 
-   <form method="post" class="mt-4">
+	<form method="post" class="mt-4">
 		{% csrf_token %}
 
-		<div class="mb-3">
-			{% for field in form %}
-				<div class="mb-3">
-					<label for="{{ field.id_for_label }}" class="form-label fw-bold">{{ field.label }}</label>
-					{{ field }}
-					{% if field.help_text %}
-						<div class="form-text text-muted">{{ field.help_text }}</div>
-					{% endif %}
-					{% for error in field.errors %}
-						<div class="text-danger small">{{ error }}</div>
-					{% endfor %}
-				</div>
-			{% endfor %}
-		</div>
+		{% for field in form %}
+			<div class="mb-3">
+				<label for="{{ field.id_for_label }}" class="form-label fw-bold">{{ field.label }}</label>
+				{{ field|add_class:"form-control" }}  <!-- Adds Bootstrap styling -->
+				
+				{% if field.help_text %}
+					<div class="form-text text-muted">{{ field.help_text }}</div>
+				{% endif %}
+				
+				{% for error in field.errors %}
+					<div class="text-danger small">{{ error }}</div>
+				{% endfor %}
+			</div>
+		{% endfor %}
 
 		<div class="text-center">
 			<button type="submit" class="btn btn-success w-100">✅ Submit Vote</button>

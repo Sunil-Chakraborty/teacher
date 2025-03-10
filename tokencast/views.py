@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.utils.timezone import now
 from .models import PollSession, StudentVote
+from teachers.models import Department, Teacher
 from .forms import PollSessionForm, StudentVoteForm
 from django.urls import reverse
 import uuid  # Import UUID for generating verification codes
@@ -9,6 +10,15 @@ import uuid  # Import UUID for generating verification codes
 
 @login_required
 def initiate_poll(request):
+    # Get the logged-in teacher's department
+    user_teacher = Teacher.objects.filter(email=request.user.email).first()
+    
+    if user_teacher:
+        department_name = user_teacher.dept_name  # Get department name
+        courses = Department.objects.filter(name=department_name).values_list('program', flat=True)
+    else:
+        courses = []  # Empty list if no teacher is found
+     
     if request.method == 'POST':
         form = PollSessionForm(request.POST)
         if form.is_valid():
@@ -23,18 +33,19 @@ def initiate_poll(request):
     else:
         form = PollSessionForm()
 
-    return render(request, 'tokencast/initiate_poll.html', {'form': form})
+    return render(request, 'tokencast/initiate_poll.html', {'form': form, 'courses':courses})
 
     
 @login_required
 def poll_dashboard(request):
+    
     polls = PollSession.objects.filter(teacher=request.user).order_by('-start_time')  # Fetch polls for the teacher
     
     base_url = request.build_absolute_uri('/').rstrip('/')  # Get http://127.0.0.1:8000
     faculty_name = request.user.get_full_name() or request.user.username  # ✅ Fetch teacher's name
-    
-    
-    
+    department = Department.objects.get(id=request.user.department_id)  # Fetch the department instance
+    dept_name = department.name.title()
+     
     for index, poll in enumerate(polls, start=1):
         poll.row_number = index  # Row count
         poll.token_used = StudentVote.objects.filter(poll_session=poll).exists()  # Check if token was used
@@ -42,11 +53,14 @@ def poll_dashboard(request):
         poll.remaining_votes = max(poll.head_count - poll.used_token_count, 0)  # ✅ Calculate remaining votes
         poll.voting_link = f"{base_url}/tokencast/vote/{poll.verification_code}/"  # Generate shareable link
 
-    return render(request, 'tokencast/poll_dashboard.html', {'polls': polls, 'faculty_name': faculty_name})
+    return render(request, 'tokencast/poll_dashboard.html', 
+        {'polls': polls,'faculty_name': faculty_name, 
+        'dept_name': dept_name})
     
     
     
 def cast_vote(request, verification_code):
+       
     poll = get_object_or_404(PollSession, verification_code=verification_code, is_active=True)
     
     # Fetch faculty and department details
@@ -69,6 +83,8 @@ def cast_vote(request, verification_code):
                 vote.poll_session = poll
                 vote.save()
                 return redirect('tokencast:vote_success')  # Redirect to success page
+                
+            
             else:
                 form.add_error('token_no', "Invalid token number. Please check and try again.")  # ✅ Add form error
         else:
@@ -80,7 +96,7 @@ def cast_vote(request, verification_code):
     return render(request, 'tokencast/cast_vote.html', 
         {'form': form, 'poll': poll,
         'faculty_name': faculty_name, 
-        'dept_name': dept_name,
+        'dept_name': dept_name,        
         'remaining_votes': poll.head_count - current_vote_count})
     
 @login_required

@@ -2,12 +2,101 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Poll Dashboard</title>
-    
-    <!-- Bootstrap 5 CDN -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 0;
+            background-color: #f8f9fa;
+        }
+
+        h1, h2, h4 {
+            text-align: center;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: auto;
+            padding: 15px;
+            background: white;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        .table-container {
+			overflow-y: auto;
+			max-height: 500px;  /* Enables vertical scrolling */
+			border: 1px solid #ddd;
+			border-radius: 5px;
+		}
+
+		table {
+			width: 100%;
+			border-collapse: collapse;
+			background: white;
+		}
+
+		thead {
+			background-color: #007bff;
+			color: white;
+			position: sticky;
+			top: 0;
+			z-index: 10;
+		}
+
+		th, td {
+			padding: 12px;
+			border: 1px solid #ddd;
+			text-align: center;
+			white-space: nowrap;
+		}
+
+		/* Freeze "Course Name" column */
+		th:nth-child(3), td:nth-child(3) {  /* Target 3rd column */
+			position: sticky;
+			left: 0;
+			background: #e5f1ff;
+			z-index: 15;  /* Ensures it stays on top */
+			box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1); /* Creates a separation effect */
+		}
+
+		@media (max-width: 768px) {
+			th, td {
+				padding: 8px;
+				font-size: 12px;
+			}
+
+			.table-container {
+				max-height: 400px;
+			}
+		}
+        button {
+            padding: 8px 12px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .btn-primary {
+            background-color: #007bff;
+            color: white;
+        }
+
+        .btn-danger {
+            background-color: #dc3545;
+            color: white;
+        }
+
+        .btn-copy {
+            background-color: #28a745;
+            color: white;
+        }
+
+    </style>
+
     <script>
         function copyToClipboard(link) {
             navigator.clipboard.writeText(link)
@@ -15,101 +104,75 @@
                 .catch(err => console.error("Error copying text: ", err));
         }
     </script>
-    
-    <style>
-        body {
-            background-color: #f8f9fa;
-            padding: 20px;
-        }
-        .container {
-            max-width: 1000px;
-        }
-        .table th, .table td {
-            text-align: center;
-            vertical-align: middle;
-        }
-    </style>
 </head>
 <body>
 
 <div class="container">
-    <div class="d-flex justify-content-between align-items-center mb-3">
-        <h2>Welcome, {{ faculty_name }}</h2>
-        <a href="{% url 'teachers:profile' %}" class="btn btn-primary">🏠 Home</a>
-    </div>
-
-    <h1 class="mb-4 text-center">📊 Poll Dashboard</h1>
+    <a href="{% url 'teachers:profile' %}" class="btn btn-primary">🏠 Home</a>
+    <h2>Welcome,{{ faculty_name }} of {{ dept_name }}</h2>
+	{% for course in courses %}
+		{{course}}
+	{% endfor %}
+    <h1>Poll Dashboard</h1>
 
     {% if polls %}
-        <div class="table-responsive">
-            <table class="table table-bordered table-striped">
-                <thead class="table-dark">
-                    <tr>
-                        <th>#</th>
-                        <th>Token No</th>
-                        <th>Course Name</th>
-                        <th>Head Count</th>
-                        <th>Start Time</th>
-                        <th>End Time</th>
-                        <th>Status</th>
-                        <th>Remaining</th>
-                        <th>Token Used</th>
-                        <th>Poll Link</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for poll in polls %}
-                    <tr>
-                        <td>{{ forloop.counter }}</td>
-                        <td>{{ poll.token_no }}</td>
-                        <td>{{ poll.course_name }}</td>
-                        <td>{{ poll.head_count }}</td>
-                        <td>{{ poll.start_time|date:"d-m-Y h:i A" }}</td>
-                        <td>{{ poll.end_time|date:"d-m-Y h:i A"|default:"Ongoing" }}</td>
-                        <td>
-                            {% if poll.is_active %}
-                                <span class="badge bg-success">Active</span>
-                            {% else %}
-                                <span class="badge bg-danger">Ended</span>
-                            {% endif %}
-                        </td>
-                        <td>{{ poll.remaining_votes|default:0 }}</td>
-                        <td>
-                            {% if poll.token_used %}
-                                ✅ Used ({{ poll.used_token_count }})
-                            {% else %}
-                                ❌ Not Used
-                            {% endif %}
-                        </td>
-                        <td>
-                            <button class="btn btn-sm btn-outline-secondary" onclick="copyToClipboard('{{ poll.voting_link }}')">
-                                📋 Copy Link
-                            </button>
-                        </td>
-                        <td>
-                            {% if poll.is_active %}
-                                <a href="{% url 'tokencast:end_poll' poll.id %}" class="btn btn-sm btn-danger">End Poll</a>
-                            {% else %}
-                                <span class="text-muted">Poll Closed</span>
-                            {% endif %}
-                        </td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        </div>
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Token No</th>
+                    <th style="color:black;text-align:left;">Course Name</th>
+                    <th>Head Count</th>
+                    <th>Start Time</th>
+                    <th>End Time</th>
+                    <th>Status</th>
+                    <th>Remaining</th>
+                    <th>Token Used</th>
+                    <th>Poll Link</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for poll in polls %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ poll.token_no }}</td>
+                    <td style="text-align:left;">{{ poll.course_name }}</td>
+                    <td>{{ poll.head_count }}</td>
+                    <td>{{ poll.start_time|date:"d-m-Y h:i A" }}</td>
+                    <td>{{ poll.end_time|date:"d-m-Y h:i A"|default:"Ongoing" }}</td>
+                    <td>{% if poll.is_active %}✅ Active{% else %}❌ Ended{% endif %}</td>
+                    <td>{{ poll.remaining_votes|default:0 }}</td>
+                    <td>
+                        {% if poll.token_used %}
+                            ✅ Used ({{ poll.used_token_count }})
+                        {% else %}
+                            ❌ Not Used
+                        {% endif %}
+                    </td>
+                    <td>
+                        <button class="btn-copy" onclick="copyToClipboard('{{ poll.voting_link }}')">📋 Copy</button>
+                    </td>
+                    <td>
+                        {% if poll.is_active %}
+                            <a href="{% url 'tokencast:end_poll' poll.id %}" class="btn btn-danger">End Poll</a>
+                        {% else %}
+                            <span>Poll Closed</span>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
     {% else %}
-        <div class="alert alert-warning text-center">No active polls.</div>
+        <p style="text-align: center;">No active polls.</p>
     {% endif %}
 
-    <div class="text-center mt-4">
-        <a href="{% url 'tokencast:initiate_poll' %}" class="btn btn-success">➕ Start New Poll</a>
-    </div>
+    <br>
+    <a href="{% url 'tokencast:initiate_poll' %}" class="btn btn-primary w-100">➕ Start New Poll</a>
 </div>
-
-<!-- Bootstrap JS (Optional, only needed for advanced Bootstrap components) -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
 </html>

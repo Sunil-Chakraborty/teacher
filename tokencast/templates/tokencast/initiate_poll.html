@@ -37,9 +37,15 @@
 		
         <div class="mb-3">
             <label for="course_name" class="form-label">📚 Course Name:</label>
-            <input type="text" class="form-control" name="course_name" id="course_name" required>
-        </div>
-
+            <select name="course_name" id="course_name" required class="form-control">
+			<option value="">-- Select Course --</option>
+			{% for course in courses %}
+				<option value="{{ course }}">{{ course }}</option>
+			{% endfor %}
+		</select>
+		</div>
+		
+		
         <div class="mb-3">
             <label for="head_count" class="form-label">👥 Head Count:</label>
             <input type="number" class="form-control" name="head_count" id="head_count" required>

@@ -1,4 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Voting Closed</title>
+    
+    <!-- Bootstrap for styling -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <style>
+        body {
+            background-color: #f8f9fa;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            text-align: center;
+        }
+        .message-box {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .error-icon {
+            font-size: 50px;
+            color: #dc3545;
+        }
+    </style>
+</head>
 
-<h2>Voting Closed for token no :{{poll.token_no}} of {{poll.start_time}}</h2>
-<p>as this poll has reached the maximum head count {{poll.head_count}}</p>
-
+<body>
+    <div class="message-box">
+        <div class="error-icon">⛔</div>
+        <h2 class="mt-3 text-danger">Voting Closed</h2>
+        <p class="fs-5">Voting is closed for <strong>Token No: {{ poll.token_no }}</strong> as this poll has reached the maximum head count of <strong>{{ poll.head_count }}</strong>.</p>
+        <p><small>Poll started at: <strong>{{ poll.start_time }}</strong></small></p>
+        
+    </div>
+</body>
+</html>
