@@ -130,7 +130,7 @@
                     <th>Remaining</th>
                     <th>Token Used</th>
                     <th>Poll Link</th>
-                    <th>Actions</th>
+                    <th colspan="2">Actions</th>
                 </tr>
             </thead>
             <tbody>
@@ -144,16 +144,26 @@
                     <td>{{ poll.end_time|date:"d-m-Y h:i A"|default:"Ongoing" }}</td>
                     <td>{% if poll.is_active %}✅ Active{% else %}❌ Ended{% endif %}</td>
                     <td>{{ poll.remaining_votes|default:0 }}</td>
+                    
                     <td>
-                        {% if poll.token_used %}
+                        {% if poll.used_token_count %}
                             ✅ Used ({{ poll.used_token_count }})
                         {% else %}
                             ❌ Not Used
                         {% endif %}
                     </td>
+                    
+					
                     <td>
                         <button class="btn-copy" onclick="copyToClipboard('{{ poll.voting_link }}')">📋 Copy</button>
                     </td>
+					<td>
+						{% if not poll.is_started %}
+							<a href="{% url 'tokencast:start_poll' poll.id %}" class="btn btn-warning">Start Poll</a>
+						{% else %}
+							<span class="text-success">Poll Started</span>
+						{% endif %}
+					</td>
                     <td>
                         {% if poll.is_active %}
                             <a href="{% url 'tokencast:end_poll' poll.id %}" class="btn btn-danger">End Poll</a>
@@ -161,7 +171,9 @@
                             <span>Poll Closed</span>
                         {% endif %}
                     </td>
+					
                 </tr>
+				
                 {% endfor %}
             </tbody>
         </table>
