@@ -114,6 +114,12 @@
 		{{course}}
 	{% endfor %}
     <h1>Poll Dashboard</h1>
+	
+	 <!-- Display the received count -->
+    <h4 class="text-center text-success">
+        ✅ Verified Student Count: {{ request.GET.count }}
+    </h4>
+
 
     {% if polls %}
     <div class="table-container">

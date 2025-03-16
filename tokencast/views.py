@@ -6,6 +6,7 @@ from teachers.models import Department, Teacher
 from .forms import PollSessionForm, StudentVoteForm
 from django.urls import reverse
 import uuid  # Import UUID for generating verification codes
+from django.http import JsonResponse
 
 
 @login_required

@@ -1,0 +1,7 @@
+logout msg.
+
+Logged out
+Thanks for spending some quality time with the web site today.
+
+Log in again
+

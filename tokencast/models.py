@@ -23,8 +23,7 @@ class PollSession(models.Model):
         
 class StudentVote(models.Model):
     poll_session = models.ForeignKey(PollSession, on_delete=models.CASCADE)
-    token_no = models.CharField(max_length=10)
-    vote = models.CharField(max_length=100)
+    token_no = models.CharField(max_length=10)    
     clarity = models.IntegerField(choices=[(i, str(i)) for i in range(1, 6)])  # Rating 1-5
     engagement = models.IntegerField(choices=[(i, str(i)) for i in range(1, 6)])  # Rating 1-5
     teaching_methods = models.IntegerField(choices=[(i, str(i)) for i in range(1, 6)])  # Rating 1-5
