@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% load widget_tweaks %}
+{% load signing_tags %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="text-center text-danger">Delete Course Record</h2>
+    <p class="text-center">Are you sure you want to delete the record for <strong>{{ course.course_name }} - {{ course.enrol_year }}</strong></p>
+    <form method="POST" action="{% url 'hod_group:course_delete' signed_id=course.id|sign_id %}">
+        {% csrf_token %}
+        <div class="text-center mt-4">
+            <button type="submit" class="btn btn-danger">Yes, Delete</button>
+            <a href="{% url 'hod_group:group_table_with_id' grp_id %}" class="btn btn-secondary">Cancel</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

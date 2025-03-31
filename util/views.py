@@ -109,6 +109,11 @@ def convert_google_links(url):
     if "drive.google.com" in url and "/file/d/" in url:
         file_id = url.split("/file/d/")[1].split("/")[0]
         return f"https://drive.google.com/uc?export=download&id={file_id}"
+    
+    # Handle Google Drive folder links (No direct download, only folder ID extraction)
+    if "drive.google.com/drive/folders/" in url:
+        folder_id = url.split("/folders/")[1].split("?")[0]
+        return f"https://drive.google.com/drive/folders/{folder_id}"
 
     return url
     

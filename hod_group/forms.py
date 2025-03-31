@@ -1,5 +1,5 @@
 from django import forms
-from .models import StudentAdmitted
+from .models import StudentAdmitted, OnlineCourse
 from teachers.models import  Department
 from django.core.exceptions import ValidationError
 
@@ -41,4 +41,32 @@ class StudentAdmittedForm(forms.ModelForm):
         else:
             self.fields["prog_name"].queryset = Department.objects.none()
 
-   
+class OnlineCourseForm(forms.ModelForm):
+    class Meta:
+        model = OnlineCourse
+        exclude = ['teacher', 'group_id', 'dept_name', 'created_date', 'updated_date']
+        widgets = {
+            'enrol_year': forms.NumberInput(attrs={                
+                'class': 'form-control',
+                'placeholder': 'YYYY',
+                'min': '1990',    
+            }),
+            'contact_hrs': forms.NumberInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Hours',
+                'min': '1',
+                'max': '100'
+            }),
+            'enrol_students': forms.NumberInput(attrs={'min': 0}),
+            'complete_count': forms.NumberInput(attrs={'min': 0}),
+        }
+        labels = {            
+            'course_name': "Course Name",
+            'prog_cd': "Program Code",
+            'enrol_year': "Year of Enrollment",
+            'contact_hrs': "Course Contact Hours",
+            'enrol_students': "Students Enrolled",
+            'complete_count': "Students Completed",
+        }
+
+    

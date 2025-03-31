@@ -82,8 +82,8 @@ def login_view(request):
             
              
             # Otherwise, redirect to a default profile page or another page
-            #return redirect('teachers:profile')  # Replace with your desired default URL
-            return redirect('tokencast:poll_dashboard')  # Replace with your desired default URL
+            return redirect('teachers:profile')  # Replace with your desired default URL
+            #return redirect('tokencast:poll_dashboard')  # Replace with your desired default URL
             
             
             #return redirect(f"{reverse('teachers:profile')}?hod={hod}")

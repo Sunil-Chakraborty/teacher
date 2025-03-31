@@ -107,11 +107,14 @@ def cast_vote(request, verification_code):
 
 @login_required
 def start_poll(request, poll_id):
-    poll = get_object_or_404(PollSession, id=poll_id)
-    poll.is_started = True
-    poll.save()
-    return redirect('tokencast:poll_dashboard')
+    poll = get_object_or_404(PollSession, id=poll_id, teacher=request.user)
 
+    # Ensure the teacher is the one starting the poll
+    if request.user == poll.teacher:
+        poll.is_started = True
+        poll.save()
+
+    return redirect('tokencast:cast_vote', verification_code=poll.verification_code)
     
 @login_required
 def end_poll(request, poll_id):

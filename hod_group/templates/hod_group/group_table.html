@@ -43,10 +43,10 @@
 <body>
     <!-- Sidebar Section -->
     <div class="sidebar" >
-		<h3>Tables</h3>
+		<h3><a style="text-decoration=none;" href="{% url 'hod_group:group_table' %}">Tables</a></h3>
 		<ul>
 			<li><a href="{% url 'hod_group:group_table_with_id' 'group1' %}">Sanctioned and Admitted Students</a></li>
-			<li><a href="{% url 'hod_group:group_table_with_id' 'group2' %}">Group 2</a></li>
+			<li><a href="{% url 'hod_group:group_table_with_id' 'group2' %}">Online Courses for students</a></li>
 			<li><a href="{% url 'hod_group:group_table_with_id' 'group3' %}">Group 3</a></li>
 			<li><a href="{% url 'hod_group:group_table_with_id' 'group4' %}">Utilities</a></li>
 		</ul>

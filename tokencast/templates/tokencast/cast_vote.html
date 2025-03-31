@@ -1,129 +1,82 @@
 {% load widget_tweaks %}
+<html>
+<h2 class="text-center">Cast Your Vote</h2>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Cast Your Vote</title>
+<!-- Display remaining votes -->
+<p class="text-center">Remaining Votes: <strong id="remaining_votes">{{ remaining_votes }}</strong></p>
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<!-- Proceed Button for Teacher -->
+{% if request.user == poll.teacher %}
+    <form method="post" action="{% url 'tokencast:start_poll' poll.id %}">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-primary w-100">Proceed ({{ poll.used_token_count }}/{{ poll.head_count }})</button>
+    </form>
+{% endif %}
 
-    <style>
-        body {
-            background-color: #f8f9fa;
-            padding: 20px;
-        }
-        .container {
-            max-width: 700px;
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-        }
-        .error-message {
-            color: #dc3545;
-            font-weight: bold;
-            font-size: 20px;
-            background-color: #f8d7da;
-            padding: 10px;
-            text-align: center;
-            border-radius: 5px;
-            margin-bottom: 15px;
-        }
-    </style>
-</head>
-<body>
+<!-- Voting Form (Initially Disabled) -->
+<form method="post" class="mt-4" id="voteForm">
+    {% csrf_token %}
 
-<div class="container mt-5">
-    <h2 class="text-center">🗳️ Cast Your Vote</h2>
+    <!-- Clarity of Explanation -->
+    <div class="mb-3">
+        <label class="form-label fw-bold">Clarity of Explanation</label>
+        <select class="form-select" name="clarity">
+            <option value="5">Excellent</option>
+            <option value="4">Very Good</option>
+            <option value="3">Good</option>
+            <option value="2">Fair</option>
+            <option value="1">Needs Improvement</option>
+        </select>
+    </div>
 
-    {% if form.errors %}
-        <div class="error-message">
-            <ul class="mt-2">
-                {% for field, errors in form.errors.items %}
-                    {% for error in errors %}
-                        {{ error }}
-                    {% endfor %}
-                {% endfor %}
-            </ul>
-        </div>
-    {% endif %}
+    <!-- Engagement Level -->
+    <div class="mb-3">
+        <label class="form-label fw-bold">Level of Student Engagement</label>
+        <select class="form-select" name="engagement">
+            <option value="5">Highly Engaging</option>
+            <option value="4">Engaging</option>
+            <option value="3">Neutral</option>
+            <option value="2">Somewhat Disengaging</option>
+            <option value="1">Not Engaging</option>
+        </select>
+    </div>
 
-    <h4 class="text-center mt-3">
-        {{ poll.course_name }} <br>
-        <small>Dt.{{ poll.start_time|date:"d-m-Y h:i A" }}</small>        
-    </h4>
-    <h5 class="text-center text-muted">
-        🎓 {{ faculty_name }} 
-        👥 {{ poll.head_count }}-Students
-        <br>
-        ✅ Tokens Used: {{ poll.used_token_count }}
-        <br>
-        ⏳ Remaining Votes: {{ remaining_votes }}
-    </h5>
+    <!-- Use of Teaching Methods -->
+    <div class="mb-3">
+        <label class="form-label fw-bold">Effectiveness of Teaching Methods</label>
+        <select class="form-select" name="teaching_methods">
+            <option value="5">Highly Effective</option>
+            <option value="4">Effective</option>
+            <option value="3">Neutral</option>
+            <option value="2">Somewhat Ineffective</option>
+            <option value="1">Ineffective</option>
+        </select>
+    </div>
 
-    {% if not poll.is_active %}
-        <div class="alert alert-danger text-center">⚠️ Voting is closed.</div>
-    {% else %}
-        <form method="post" class="mt-4">
-            {% csrf_token %}
-            {% for field in form %}
-                <div class="mb-3">
-                    <label for="{{ field.id_for_label }}" class="form-label fw-bold">{{ field.label }}</label>
-                    {{ field|add_class:"form-control" }}
-                    {% if field.help_text %}
-                        <div class="form-text text-muted">{{ field.help_text }}</div>
-                    {% endif %}
-                    {% for error in field.errors %}
-                        <div class="text-danger small">{{ error }}</div>
-                    {% endfor %}
-                </div>
-            {% endfor %}
+    <!-- Feedback on Improvements -->
+    <div class="mb-3">
+        <label class="form-label fw-bold">Suggestions for Improvement</label>
+        <textarea class="form-control" name="improvement_suggestions" rows="3"></textarea>
+    </div>
 
-            <div class="text-center">
-                <button type="submit" class="btn btn-success w-100" {% if not poll.is_active %}disabled{% endif %}>✅ Submit Vote</button>
-            </div>
-        </form>
-    {% endif %}
+    <!-- Additional Comments -->
+    <div class="mb-3">
+        <label class="form-label fw-bold">Additional Comments</label>
+        <textarea class="form-control" name="additional_comments" rows="3"></textarea>
+    </div>
 
-    <form id="voteForm" action="{% url 'tokencast:poll_dashboard' %}" method="post">
-		{% csrf_token %}
-		<!-- Form fields go here -->
-		<button type="submit">Submit</button>
-	</form>
+    <!-- Submit Button (Initially Disabled) -->
+    <div class="text-center">
+        <button type="submit" class="btn btn-success w-100" id="submitVoteBtn" disabled>✅ Submit Feedback</button>
+    </div>
+</form>
 
-    {% if request.user.is_authenticated and request.user == poll.teacher %}
-        <div class="text-center mt-4">
-            <a href="{% url 'tokencast:start_poll' poll.id %}" class="btn btn-primary">🎬 Start Poll</a>
-            <a href="{% url 'tokencast:end_poll' poll.id %}" class="btn btn-danger">🛑 End Poll</a>
-        </div>
-    {% endif %}
-</div>
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script>
-document.getElementById('voteForm').addEventListener('submit', function(event) {
-    event.preventDefault(); // Prevent default redirect
-    let formData = new FormData(this);
-
-    fetch(this.action, {
-        method: 'POST',
-        body: formData,
-        headers: {
-            'X-Requested-With': 'XMLHttpRequest'
-        }
-    }).then(response => response.json())
-    .then(data => {
-        if (data.success) {
-            alert("Vote cast successfully! Waiting for the teacher to start the poll.");
-            // Optionally, update the UI instead of redirecting
-        } else {
-            alert("Something went wrong. Please try again.");
-        }
+    // Enable Submit Vote button when poll is started
+    document.addEventListener("DOMContentLoaded", function() {
+        var isPollStarted = {{ poll.is_started|yesno:"true,false" }};
+        document.getElementById("submitVoteBtn").disabled = !isPollStarted;
     });
-});
 </script>
-
-</body>
 </html>
+
