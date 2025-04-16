@@ -8,6 +8,10 @@
 	<!-- Include jQuery and DataTables scripts -->
 	<!-- CSS -->
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.4.1/css/buttons.dataTables.min.css">
+
+	
+	
 	<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 	<script src="https://cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js"></script>
 	<script src="https://cdn.datatables.net/1.13.5/js/dataTables.bootstrap5.min.js"></script>
@@ -297,9 +301,16 @@
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
 
+<!-- Buttons Extension -->
+<script src="https://cdn.datatables.net/buttons/2.4.1/js/dataTables.buttons.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.html5.min.js"></script>
+
+<!-- JSZip for Excel export -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 
 <script>
 		$(document).ready(function () {
+		
 			$('#onlineTable').DataTable({
 				autoWidth: false,
 				pageLength: 10,
@@ -307,9 +318,42 @@
 				searching: true,
 				ordering: true,
 				columnDefs: [
-					{ orderable: false, targets: -1 } // Disable sorting on the Actions column
+					{ orderable: false, targets: -1 } // Disable sorting on last column (Actions)
+				],
+				dom: '<"row mb-2"<"col-md-6"l><"col-md-6"f>>' + 
+					 '<"row mb-2"<"col-md-12"B>>' + 
+					 'rt<"row mt-2"<"col-md-6"i><"col-md-6"p>>',
+					 
+				buttons: [
+					{
+						extend: 'csvHtml5',
+						text: 'Export CSV',
+						className: 'btn btn-sm btn-outline-primary me-2',
+						exportOptions: {
+							columns: ':not(:last-child):not(:nth-last-child(2))'
+						}
+					},
+					{
+						extend: 'excelHtml5',
+						text: 'Export Excel',
+						className: 'btn btn-sm btn-outline-success',
+						exportOptions: {
+							columns: ':not(:last-child):not(:nth-last-child(2))'
+						}
+					}
 				]
 			});
+
+			// Clear the Add form when the modal is opened
+			$('#addOnlineModal').on('show.bs.modal', function () {
+				const $form = $('#OnlineCourseForm');
+				$form[0].reset();  // Reset native form values
+				$form.find('select').val('').trigger('change');  // Reset dropdowns
+				$form.find('input[type="file"]').val(''); // Clear file inputs
+				$form.find('.errorlist').remove(); // Remove any error messages
+			});
+
+
 
 			// Make the modal draggable
 			$('#addOnlineModal').draggable({
@@ -407,13 +451,19 @@
 				}
 			});
 			
-			
-			
+			// Remove highlight when Edit modal is closed (via X or Cancel button)
+			$('#editOnlineModal').on('hidden.bs.modal', function () {
+				$('tr').removeClass('highlight-row');
+			});
+					
 			//$('.edit-btn').on('click', function() {
 			$(".edit-btn").click(function () {				 
 				var courseId = $(this).data("id");
 				
-				
+				$('tr').removeClass('highlight-row'); // Remove previous highlights
+				var row = $(this).closest('tr');
+				row.addClass('highlight-row'); // Highlight this row
+		
 				$("#editOnlineCourseForm").attr("action", "/hod/edit_course/" + courseId + "/");  // Update form action dynamically
 				
 				$("#edit-course-id").val(courseId);
