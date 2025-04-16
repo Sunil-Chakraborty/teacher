@@ -192,6 +192,7 @@
 				<div class="modal-body">
 					
 					<form method="POST" action="{% url 'hod_group:courses_add' %}"  id="OnlineCourseForm" enctype="multipart/form-data" >
+												
 						{% csrf_token %}
 						
 						<!-- Render  fields -->
@@ -223,11 +224,19 @@
 						</div>
 						<!-- Action buttons -->
 						<div class="modal-footer">
-							<button type="submit" class="btn btn-primary">Add Student</button>
+							<button type="submit" class="btn btn-primary">Add & Exit</button>
+							<button type="button" class="btn btn-success" id="submitAndContinue">Add & Continue</button>
 							{% if grp_id %}
 								<a href="{% url 'hod_group:group_table_with_id' group_id=grp_id %}" class="btn btn-secondary px-4">Cancel</a>
 							{% endif %}
+							
 						</div>
+						
+						<div class="mb-3">
+								<button type="button" class="btn btn-outline-primary btn-sm" onclick="copyCourseForm()">Copy Data</button>
+								<button type="button" class="btn btn-outline-success btn-sm" onclick="pasteCourseForm()">Paste Data</button>
+						</div>
+						
 					</form>
 					
 						
@@ -451,6 +460,39 @@
 				}
 			});
 			
+			$('#submitAndContinue').click(function (e) {
+				e.preventDefault();
+				const form = $('#OnlineCourseForm')[0];
+				const formData = new FormData(form);
+
+				$.ajax({
+					type: 'POST',
+					url: "{% url 'hod_group:courses_add_continue' %}",
+					data: formData,
+					processData: false,
+					contentType: false,
+					headers: {'X-CSRFToken': '{{ csrf_token }}'},
+					success: function (response) {
+						if (response.success) {
+							alert("Record added successfully!");
+							$('#OnlineCourseForm')[0].reset();  // Reset form
+						}
+					},
+					error: function (xhr) {
+						const errorData = JSON.parse(xhr.responseText);
+						let message = "Error:\n";
+						for (let field in errorData.errors) {
+							message += `${field}: ${errorData.errors[field][0].message}\n`;
+						}
+						alert(message);
+					}
+				});
+			});
+					
+			
+			
+			
+			
 			// Remove highlight when Edit modal is closed (via X or Cancel button)
 			$('#editOnlineModal').on('hidden.bs.modal', function () {
 				$('tr').removeClass('highlight-row');
@@ -522,13 +564,45 @@
                 handle: ".modal-header" // Allow dragging by the modal header
             });
 
-			
-			
-
+		
 			
 		});
 
 	
+</script>
+
+<!-- Clipboard Script (at the bottom) -->
+<script>
+    const storageKey = 'onlineCourseFormData';
+
+    function copyCourseForm() {
+        const data = {
+            course_name: document.getElementById("id_course_name")?.value || "",
+            prog_cd: document.getElementById("id_prog_cd")?.value || "",
+            enrol_year: document.getElementById("id_enrol_year")?.value || "",
+            contact_hrs: document.getElementById("id_contact_hrs")?.value || "",
+            enrol_students: document.getElementById("id_enrol_students")?.value || "",
+            complete_count: document.getElementById("id_complete_count")?.value || ""
+        };
+        localStorage.setItem(storageKey, JSON.stringify(data));
+        alert("Form data copied!");
+    }
+
+    function pasteCourseForm() {
+        const data = JSON.parse(localStorage.getItem(storageKey) || "{}");
+        if (!data || Object.keys(data).length === 0) {
+            alert("No copied data found.");
+            return;
+        }
+
+        document.getElementById("id_course_name").value = data.course_name || "";
+        document.getElementById("id_prog_cd").value = data.prog_cd || "";
+        document.getElementById("id_enrol_year").value = data.enrol_year || "";
+        document.getElementById("id_contact_hrs").value = data.contact_hrs || "";
+        document.getElementById("id_enrol_students").value = data.enrol_students || "";
+        document.getElementById("id_complete_count").value = data.complete_count || "";
+        alert("Form data pasted!");
+    }
 </script>
 
 

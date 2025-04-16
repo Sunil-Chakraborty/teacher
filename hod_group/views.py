@@ -233,6 +233,30 @@ def onlineCourse_add(request):
     
     return render(request, 'hod_group/group2_details.html', 
                  {'form': form, 'grp_id': request.session.get('grp_id', None)})
+
+@login_required
+def onlineCourse_add_continue(request):
+
+    if request.method == 'POST' and request.headers.get('x-requested-with') == 'XMLHttpRequest':
+        user = request.user
+        teacher = get_object_or_404(Teacher, user=user)
+        form = OnlineCourseForm(request.POST, request.FILES)
+        
+        if form.is_valid():
+            course = form.save(commit=False)
+            course.dept_name = teacher.dept_name
+            course.teacher_id = teacher.id
+            course.group_id = request.session.get('grp_id', None)
+            course.save()
+            
+            return JsonResponse({'success': True, 'message': 'Record added successfully!'})
+        else:
+            errors = form.errors.as_json()
+            return JsonResponse({'success': False, 'errors': errors}, status=400)
+
+    return JsonResponse({'success': False, 'message': 'Invalid request'}, status=400)
+
+
                  
 @login_required
 def edit_course(request, course_id):
