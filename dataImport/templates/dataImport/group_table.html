@@ -1,0 +1,76 @@
+{% extends 'grp_base.html' %}
+
+{% load widget_tweaks %}
+{% load static %}
+
+{% block content %}
+
+<!-- Remove <html>, <head>, <body> to avoid nesting inside base -->
+<style>
+    html, body {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+    }
+
+    .wrapper {
+        display: flex;
+        min-height: 100vh;
+    }
+
+    .sidebar {
+        width: 250px;
+        background-color: #f4f4f4;
+        padding: 1rem;
+        height: 100vh;
+        position: sticky;
+        top: 0;
+        flex-shrink: 0;
+        border-right: 1px solid #ddd;
+    }
+
+    .sidebar h3 a {
+        text-decoration: none;
+        color: #333;
+    }
+
+    .sidebar a {
+        display: block;
+        color: #333;
+        text-decoration: none;
+        padding: 0.5rem 0;
+        border-bottom: 1px solid #ddd;
+    }
+
+    .sidebar a:hover {
+        background-color: #ddd;
+    }
+
+    .content {
+        flex-grow: 1;
+        padding: 1rem;
+        background-color: #fff;
+    }
+</style>
+
+<div class="wrapper">
+    <!-- Sidebar Section -->
+    <div class="sidebar">
+        <h3><a href="{% url 'dataImport:group_table' %}">Tables</a></h3>
+        <ul>
+            <li><a href="{% url 'dataImport:group_table_with_id' 'group4' %}">Research Project</a></li>
+        </ul>
+    </div>
+
+    <!-- Main Content Section -->
+    <div class="content">
+        {% block group_table_details %}
+            <h2>Group Table</h2>
+            <p>Select a table from the sidebar to view its details.</p>
+            <p>No table selected yet.</p>
+			<br>
+        {% endblock %}
+    </div>
+</div>
+
+{% endblock %}
