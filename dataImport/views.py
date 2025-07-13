@@ -19,6 +19,7 @@ from .forms import (
     ResearchProjectForm,
     ResearchUploadForm,
     ExcelUploadForm,
+    ResearchProjectFormSet,
 )
 from django.db.models import Q
 import django_filters
@@ -182,4 +183,107 @@ def upload_research(request):
         'upload_success': upload_success,
         'redirect_url': redirect_url
     })
+
+"""
+Following Validation applied while adding data:
+Skips empty or invalid rows.
+Applies same rules as Excel upload.
+Updates existing projects or creates new ones.
+Associates each record with the logged-in teacher.
+"""
+
+
+
+@login_required
+def research_project_bulk_create(request):
+    user = request.user
+    teacher = get_object_or_404(Teacher, user=user)
+
+    if request.method == 'POST':
+        formset = ResearchProjectFormSet(request.POST)
+
+        valid_count = 0
+        has_partial_error = False
+
+        if formset.is_valid():
+            for i, form in enumerate(formset.forms):
+                if not form.has_changed():
+                    continue  # skip blank forms
+
+                # Extract required fields
+                pi = form.cleaned_data.get('pi_name')
+                title = form.cleaned_data.get('project_title')
+                year = form.cleaned_data.get('award_year')
+                amount = form.cleaned_data.get('amount')
+
+                # Partial/incomplete row check
+                if not all([pi, title, year, amount]):
+                    form.add_error(None, "Please complete all required fields (PI, Title, Year, Amount).")
+                    has_partial_error = True
+                    print(f"❌ Row {i+1} is partially filled: {form.cleaned_data}")
+                    continue
+
+                # Save valid row
+                ResearchProject.objects.update_or_create(
+                    pi_name=pi,
+                    project_title=title,
+                    award_year=year,
+                    amount=safe_decimal(amount),
+                    defaults={
+                        'funding_agency': form.cleaned_data.get('funding_agency', ''),
+                        'duration': form.cleaned_data.get('duration', ''),
+                        'teacher': teacher,
+                        'dept_name': teacher.dept_name
+                    }
+                )
+                valid_count += 1
+
+            if has_partial_error:
+                messages.error(request, "Some rows are incomplete. Please complete or clear them.")
+            if valid_count > 0 and not has_partial_error:
+                messages.success(request, f"{valid_count} project(s) saved.")
+                return redirect('dataImport:group_table_with_id', 'group4')
+
+            # ❗ If no valid rows and no partial error, stop redirect
+            if valid_count == 0 and not has_partial_error:
+                messages.warning(request, "No data submitted. Please enter research project details.")
+        else:
+            print("🔍 Formset is NOT valid at formset level:")
+            for i, form in enumerate(formset):
+                if form.errors:
+                    print(f"Form {i+1} Errors:", form.errors)
+            messages.error(request, "❌ Please correct the form errors.")
+
+    else:
+        formset = ResearchProjectFormSet(queryset=ResearchProject.objects.none())
+
+    return render(request, 'dataImport/research_project_bulk_create.html', {
+        'formset': formset
+    })
+
     
+@login_required
+def research_edit(request, research_id):
+    research = get_object_or_404(ResearchProject, id=research_id)
+    if request.method == 'POST':
+        form = ResearchProjectForm(request.POST, request.FILES, instance=research)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Research rec updated successfully!")
+            return redirect('dataImport:group_table_with_id', group_id="group4")
+            
+    else:
+        form = ResearchProjectForm(instance=research)
+
+    return render(request, 'dataImport/group4_details.html', {
+        'form': form,
+        'research': research
+    })
+
+
+    
+@login_required
+def research_delete(request, pk):
+    research = get_object_or_404(ResearchProject, pk=pk)
+    research.delete()
+    return redirect('dataImport:group_table_with_id', 'group4')

@@ -45,8 +45,10 @@ INSTALLED_APPS = [
     'util.apps.UtilConfig',
     'polls.apps.PollsConfig',
     'tokencast.apps.TokencastConfig',
-    
-    'widget_tweaks',    
+    'nrcApp.apps.NrcappConfig',    
+    'widget_tweaks',
+    'django_filters',
+    'dataImport.apps.DataimportConfig',   
     
 ]
 

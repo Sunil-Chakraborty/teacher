@@ -1,0 +1,528 @@
+{% extends 'nrcApp/group_table.html' %}
+{% load widget_tweaks %}
+{% load signing_tags %}
+{% load static %}
+{% block group_table_details %}
+
+<head>
+	<!-- Include jQuery and DataTables scripts -->
+	<!-- CSS -->
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.4.1/css/buttons.dataTables.min.css">
+
+	<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+	<script src="https://cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js"></script>
+	<script src="https://cdn.datatables.net/1.13.5/js/dataTables.bootstrap5.min.js"></script>
+	<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
+<style>
+
+
+	input[type=number]::-webkit-inner-spin-button, 
+    input[type=number]::-webkit-outer-spin-button { 
+           -webkit-appearance: none; 
+           margin: 0; 
+    }
+	/* Custom CSS for Dark Black Table Header */
+	.table-dark thead {
+		background-color: #000; /* Pure black background */
+		color: #fff;           /* White text color for contrast */
+		text-align: left;      /* Align text to the left */
+		font-weight: bold;     /* Bold text for emphasis */
+		font-size: 20px;
+		border-bottom: 2px solid #444; /* Optional: Adds a border to separate header */
+	}
+	th {
+		vertical-align: top;
+	}
+	div.dataTables_filter {
+		margin-left: 440px;
+		margin-bottom:15px;
+		font-weight:bold;
+	}
+	/* Adjust layout for dataTables_length */
+	.dataTables_length {
+		margin-top:14px;
+		display: flex;              /* Use flexbox for alignment */
+		align-items: center;        /* Center items vertically */
+		gap: 5px;                   /* Add space between elements */
+	}
+
+	
+	/* Optional: Adjust "entries" text */
+	.dataTables_length label {
+		display: flex;
+		align-items: center;
+		gap: 5px;                   /* Space between "Show", dropdown, and "entries" */
+	}
+
+	/* Modal Custom Styles */
+	.modal-content {
+		border-radius: 10px;
+		box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+	}
+
+	.modal-header {
+		background-color: #007bff;
+		color: #fff;
+		border-top-left-radius: 10px;
+		border-top-right-radius: 10px;
+		cursor: move; /* Indicate draggable header */
+	}
+
+	.modal-title {
+		font-weight: bold;
+	}
+
+	.modal-body {
+		padding: 20px;
+	}
+
+	.modal-footer {
+		border-top: none;
+		padding: 15px 20px;
+	}
+
+	.help-text-error {
+		color: red !important; /* Highlights the help text in red */
+		font-weight: bold; /* Optional: make the text bold */
+	}
+	.text-danger {
+		color: red;
+		font-size: 14px;
+		font-weight: bold;
+	}
+	.highlight-row {
+            background-color: #ffffcc !important;
+    }
+	
+	.highlight-row {
+      background-color: #ffffcc !important;
+	}
+
+	
+	#customerTable tbody tr td,
+	#customerTable thead tr th {
+		  padding-top: 4px !important;
+		  padding-bottom: 4px !important;
+		  font-size: 14px;
+		  font-family: Arial, Helvetica, sans-serif;
+		  font-weight:bold;
+	}
+
+	#customerTable td, 
+	#customerTable th {
+		  line-height: 1.2;
+	}
+	.dataTables_empty {
+		text-align: center !important;
+		font-weight: bold;
+		color: #555;
+	}
+	
+	#customerTable {
+	#customerTable_wrapper {
+		overflow-x: auto;
+	}
+	#customerTable {
+		table-layout: fixed;
+		width: 100%;
+	}
+	
+	.btn-close {
+		display: none !important;
+	}
+
+</style>
+
+
+</head>
+<div class="container-fluid">
+
+	
+	<h2>Customer Master</h2>
+    <br>
+	
+	<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addCustomerModal">
+		Add Record
+	</button>
+	<a href="{{ party_detail_url }}?customer_id={{ customer.id }}">Customer Details</a>
+	
+	<a href="{% url 'nrcApp:upload_customers' %}" class="btn btn-sm btn-danger">Upload Customers(xlsx)</a>
+	
+	{% if success %}
+		<p id="success" style="color: green;">Record added successfully!</p>
+		<script>
+			$(document).ready(function () {
+				
+				// Hide the success message after 2 seconds
+				setTimeout(function () {
+					$("#success").fadeOut();
+				}, 3000);
+			});
+		</script>
+	{% endif %}
+	<br>
+	<br>
+	
+	<table id="customerTable" class="table table-striped table-bordered">
+        <thead class="table-dark">
+			<tr>
+				<th style="width: 5%;">Srl</th>                
+				<th style="width: 5%;">Customer Code</th>
+				<th style="width: 25%;">Customer Name</th>
+				<th style="width: 50%;">Address</th>               
+				<th style="width: 15%; text-align:center;">Actions</th>
+			</tr>
+		</thead>
+        <tbody>
+            {% for customer in customers %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+					
+                    <td>{{ customer.customer_code }}</td>
+					<td>{{ customer.customer_name }}</td>
+					<td>{{ customer.address }}</td>
+				
+					
+                    <td style="text-align:center;">                        
+                        
+						<button class="btn btn-warning btn-sm edit-btn"
+							data-row="{{ forloop.counter0 }}"
+							data-id="{{ customer.id }}"
+							data-teacher="{{ customer.teacher.id }}"
+							data-dept_name="{{ customer.dept_name }}"
+							data-customer_code="{{ customer.customer_code }}"
+							data-customer_name="{{ customer.customer_name }}"
+							data-address="{{ customer.address }}">
+							<i class="fa fa-pencil"></i> Edit
+						</button>	
+                        
+						<a href="{% url 'nrcApp:customer_delete' signed_id=customer.id|sign_id %}" class="btn btn-sm btn-danger">Delete</a>
+						<a href="{% url 'nrcApp:customer_view_pdf' signed_id=customer.id|sign_id %}" target="_blank" class="btn btn-sm btn-info">
+							View
+						</a>
+						
+					
+					</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+	
+	<!-- Add Modal -->
+	<div class="modal fade" id="addCustomerModal"  data-bs-backdrop="false" data-bs-keyboard="false" tabindex="-1" aria-labelledby="addCustomerModalLabel" aria-hidden="true"
+	data-redirect-url="{% url 'nrcApp:group_table_with_id' group_id=group_id %}"
+	>
+	
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="addOnlineModalLabel">Add Customer Record</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					
+					<form method="POST" action="{% url 'nrcApp:customer_add' %}"  id="CustomerForm" enctype="multipart/form-data" >
+												
+						{% csrf_token %}
+						
+						<input type="hidden" name="group_id" value="{{ request.session.grp_id|default:'' }}">
+						
+						<!-- Render  fields -->
+						<div class="row">
+							{% for field in form %}
+								
+								<div class="col-md-6 mb-3">
+									<label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
+									{{ field|add_class:"form-control" }}
+										{% if field.help_text %}
+											<small id="{{ field.id_for_label }}_helptext" class="form-text text-muted">{{ field.help_text }}</small>
+										{% endif %}
+										
+									<!-- Explicitly render errors under the field -->
+									{% if field.errors %}
+										<ul class="errorlist">
+											{% for error in field.errors %}
+												<li class="text-danger">{{ error }}</li>
+											{% endfor %}
+										</ul>
+									{% endif %}
+									
+								</div>
+								
+							{% endfor %}
+							
+							
+							
+						</div>
+						<!-- Action buttons -->
+						<div class="modal-footer">
+							<button type="submit" class="btn btn-primary">Add & Exit</button>
+							<button type="button" class="btn btn-success" id="submitAndContinue" data-group-id="{{ request.session.grp_id|default:'' }}">Add & Continue</button>
+							{% if grp_id %}								
+								<button type="button" class="btn btn-secondary px-4" id="clearFormBtn">Cancel</button>
+							{% endif %}
+							
+						</div>
+						
+						
+					</form>
+					
+						
+				</div>
+			</div>
+		</div>
+		
+	</div>
+	
+	<!-- Edit Modal -->
+	<div class="modal fade" id="editCustomerModal" tabindex="-1" data-bs-backdrop="false" data-bs-keyboard="false" aria-labelledby="editCustomerModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+				 <h5 class="modal-title" >Edit Customer Record</h5>
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+				
+				</div>
+				<div class="modal-body">
+					<form method="POST" action="" id="editCustomerForm" enctype="multipart/form-data">
+						{% csrf_token %}
+						<input type="hidden" id="edit-customer-id" name="customer_id">
+						<div class="row">
+							{% for field in form %}
+								{% if field.field.widget.input_type != "file" %}
+									<div class="col-md-6 mb-3">
+										<label for="edit-{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
+										{{ field|add_class:"form-control" }}
+										{% if field.help_text %}
+											<small id="{{ field.id_for_label }}_helptext" class="form-text text-muted">{{ field.help_text }}</small>
+										{% endif %}
+										{% if field.errors %}
+											<ul class="errorlist">
+												{% for error in field.errors %}
+													<li class="text-danger">{{ error }}</li>
+												{% endfor %}
+											</ul>
+										{% endif %}
+									</div>
+								{% else %}
+									
+									<div class="mb-3">
+										<label for="id_document" class="form-label">Upload Course Document</label>
+										<input type="file" name="document" id="id_document" class="form-control">
+										<br>
+										<a id="current-document-link" href="#" target="_blank" style="display:none;">View Current Document</a>
+									</div>
+									
+									
+								{% endif %}
+								
+							{% endfor %}
+						</div>
+						<div class="modal-footer">
+							<button type="submit" class="btn btn-primary">Update</button>
+							<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	
+	
+	
+	
+</div>
+<!-- Required Scripts -->
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+
+<!-- Buttons Extension -->
+<script src="https://cdn.datatables.net/buttons/2.4.1/js/dataTables.buttons.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.html5.min.js"></script>
+
+<!-- JSZip for Excel export -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+
+        // Initialize DataTable
+        const customerTable = $('#customerTable').DataTable({			
+			processing: true,
+			serverSide: false,
+			autoWidth: false,
+			lengthMenu: [[5, 10, 25, 50, -1], [5, 10, 25, 50, "All"]],
+			pageLength: 5,			
+			lengthChange: true,
+			searching: true,
+			ordering: true,
+			order: [],
+			columnDefs: [
+				{ targets: -1, orderable: false }
+			],
+			columns: [
+				{ data: "srl" },
+				{ data: "customer_code" },
+				{ data: "customer_name" },
+				{ data: "address" },
+				{ data: "actions" }
+			],
+			language: {
+				emptyTable: "No data available in table"
+			},
+			dom: '<"row mb-2"<"col-md-6"l><"col-md-6"f>>' +
+				 '<"row mb-2"<"col-md-12"B>>' +
+				 'rt<"row mt-2"<"col-md-6"i><"col-md-6"p>>',
+			buttons: [
+				{
+					extend: 'csvHtml5',
+					text: 'Export CSV',
+					className: 'btn btn-sm btn-outline-primary me-2',
+					exportOptions: {
+						columns: ':not(:last-child)'
+					}
+				},
+				{
+					extend: 'excelHtml5',
+					text: 'Export Excel',
+					className: 'btn btn-sm btn-outline-success',
+					exportOptions: {
+						columns: ':not(:last-child)'
+					}
+				}
+			]
+		});
+
+		// Retrieve the search term from localStorage, if it exists
+		var savedSearch = localStorage.getItem('searchText');
+		if (savedSearch) {
+			customerTable.search(savedSearch).draw(); // Apply saved search filter
+			$('#searchInput').val(savedSearch); // Set the input field to the saved value
+		}
+		
+		// Store the search term in localStorage when the user types in the search box
+		$('#customerTable_filter input').on('keyup', function() {
+			var searchTerm = customerTable.search(this.value).draw(); // Apply the search
+			localStorage.setItem('searchText', this.value); // Save the search term
+		});
+
+		// Manually clear the search and the stored text
+		$('#clearSearch').on('click', function() {
+			customerTable.search('').draw(); // Clear DataTable search
+			$('#searchInput').val(''); // Clear the input field
+			localStorage.removeItem('searchText'); // Clear localStorage
+		});
+
+		
+        // Clear Add form on modal open
+        $('#addCustomerModal').on('show.bs.modal', function () {
+            const $form = $('#CustomerForm');
+            $form[0].reset();
+            $form.find('select').val('').trigger('change');
+            $form.find('input[type="file"]').val('');
+            $form.find('.errorlist').remove();
+        });
+
+        // Submit and continue
+       $('#submitAndContinue').click(function (e) {
+			e.preventDefault();
+			const form = $('#CustomerForm')[0];
+			const formData = new FormData(form);
+
+			$.ajax({
+				type: 'POST',
+				url: "{% url 'nrcApp:customer_add_continue' %}",
+				data: formData,
+				processData: false,
+				contentType: false,
+				headers: { 'X-CSRFToken': '{{ csrf_token }}' },
+				success: function (response) {
+					if (response.success) {
+						alert("Record added successfully!");
+						$('#CustomerForm')[0].reset();
+						// Optionally reload table
+					}
+				},
+				error: function (xhr) {
+					const response = JSON.parse(xhr.responseText);
+					if (response.errors) {
+						// Clear previous error messages
+						$('.errorlist').remove();
+
+						// Loop over each error field and show messages
+						for (const field in response.errors) {
+							const messages = response.errors[field].map(err => `<li class="text-danger">${err.message}</li>`).join('');
+							const errorHtml = `<ul class="errorlist">${messages}</ul>`;
+
+							// Append after the input field
+							$(`#CustomerForm [name="${field}"]`).after(errorHtml);
+						}
+					}
+				}
+			});
+		});
+
+
+
+
+
+        // Edit button logic
+        $('#customerTable').on('click', '.edit-btn', function () {
+			var customer_id = $(this).data("id");
+			var customerCode = $(this).data("customer_code");
+			var customerName = $(this).data("customer_name");
+			var customerAddress = $(this).data("address");
+			var rowNo = $(this).data("row");
+
+			$('tr').removeClass('highlight-row');
+			$(this).closest('tr').addClass('highlight-row');
+
+			$("#editCustomerForm").attr("action", "/nrc/edit_customer/" + customer_id + "/");
+			$("input[name='customer_code']").val(customerCode);
+			$("input[name='customer_name']").val(customerName);
+			$("[name='address']").val(customerAddress);
+			$("#edit-customer-id").val(customer_id);
+
+			$("#editCustomerModal").modal("show");
+			$('.modal-title').text('Edit Course Record - Row ' + (rowNo + 1));
+		});
+
+        // Remove row highlight on modal close
+        $('#editCustomerModal').on('hidden.bs.modal', function () {
+            $('tr').removeClass('highlight-row');
+        });
+
+        // Make modals draggable
+        $('#addCustomerModal, #editCustomerModal').draggable({
+            handle: ".modal-header"
+        });
+		
+		$('#clearFormBtn').click(function () {
+			const $form = $('#CustomerForm');
+			$form[0].reset();  // Reset all fields
+			$form.find('select').val('').trigger('change');  // Reset selects
+			$form.find('input[type="file"]').val('');  // Clear file inputs
+			$form.find('.errorlist').remove();  // Clear error messages
+
+			// Optionally keep the modal open (do nothing)
+		});
+		
+		$('#addCustomerModal .btn-close').on('click', function() {
+			var redirectUrl = $('#addCustomerModal').data('redirect-url');
+			if (redirectUrl) {
+				window.location.href = redirectUrl;
+			}
+		});
+		
+			
+		
+    });
+
+	
+</script>
+
+{% endblock %}

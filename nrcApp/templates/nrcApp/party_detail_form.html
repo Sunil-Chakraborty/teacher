@@ -1,0 +1,25 @@
+{{% extends 'nrcApp/group_table.html' %}
+{% load widget_tweaks %}
+{% load signing_tags %}
+{% load static %}
+{% block group_table_details %}
+<style>
+	. errorlist nonfield {
+		color: #721c24;
+		background-color: #f8d7da;
+		padding: 10px;
+		border-radius: 4px;
+		margin-bottom: 15px;
+		border: 1px solid #f5c6cb;
+	}
+</style>
+<h4>{% if form.instance.pk %}Edit{% else %}Add{% endif %} Party Detail</h4>
+<form method="post">
+  {% csrf_token %}
+	
+  {{ form.as_p }}
+  
+  <button type="submit" class="btn btn-success">Save</button>
+  <a href="{% url 'nrcApp:party_detail_list' %}" class="btn btn-secondary">Cancel</a>
+</form>
+{% endblock %}

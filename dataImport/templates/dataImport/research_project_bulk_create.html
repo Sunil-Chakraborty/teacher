@@ -1,0 +1,93 @@
+{% extends 'dataImport/group_table.html' %}
+{% load widget_tweaks %}
+{% block group_table_details %}
+
+<style>
+	input[type=number]::-webkit-inner-spin-button, 
+    input[type=number]::-webkit-outer-spin-button { 
+           -webkit-appearance: none; 
+           margin: 0; 
+    }
+</style>	
+
+<div class="container mt-4">
+    <h3 class="mb-3">Add Multiple Research Projects</h3>
+
+    {% if messages %}
+	  {% for message in messages %}
+		<div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+		  {{ message }}
+		  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+		</div>
+	  {% endfor %}
+	{% endif %}
+
+    <form method="post">
+        {% csrf_token %}
+	
+        <table class="table table-bordered align-middle">
+            {% with sample=formset.empty_form %}
+				<thead class="table-light sticky-top">
+				  <tr>
+					<th>Name of PI {% if sample.pi_name.field.required %}<span class="text-danger">*</span>{% endif %}</th>
+					<th>Project Title {% if sample.project_title.field.required %}<span class="text-danger">*</span>{% endif %}</th>
+					<th>Funding Agency</th>
+					<th>Award Year {% if sample.award_year.field.required %}<span class="text-danger">*</span>{% endif %}</th>
+					<th>Amount (Rs.) {% if sample.amount.field.required %}<span class="text-danger">*</span>{% endif %}</th>
+					<th>Duration</th>
+				  </tr>
+				</thead>
+			{% endwith %}
+            <tbody>
+                {{ formset.management_form }}
+                {% for form in formset %}
+                    <tr class="{% if form.errors %}table-danger{% endif %}">
+                        <td>
+                            {{ form.pi_name|add_class:"form-control" }}
+                            {% for error in form.pi_name.errors %}
+                                <small class="text-danger d-block">{{ error }}</small>
+                            {% endfor %}
+                        </td>
+                        <td>
+                            {{ form.project_title|add_class:"form-control" }}
+                            {% for error in form.project_title.errors %}
+                                <small class="text-danger d-block">{{ error }}</small>
+                            {% endfor %}
+                        </td>
+                        <td>
+                            {{ form.funding_agency|add_class:"form-control" }}
+                            {% for error in form.funding_agency.errors %}
+                                <small class="text-danger d-block">{{ error }}</small>
+                            {% endfor %}
+                        </td>
+                        <td>
+                            {{ form.award_year|add_class:"form-control" }}
+                            {% for error in form.award_year.errors %}
+                                <small class="text-danger d-block">{{ error }}</small>
+                            {% endfor %}
+                        </td>
+                        <td>
+                            {{ form.amount|add_class:"form-control" }}
+                            {% for error in form.amount.errors %}
+                                <small class="text-danger d-block">{{ error }}</small>
+                            {% endfor %}
+                        </td>
+                        <td>
+                            {{ form.duration|add_class:"form-control" }}
+                            {% for error in form.duration.errors %}
+                                <small class="text-danger d-block">{{ error }}</small>
+                            {% endfor %}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <div class="mt-3">
+            <button type="submit" class="btn btn-success">Save Projects</button>
+            <a href="{% url 'dataImport:group_table_with_id' 'group4' %}" class="btn btn-secondary">Cancel</a>
+        </div>
+    </form>
+</div>
+{% endblock %}
+

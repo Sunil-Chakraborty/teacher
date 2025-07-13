@@ -69,14 +69,24 @@ def login_view(request):
             
            
             # Check if the user is in the "iqac" group
-            if user.groups.filter(name='iqac').exists():                
+            if user.groups.filter(name='iqac').exists():
+                hod_status = "iqac"  # Replace with your logic
+                request.session['hod'] = hod_status
                 return redirect('iqac:home')
                 
             if user.groups.filter(name='hod').exists():
                 hod_status = "Hod"  # Replace with your logic
                 
+            if user.groups.filter(name='Audit').exists():
+                hod_status = "Audit"  # Replace with your logic
+                
             if user.groups.filter(name='actg_hod').exists():
                 hod_status = "Actg_Hod"  # Replace with your logic
+                
+            if user.groups.filter(name='Master').exists():
+                hod_status = "Master"  # Replace with your logic
+                request.session['hod'] = hod_status
+                return redirect('nrcApp:group_table')
                 
             request.session['hod'] = hod_status 
             

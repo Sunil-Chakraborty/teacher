@@ -1,0 +1,42 @@
+{% load widget_tweaks %}
+{% load static %}
+
+{% block group_table_details %}
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ data.name }}</title>
+	
+	<style>
+	.content {
+            margin-left: 360px;
+            padding: 1rem;
+    }
+	</style>
+</head>
+<body >
+    <h2>{{ data.name }}</h2>
+    <table border="1" >
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Value</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in data.rows %}
+                <tr>
+                    <td>{{ row.id }}</td>
+                    <td>{{ row.value }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <a href="{% url 'teachers:group_table' %}">Back to Table List</a>
+</body>
+</html>
+{% endblock %}

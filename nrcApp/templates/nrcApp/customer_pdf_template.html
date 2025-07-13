@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; }
+        h2 { border-bottom: 1px solid #ccc; padding-bottom: 10px; }
+        .section { margin-top: 20px; }
+    </style>
+</head>
+<body>
+    <h2>Customer Master Record</h2>
+
+    <div class="section">
+        <strong>Customer Code:</strong> {{ customer.customer_code }}<br>
+        <strong>Customer Name:</strong> {{ customer.customer_name }}<br>
+        <strong>Address:</strong> {{ customer.address }}<br>
+    </div>
+
+    {% if bill_to %}
+    <div class="section">
+        <h4>Bill To Party</h4>
+        <strong>Party Code:</strong> {{ bill_to.party_code }}<br>
+        <strong>Party Name:</strong> {{ bill_to.party_name }}<br>
+        <strong>Address:</strong> {{ bill_to.address }}<br>
+    </div>
+    {% endif %}
+
+    {% if ship_to %}
+    <div class="section">
+        <h4>Ship To Party</h4>
+        <strong>Party Code:</strong> {{ ship_to.party_code }}<br>
+        <strong>Party Name:</strong> {{ ship_to.party_name }}<br>
+        <strong>Address:</strong> {{ ship_to.address }}<br>
+    </div>
+    {% endif %}
+
+</body>
+</html>

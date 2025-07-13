@@ -30,7 +30,7 @@ class ResearchProject(models.Model):
         verbose_name="Title of the Research Project"
     )
     funding_agency = models.CharField(
-        max_length=100,
+        max_length=100, null=True, blank=True,
         verbose_name="Name of the Funding Agency"
     )
     award_year = models.CharField(

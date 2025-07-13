@@ -1,0 +1,102 @@
+{% extends 'nrcApp/group_table.html' %}
+{% load widget_tweaks %}
+{% load signing_tags %}
+{% load static %}
+{% block group_table_details %}
+<style>
+
+	input[type=number]::-webkit-inner-spin-button, 
+    input[type=number]::-webkit-outer-spin-button { 
+           -webkit-appearance: none; 
+           margin: 0; 
+    }
+
+</style>
+<div class="container mt-4">
+    <h2>{{ form.instance.pk|yesno:"Edit Invoice,Create New Invoice" }}</h2>
+
+    <form method="post">
+        {% csrf_token %}
+		
+			<div class="mb-3">
+			  <label for="id_customer">Customer</label>
+			  {{ form.customer|add_class:"form-select" }}
+			</div>
+
+			<!-- Bill To Party -->
+			<div class="mb-3">
+			  <label for="id_bill_to_party">Bill To Party</label>
+			  {{ form.bill_to_party|add_class:"form-select" }}
+			</div>
+
+			<!-- Ship To Party -->
+			<div class="mb-3">
+			  <label for="id_ship_to_party">Ship To Party</label>
+			  {{ form.ship_to_party|add_class:"form-select" }}
+			</div>
+			
+        <hr class="my-4">
+
+        <h5>Product Lines</h5>
+        <table class="table table-bordered">
+            <thead class="table-light">
+                <tr>
+                    <th>Material</th>
+                    <th>Quantity</th>
+                    <th>Rate</th>
+                    <th>DELETE?</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{ formset.management_form }}
+                {% for form in formset %}
+                    <tr>
+						{{ form.id }} 
+                        <td>{{ form.product_name }}</td>
+                        <td>{{ form.quantity }}</td>
+                        <td>{{ form.rate }}</td>
+                        <td class="text-center">{{ form.DELETE }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <button type="submit" class="btn btn-success">Save Invoice</button>
+        <a href="{% url 'nrcApp:invoice_list' %}" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const customerSelect = document.getElementById('id_customer');
+  const billToSelect = document.getElementById('id_bill_to_party');
+  const shipToSelect = document.getElementById('id_ship_to_party');
+
+  customerSelect.addEventListener('change', function() {
+    const customerId = this.value;
+
+    // Clear old options
+    billToSelect.innerHTML = '<option value="">---------</option>';
+    shipToSelect.innerHTML = '<option value="">---------</option>';
+
+    if (customerId) {
+      fetch(`/nrc/ajax/get-party-details/?customer_id=${customerId}`)
+        .then(response => response.json())
+        .then(data => {
+          data.bill_to.forEach(function(item) {
+            const option = new Option(item.name, item.id);
+            billToSelect.add(option);
+          });
+
+          data.ship_to.forEach(function(item) {
+            const option = new Option(item.name, item.id);
+            shipToSelect.add(option);
+          });
+        })
+        .catch(error => console.error('Error fetching party details:', error));
+    }
+  });
+});
+</script>
+
+{% endblock %}

@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home Tab</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 30px;
+            border: 2px solid #333;
+        }
+
+        h1 {
+            font-size: 32px;
+            color: #4a5568;
+            margin-bottom: 30px;
+            font-weight: normal;
+        }
+
+        .section {
+            margin-bottom: 25px;
+        }
+
+        .section-title {
+            font-size: 20px;
+            color: #4a5568;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .info-icon {
+            width: 20px;
+            height: 20px;
+            background-color: #d69e2e;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 12px;
+        }
+
+        .button-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .btn {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            color: white;
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover {
+            opacity: 0.8;
+        }
+
+        .btn.disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+            background-color: #999 !important;
+        }
+
+        /* Student Details Buttons */
+        .student-btn1 { background-color: #c53030; }
+        .student-btn2 { background-color: #c53030; }
+        .student-btn3 { background-color: #c53030; }
+        .student-btn4 { background-color: #c53030; }
+
+        /* Faculty Details Buttons */
+        .faculty-btn1 { background-color: #d69e2e; }
+        .faculty-btn2 { background-color: #c53030; }
+
+        /* Institution Details Buttons */
+        .institution-btn1 { background-color: #c53030; }
+        .institution-btn2 { background-color: #c53030; }
+        .institution-btn3 { background-color: #c53030; }
+        .institution-btn4 { background-color: #c53030; }
+        .institution-btn5 { background-color: #c53030; }
+
+        /* Research Funding Buttons */
+        .research-btn1 { background-color: #c53030; }
+        .research-btn2 { background-color: #c53030; }
+        .research-btn3 { background-color: #c53030; }
+        .research-btn4 { background-color: #c53030; }
+
+        /* Declaration Buttons */
+        .declaration-btn1 { background-color: #c53030; }
+        .declaration-btn2 { background-color: #c53030; }
+
+        .page-number {
+            text-align: right;
+            margin-top: 20px;
+            font-size: 14px;
+            color: #666;
+        }
+
+        .section.completed .btn:not(.active) {
+            opacity: 0.4;
+            cursor: not-allowed;
+            background-color: #999 !important;
+        }
+
+        .section.completed .btn.active {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Home Tab</h1>
+        
+        <div class="section" id="student-section">
+            <div class="section-title">
+                Student Details
+                <div class="info-icon">i</div>
+            </div>
+            <div class="button-group">
+                <button class="btn student-btn1" data-section="student">Sanctioned (Approved) Intake</button>
+                <button class="btn student-btn2" data-section="student">Student Strength</button>
+                <button class="btn student-btn3" data-section="student">Ph.D. Student Details</button>
+                <button class="btn student-btn4" data-section="student">Placement & Higher Studies</button>
+            </div>
+        </div>
+
+        <div class="section" id="faculty-section">
+            <div class="section-title">
+                Faculty Details
+                <div class="info-icon">i</div>
+            </div>
+            <div class="button-group">
+                <button class="btn faculty-btn1" data-section="faculty">Select Faculty From (NIRF-2024)</button>
+                <button class="btn faculty-btn2" data-section="faculty">Faculty Details (NIRF-2025)</button>
+            </div>
+        </div>
+
+        <div class="section" id="institution-section">
+            <div class="section-title">
+                Institution Details
+                <div class="info-icon">i</div>
+            </div>
+            <div class="button-group">
+                <button class="btn institution-btn1" data-section="institution">Financial Resources</button>
+                <button class="btn institution-btn2" data-section="institution">PCS Facilities</button>
+                <button class="btn institution-btn3" data-section="institution">Accreditation</button>
+                <button class="btn institution-btn4" data-section="institution">Multiple Entry/Exit and Indian Knowledge System</button>
+                <button class="btn institution-btn5" data-section="institution">Sustainable Living Practices</button>
+            </div>
+        </div>
+
+        <div class="section" id="research-section">
+            <div class="section-title">
+                Research Funding
+                <div class="info-icon">i</div>
+            </div>
+            <div class="button-group">
+                <button class="btn research-btn1" data-section="research">IPR</button>
+                <button class="btn research-btn2" data-section="research">Sponsored Research Details</button>
+                <button class="btn research-btn3" data-section="research">Consultancy Project Details</button>
+                <button class="btn research-btn4" data-section="research">Executive Development Program/Management Development Program</button>
+            </div>
+        </div>
+
+        <div class="section" id="declaration-section">
+            <div class="section-title">
+                Declaration
+                <div class="info-icon">i</div>
+            </div>
+            <div class="button-group">
+                <button class="btn declaration-btn1" data-section="declaration">About Institute</button>
+                <button class="btn declaration-btn2" data-section="declaration">Declaration</button>
+            </div>
+        </div>
+
+        <div class="page-number">21</div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            // Track completion status for each section
+            let sectionStatus = {
+                student: false,
+                faculty: false,
+                institution: false,
+                research: false,
+                declaration: false
+            };
+
+            // Track active buttons in each section
+            let activeButtons = {
+                student: null,
+                faculty: null,
+                institution: null,
+                research: null,
+                declaration: null
+            };
+
+            // Handle button clicks
+            $('.btn').click(function() {
+                const sectionName = $(this).data('section');
+                const sectionElement = $('#' + sectionName + '-section');
+                
+                // Remove active class from all buttons in this section
+                sectionElement.find('.btn').removeClass('active');
+                
+                // Add active class to clicked button
+                $(this).addClass('active');
+                
+                // Update active button for this section
+                activeButtons[sectionName] = $(this);
+                
+                // Mark section as completed
+                sectionStatus[sectionName] = true;
+                sectionElement.addClass('completed');
+                
+                // Update button states
+                updateButtonStates();
+                
+                // Visual feedback
+                $(this).css('transform', 'scale(0.95)');
+                setTimeout(() => {
+                    $(this).css('transform', 'scale(1)');
+                }, 150);
+            });
+
+            function updateButtonStates() {
+                // For each section, if it's completed, disable other buttons
+                Object.keys(sectionStatus).forEach(section => {
+                    if (sectionStatus[section]) {
+                        const sectionElement = $('#' + section + '-section');
+                        sectionElement.find('.btn').each(function() {
+                            if (!$(this).hasClass('active')) {
+                                $(this).addClass('disabled');
+                            }
+                        });
+                    }
+                });
+            }
+
+            // Add hover effects
+            $('.btn').hover(
+                function() {
+                    if (!$(this).hasClass('disabled')) {
+                        $(this).css('transform', 'translateY(-2px)');
+                    }
+                },
+                function() {
+                    if (!$(this).hasClass('disabled')) {
+                        $(this).css('transform', 'translateY(0)');
+                    }
+                }
+            );
+
+            // Prevent disabled buttons from being clicked
+            $(document).on('click', '.btn.disabled', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                return false;
+            });
+
+            // Add a reset function (optional - for testing)
+            window.resetSections = function() {
+                sectionStatus = {
+                    student: false,
+                    faculty: false,
+                    institution: false,
+                    research: false,
+                    declaration: false
+                };
+                activeButtons = {
+                    student: null,
+                    faculty: null,
+                    institution: null,
+                    research: null,
+                    declaration: null
+                };
+                $('.btn').removeClass('active disabled');
+                $('.section').removeClass('completed');
+            };
+        });
+    </script>
+</body>
+</html>

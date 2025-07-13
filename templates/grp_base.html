@@ -4,18 +4,18 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Teacher Database</title>
+    <title>Academy Database</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<!-- Link to Custom CSS -->
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
     <!-- Optional: Link to Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
-
+	
 </head>
 <body>
 <div class="bg-success text-white text-center p-2">
-    <h1>JU Teacher Portal</h1>
+    <h1>Academy Portal</h1>
 </div>
 
 <nav class="bg-dark text-white p-2 text-end">
@@ -50,6 +50,45 @@
 
 <!-- Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- HTMX (if not already included) -->
+<script src="https://unpkg.com/htmx.org@1.9.2"></script>
+
+<!-- Bootstrap 5 JS for Modal -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- HTMX Modal Auto-Show Script -->
+<script>
+  // Show modal automatically after HTMX injects it
+  document.body.addEventListener('htmx:afterSwap', (event) => {
+    // If the modal was injected into the #modal-body container
+    if (event.detail.target.id === "modal-body") {
+      const modalElement = document.querySelector('#editCustomerModal');
+      if (modalElement) {
+        const modal = new bootstrap.Modal(modalElement);
+        modal.show();
+      }
+    }
+  });
+
+  // Optional: Close modal if triggered
+  document.body.addEventListener('closeModal', function () {
+    const modalEl = document.getElementById('editCustomerModal');
+    if (modalEl) {
+      const modal = bootstrap.Modal.getInstance(modalEl);
+      if (modal) {
+        modal.hide();
+      }
+    }
+  });
+
+  // ✅ HTMX Debug Mode
+  htmx.logger = function (msg, elt) {
+    console.log("HTMX:", msg, elt);
+  };
+</script>
+
+
 
 </body>
 </html>

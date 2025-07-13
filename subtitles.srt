@@ -1,0 +1,15 @@
+1
+00:00:01,000 --> 00:00:05,000
+Hello! This is my first subtitle.
+
+2
+00:00:06,000 --> 00:00:10,000
+I am learning how to add subtitles using HandBrake!
+
+3
+00:00:11,000 --> 00:00:15,000
+It's really easy and fun!
+
+4
+00:00:16,000 --> 00:00:20,000
+Thank you for watching this video.

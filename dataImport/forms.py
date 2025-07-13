@@ -22,40 +22,26 @@ class ResearchUploadForm(forms.Form):
         })
     )
 
+
 class ResearchProjectForm(forms.ModelForm):
     class Meta:
         model = ResearchProject
         fields = [
-            'teacher',
-            'dept_name',
-            'pi_name',
-            'project_title',
-            'funding_agency',
-            'award_year',
-            'amount',
-            'duration'
+            'pi_name', 'project_title', 'funding_agency',
+            'award_year', 'amount', 'duration'
         ]
-        labels = {
-            'teacher': "Assigned Teacher",
-            'dept_name': "Department Name",
-            'pi_name': "Name of the PI/Co-PI",
-            'project_title': "Title of the Research Project",
-            'funding_agency': "Name of the Funding Agency",
-            'award_year': "Year of Award or Sanction",
-            'amount': "Amount in Rs.",
-            'duration': "Duration (in years)",
-        }
-        help_texts = {
-            'award_year': "Format: YYYY-YY (e.g., 2018-19)",
-        }
         widgets = {
-            'project_title': forms.Textarea(attrs={'rows': 3}),
-            'award_year': forms.TextInput(attrs={'placeholder': 'YYYY-YY'}),
-            'amount': forms.NumberInput(attrs={'step': 0.01}),
-            'duration': forms.TextInput(attrs={'placeholder': 'Year-Month'}),
+            'project_title': forms.Textarea(attrs={'rows': 2, 'class': 'form-control'}),
+            'pi_name': forms.TextInput(attrs={'class': 'form-control'}),
+            'funding_agency': forms.TextInput(attrs={'class': 'form-control'}),
+            'award_year': forms.TextInput(attrs={'class': 'form-control'}),
+            'amount': forms.NumberInput(attrs={'class': 'form-control'}),
+            'duration': forms.TextInput(attrs={'class': 'form-control'}),
         }
 
-
-
-
-
+ResearchProjectFormSet = modelformset_factory(
+    ResearchProject,
+    form=ResearchProjectForm,
+    extra=5,  # allow 5 blank forms
+    can_delete=False
+)

@@ -1,0 +1,105 @@
+Django's class-based views make CRUD operations straightforward by providing built-in views that handle common patterns. Here's how to use them:
+Basic Setup
+First, let's assume you have a simple model:
+python# models.py
+from django.db import models
+
+class Book(models.Model):
+    title = models.CharField(max_length=200)
+    author = models.CharField(max_length=100)
+    published_date = models.DateField()
+    
+    def __str__(self):
+        return self.title
+Create - CreateView
+python# views.py
+from django.views.generic import CreateView
+from django.urls import reverse_lazy
+from .models import Book
+
+class BookCreateView(CreateView):
+    model = Book
+    fields = ['title', 'author', 'published_date']
+    template_name = 'books/book_form.html'
+    success_url = reverse_lazy('book-list')
+Read - ListView and DetailView
+List all books:
+pythonfrom django.views.generic import ListView
+
+class BookListView(ListView):
+    model = Book
+    template_name = 'books/book_list.html'
+    context_object_name = 'books'
+    paginate_by = 10  # Optional pagination
+View single book:
+pythonfrom django.views.generic import DetailView
+
+class BookDetailView(DetailView):
+    model = Book
+    template_name = 'books/book_detail.html'
+    context_object_name = 'book'
+Update - UpdateView
+pythonfrom django.views.generic import UpdateView
+
+class BookUpdateView(UpdateView):
+    model = Book
+    fields = ['title', 'author', 'published_date']
+    template_name = 'books/book_form.html'
+    success_url = reverse_lazy('book-list')
+Delete - DeleteView
+pythonfrom django.views.generic import DeleteView
+
+class BookDeleteView(DeleteView):
+    model = Book
+    template_name = 'books/book_confirm_delete.html'
+    success_url = reverse_lazy('book-list')
+URL Configuration
+python# urls.py
+from django.urls import path
+from . import views
+
+urlpatterns = [
+    path('', views.BookListView.as_view(), name='book-list'),
+    path('book/<int:pk>/', views.BookDetailView.as_view(), name='book-detail'),
+    path('book/new/', views.BookCreateView.as_view(), name='book-create'),
+    path('book/<int:pk>/edit/', views.BookUpdateView.as_view(), name='book-update'),
+    path('book/<int:pk>/delete/', views.BookDeleteView.as_view(), name='book-delete'),
+]
+Basic Templates
+book_list.html:
+html<h1>Books</h1>
+<a href="{% url 'book-create' %}">Add New Book</a>
+<ul>
+{% for book in books %}
+    <li>
+        <a href="{% url 'book-detail' book.pk %}">{{ book.title }}</a>
+        <a href="{% url 'book-update' book.pk %}">Edit</a>
+        <a href="{% url 'book-delete' book.pk %}">Delete</a>
+    </li>
+{% endfor %}
+</ul>
+book_form.html:
+html<h1>{% if object %}Edit{% else %}Add{% endif %} Book</h1>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Save</button>
+    <a href="{% url 'book-list' %}">Cancel</a>
+</form>
+book_confirm_delete.html:
+html<h1>Delete Book</h1>
+<p>Are you sure you want to delete "{{ object.title }}"?</p>
+<form method="post">
+    {% csrf_token %}
+    <button type="submit">Yes, Delete</button>
+    <a href="{% url 'book-list' %}">Cancel</a>
+</form>
+Key Benefits
+Class-based views handle much of the boilerplate code automatically:
+
+Form handling and validation
+Template context creation
+URL parameter processing
+Success/error redirects
+
+You can customize behavior by overriding methods like get_queryset(), form_valid(), or get_context_data() when needed.

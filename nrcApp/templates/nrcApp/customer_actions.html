@@ -1,0 +1,8 @@
+<button class="btn btn-warning btn-sm edit-btn"
+        data-id="{{ customer.id }}"
+        data-customer_code="{{ customer.customer_code }}"
+        data-customer_name="{{ customer.customer_name }}"
+        data-address="{{ customer.address }}">
+    <i class="fa fa-pencil"></i> Edit
+</button>
+<a href="{% url 'nrcApp:customer_delete' signed_id=customer.id|sign_id %}" class="btn btn-sm btn-danger">Delete</a>

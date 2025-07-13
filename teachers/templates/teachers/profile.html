@@ -262,9 +262,11 @@
 				<br>
 				<a href="{% url 'teachers:research-list' %}" id="addResearchPub">Research Publication</a>
 				<br>
+				<!--
 				<a href="#" id="addBooks">Books/Books Chapters</a>
+				
 				<a href="{% url 'tokencast:poll_dashboard' %}">TokenCast Dashboard</a>
-        
+				-->
 			</div>
 		</div>
 
@@ -272,8 +274,11 @@
         <div class="box group-box" id="groupBox">
             <h3>Group Table</h3>
             <a href="{% url 'hod_group:group_table' %}">Go inside Group Table</a> <br>
-			<a href="{% url 'polls:create_poll' %}">Create Voting Session</a>
 			
+			<a href="{% url 'dataImport:group_table' %}">Go inside Data Import</a> <br>
+			<!--
+			<a href="{% url 'polls:create_poll' %}">Create Voting Session</a>
+			-->
 		</div>
         {% endif %}
     </div>

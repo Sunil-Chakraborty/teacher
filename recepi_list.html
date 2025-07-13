@@ -1,0 +1,730 @@
+{% extends 'product/base.html' %}
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Employee Records</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- jQuery UI CSS -->
+    <link href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" rel="stylesheet">
+
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+	<!-- Include Select2 CSS -->
+	<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+
+	<!-- CSS -->
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+	<!-- jQuery -->
+	<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+	<!-- Bootstrap JS -->
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+    <style>
+		#pdf-list {
+            display: none;
+            margin-top: 10px;
+        }
+		/* Styles for the button */
+        .toggle-button {
+            padding: 10px;
+            border: none;
+            color: white;
+            cursor: pointer;
+        }
+        .button-available {
+            background-color: green;
+        }
+        .button-unavailable {
+            background-color: grey;
+            cursor: not-allowed;
+        }
+		input[type=number]::-webkit-inner-spin-button,
+		input[type=number]::-webkit-outer-spin-button {
+			   -webkit-appearance: none;
+			   margin: 0;
+		}
+		
+        .iframe-container {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+        }
+        .iframe-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+        /* Custom CSS for dark black thead */
+        .table-dark thead th {
+            background-color: #000;
+            color: #fff;
+        }
+        /* Modal Custom Styles */
+        .modal-content {
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .modal-header {
+            background-color: #007bff;
+            color: #fff;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+            cursor: move; /* Indicate draggable header */
+        }
+
+        .modal-title {
+            font-weight: bold;
+        }
+
+        .modal-body {
+            padding: 20px;
+        }
+
+        .modal-footer {
+            border-top: none;
+            padding: 15px 20px;
+        }
+
+        .highlight-row {
+            background-color: #ffffcc !important;
+        }
+        /* Custom style for video modal */
+        .video-modal {
+            display: none;
+        }
+
+		 .card-header {
+            background-color: #343a40;
+			text-align : center;
+            color: #fff;
+            padding: 10px;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+            font-size: 1.25rem;
+        }
+
+        .card-body {
+            padding: 10px;
+        }
+		.thead-dark tr th {
+            vertical-align: top;
+        }
+		.des{
+		}
+		
+    </style>
+
+</head>
+<body>
+<br>
+<div class="container">
+
+	<!-- <a href="{{ MEDIA_URL }}pdf/types.pdf">Download PDF</a> -->
+
+	
+	<h2>Recepi List
+
+	<button style="float:right;margin-left:5px;" id="generatePdfBtn" class="btn btn-primary">Print</button>
+	<!-- <button style="float:right;margin-left:5px;" id="generateExcelBtn" class="btn btn-success">Excel</button>
+	
+	Button to trigger Add modal -->
+
+    <button style="float:right;" type="button" class="btn btn-primary" data-toggle="modal" data-target="#addRecepiModal">
+        Add Recepi
+    </button>
+
+	</h2>
+	
+	<table id="recepiTable" class="display table table-striped table-bordered card-body" style="width:100%">
+		<thead class="thead-dark">
+			<tr>
+				<th style="width:2%;">Srl.</th> <!-- Serial number column -->
+				<th>Card<br>No.</th>
+				<th>Date</th>				
+				<th>Comp.<br>Code</th>
+				<th>SAP Code</th>
+				<th>R.M <br>Code</th>
+				<th>SAP Code</th>
+				<th style="width:20%;">Description</th>
+				<th style="width:5%;">Grp.Desc</th>
+				<th>UOM</th>
+				<th style="text-align:right;">Qty.</th>
+				<th style="text-align:right;">Rs./Kg.</th>
+				<th style="text-align:center;">Actions</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for recepi in recepis %}
+			<tr>
+				<td></td>
+				<td>{{ recepi.card_no }}</td>
+				<td style="font-size:12px;font-weight:bold;">{{ recepi.doc_dt|date:"d-m-y" }}</td>				
+				<td>{{ recepi.comp_cd.comp_cd }}</td>
+				<td>{{ recepi.comp_cd.sap_cd }}</td>
+				<td>{{ recepi.rm_cd.rm_cd }}</td>
+				<td>{{ recepi.rm_cd.sap_cd }}</td>
+				<td>{{ recepi.rm_cd.rm_des }}</td>
+				<td>{{ recepi.rm_cd.grp_cd.grp_des }}</td>
+				<td style="text-align:center;">{{ recepi.rm_cd.uom }}</td>
+				<td style="text-align:right;">{{ recepi.qty }}</td>
+				<td style="text-align:right;">{{ recepi.rm_cd.rate }}</td>
+				<td style="text-align:center;">
+					<button class="btn btn-warning btn-sm edit-btn" data-row="{{ forloop.counter0 }}" data-id="{{ recepi.id }}" data-compid="{{ recepi.comp_cd.id }}"
+							data-rmcdid="{{ recepi.rm_cd.id }}"  data-qty="{{ recepi.qty }}"
+							data-date="{{ recepi.created_date }}" data-rmdes="{{ recepi.rm_cd.rm_des }}" data-rmuom="{{ recepi.rm_cd.uom }}">
+							<i class="fa fa-pencil"></i>Edit</button>
+					<a href="{% url 'product:recepi_delete' recepi.id %}">Delete</a>
+				</td>
+			</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+	<p style="font-weight:bold;">Total Qty: <span id="totalQty">0</span> Amount: <span id="totalAmt">0</span>
+	   Rate: <span id="rate">0</span>
+	</p>
+		
+	<!-- <a href="{% url 'product:pdf_list' %}">Download PDF</a> -->
+	
+	
+    <!-- Toggle button for PDF list with conditional styling -->
+    <h3>
+        {% if pdf_files %}
+            <button onclick="togglePdfList()" class="toggle-button button-available">Available PDFs</button>
+        {% else %}
+            <button class="toggle-button button-unavailable" disabled>Available PDFs</button>
+        {% endif %}
+    </h3>
+    
+    <!-- PDF list with toggle functionality -->
+    <ul id="pdf-list">
+        {% for file in pdf_files %}
+            <li><a href="{{ file.url }}" target="_blank">{{ file.name }}</a></li>
+        {% endfor %}
+    </ul>
+	
+	<!-- The report container where the report will be displayed -->
+    <div id="reportContainer"></div>
+
+
+    <!-- Add Modal -->
+	<div class="modal fade" id="addRecepiModal" tabindex="-1" role="dialog" aria-labelledby="addRecepiModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-lg" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="addRecepiModalLabel">Add Recepi !!</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<!-- Recepi Form -->
+					<form action="{% url 'product:recepi_add' %}" method="post">
+						{% csrf_token %}
+						
+						<!-- Header Fields -->
+						<div class="header-fields">
+							<div class="form-row">
+								
+								<div class="form-group col-md-3">
+									<label for="card_no">Card Number</label>
+									<input type="text" class="form-control" id="card_no" name="card_no" required>
+								</div>
+								<div class="form-group col-md-3">
+									<label for="doc_dt">Document Date</label>
+									<input type="date" class="form-control" id="doc_dt" name="doc_dt" required>
+								</div>
+								<div style="width:185px;"></div>
+								<div class="form-group col-md-3">
+									<label for="comp_cd">Compound Code</label>
+									<select class="form-control" id="comp_cd" name="comp_cd" required>
+										<option value="" disabled selected>Select Compound</option>
+										<!-- Populate with Compounds -->
+										{% for comp_cd in comp_cds %}
+											<option value="{{ comp_cd.id }}" {% if form.comp_cd.value == comp_cd.id %}selected{% endif %}>{{ comp_cd.comp_cd }}</option>
+										{% endfor %}	
+									</select>
+								</div>
+							</div>
+						</div>
+
+						<!-- Detail Fields -->
+						<div class="detail-fields">
+							<table class="table table-bordered">
+								<thead>
+									<tr>
+										<th>Raw Material Code</th>
+										<th>Quantity</th>
+										<th>Action</th>
+									</tr>
+								</thead>
+								<tbody id="recepiRows">
+									<tr>
+										<td>
+											<select class="form-control des" id="rm_cd" name="rm_cd[]" required>
+												<option value="" disabled selected>Select R.M</option>
+												{% for rm_cd in rm_cds %}
+													<option value="{{ rm_cd.id }}">{{ rm_cd.rm_des }} - {{ rm_cd.rm_cd }} - UOM : {{ rm_cd.uom }}</option>
+												{% endfor %}
+											</select>
+										</td>
+										<td>
+											<input type="number" class="form-control" id="qty" name="qty[]" step="0.001" required>
+										</td>
+										<td>
+											<button type="button" class="btn btn-danger remove-row">Remove</button>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+							<button type="button" id="addRow" class="btn btn-secondary">Add Row</button>
+						</div>
+
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+							<button type="submit" class="btn btn-primary">Add Recepi</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+
+    <!-- Edit Modal -->
+    <div id="editModal" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" ></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="editForm" method="post" action="">
+                        {% csrf_token %}
+                        <div class="modal-body">
+								<div class="form-group">
+									<label for="comp_cd">Compound Code</label>
+									<select class="form-control" id="edit_comp_cd" name="compid" required>
+										<option value="" disabled selected>Select Compound</option>
+										<!-- Populate with Compounds -->
+										{% for comp_cd in comp_cds %}
+											<option value="{{ comp_cd.id }}" {% if form.comp_cd.value == comp_cd.id %}selected{% endif %}>{{ comp_cd.comp_cd }}</option>
+										{% endfor %}
+									</select>
+								</div>
+								<div class="form-group">
+									<label for="edit_rm_cd">R.M Desc./ Code / UOM</label>
+									<select class="form-control des" id="edit_rm_cd" name="rmcdid" required style="height: auto;">
+										<option value="" disabled selected>Select R.M</option>
+
+										<!-- Populate with Raw Materials -->
+										{% for rm_cd in rm_cds %}
+
+										
+										<option value="{{ rm_cd.id }}" data-uom="{{ rm_cd.uom }}">{{ rm_cd.rm_des }} - {{ rm_cd.rm_cd }} - UOM : {{ rm_cd.uom }}</option>
+										
+										{% endfor %}
+									</select>
+								</div>
+								<!-- The rm_des field (readonly)
+								<div class="form-group">
+									<label for="rm_des">Description</label>
+									<input type="text" class="form-control des" id="rm_des" readonly>
+								</div>
+								<!-- The rm_uom field (readonly)
+								<div class="form-group">
+									<label for="rm_uom">UOM</label>
+									<input type="text" class="form-control des" id="rm_uom" readonly>
+								</div>
+								 -->
+								<div class="form-group">
+									<label for="qty">Quantity</label>
+									<input type="number" class="form-control" id="edit_qty" name="qty" step="0.001" required>
+								</div>
+								<div class="form-group">
+									<input type="hidden" class="form-control" id="edit_created_date" name="created_date" required>
+								</div>
+								
+						</div>		
+
+							<div class="modal-footer">
+								<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+								<button type="submit" class="btn btn-primary">Save Changes</button>
+							</div>
+						
+						
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+	
+
+</div>
+
+	<!-- Load jQuery first -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- jQuery UI -->
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+    <!-- Load Bootstrap JS after jQuery -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
+
+	<!-- DataTables Buttons JS -->
+	<script src="https://cdn.datatables.net/buttons/2.4.1/js/dataTables.buttons.min.js"></script>
+	<!-- JSZip for XLSX export -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+	<!-- PDFMake for PDF export -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
+	<!-- Buttons HTML5 export -->
+	<script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.html5.min.js"></script>
+	<!-- Buttons Print export -->
+	<script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.print.min.js"></script>
+
+
+
+	<script type="text/javascript">
+		$(document).ready(function() {
+		
+		
+
+			$('.des').change(function() {
+				var selectedRmCd = $(this).val();
+				var description = '';
+				var uom = '';
+
+				{% for rm_cd in rm_cds %}
+				if (selectedRmCd == '{{ rm_cd.id }}') {
+					description = '{{ rm_cd.rm_des }}';
+					uom 		= '{{ rm_cd.uom }}';
+				}
+				{% endfor %}
+
+				$('#id_rm_des').val(description);
+				$('#id_rm_uom').val(uom);
+
+				$('#rm_des').val(description);
+				$('#rm_uom').val(uom);
+			});
+
+
+			// Make the modal draggable
+            $('#addRecepiModal').draggable({
+                handle: ".modal-header" // Allow dragging by the modal header
+            });
+
+			// Make the modal draggable
+            $('#editModal').draggable({
+                handle: ".modal-header" // Allow dragging by the modal header
+            });
+
+			// Edit button click
+
+            //$('.edit-btn').on('click', function() {
+			$(document).on('click', '.edit-btn', function() {
+				var recepi_id = $(this).data('id');
+                var comp_cd_id = $(this).data('compid');
+                var rm_cd_id = $(this).data('rmcdid');
+				var qty  = $(this).data('qty');
+				var des = $(this).data('rmdes');
+				var uom = $(this).data('rmuom');
+				var created_date = $(this).data('date'); // Directly use the date from the data attribute
+				
+				var rowNo = $(this).data('row');  // Get the row number from the data attribute
+				var modalTitle = 'Edit Recepi - Row ' + (rowNo + 1);  // Add 1 to make it 1-based index
+				$('.modal-title').text(modalTitle);  // Update the modal title
+
+				// Highlight the current row
+				$('tr').removeClass('highlight-row');
+				$(this).closest('tr').addClass('highlight-row');
+				
+				$('#edit_comp_cd').val(comp_cd_id);
+                $('#edit_rm_cd').val(rm_cd_id);
+				$('#edit_qty').val(qty);
+				$('#rm_des').val(des);
+				$('#rm_uom').val(uom);
+				$('#edit_created_date').val(created_date); // Pass the date to the form
+
+
+                $('#editForm').attr('action', `/product/recepi/edit/${recepi_id}/`);
+				
+				$('#editModal').modal('show');
+				
+            });
+
+
+
+            // Close modal by clicking the 'Close' button or outside the modal
+            $('.close, .btn-secondary').on('click', function() {				
+                $('#editModal').modal('hide');
+
+            });
+
+
+		});
+
+		var table = $('#recepiTable').DataTable({
+					dom: 'Blfrtip',   // This is where the export buttons are enabled
+
+					buttons: [
+						{
+							extend: 'copy',
+							exportOptions: {
+								columns: ':not(:last-child)' // This will exclude the last column (Action) from exporting
+							}
+						},
+						{
+							extend: 'csv',
+							exportOptions: {
+								columns: ':not(:last-child)'
+							}
+						},
+						{
+							extend: 'excel',
+							exportOptions: {
+								columns: ':not(:last-child)'
+							}
+						},
+						{
+							extend: 'pdf',
+							exportOptions: {
+								columns: ':not(:last-child)'
+							},
+						}
+
+					],
+					
+					"columnDefs": [
+						{
+							// Target the first column (Serial Number) and render the index of the row.
+							"targets": 0,
+							"data": null,
+							"render": function(data, type, row, meta) {
+								return meta.row + 1;  // Return the row index + 1
+							}
+						}
+					],
+
+
+					lengthMenu: [[4,10,25, 50, -1], [4,10,25, 50, "All"]],
+					paging: true
+
+		});
+
+		// Retrieve the search term from localStorage, if it exists
+		var savedSearch = localStorage.getItem('searchText');
+		if (savedSearch) {
+			table.search(savedSearch).draw(); // Apply saved search filter
+			$('#searchInput').val(savedSearch); // Set the input field to the saved value
+		}
+
+		// Store the search term in localStorage when the user types in the search box
+		$('#recepiTable_filter input').on('keyup', function() {
+			var searchTerm = table.search(this.value).draw(); // Apply the search
+			localStorage.setItem('searchText', this.value); // Save the search term
+		});
+
+		// Manually clear the search and the stored text
+		$('#clearSearch').on('click', function() {
+			table.search('').draw(); // Clear DataTable search
+			$('#searchInput').val(''); // Clear the input field
+			localStorage.removeItem('searchText'); // Clear localStorage
+		});
+
+		// Function to update the summary
+		function updateSummary() {
+			var total = 0;
+			var amount = 0;
+			var rate = 0;
+			// Iterate over each row in the current view (filtered rows)
+			table.rows({ filter: 'applied' }).every(function(rowIdx, tableLoop, rowLoop) {
+				var data = this.data();
+				total += parseFloat(data[10]) || 0; // Assuming Qty is the 8th column (index 7)
+				amount += (parseFloat(data[10]) || 0) * (parseFloat(data[11]) || 0); // Assuming Rs./Kg is in the 9th column (index 8)
+			});
+
+			// Update the summary element
+			$('#totalQty').text(total.toFixed(3));
+			$('#totalAmt').text(amount.toFixed(2));
+			rate = amount/total;
+			$('#rate').text(rate.toFixed(2));
+		};
+
+		// Trigger the summary update on each search event
+		table.on('search.dt', function() {
+			updateSummary();
+		});
+
+		// Initial summary calculation
+		updateSummary();
+
+
+
+		/*
+		// Capture filtered data and trigger PDF generation on button click
+		$('#generatePdfBtn').on('click', function() {
+			//var table = $('#recepiTable').DataTable();
+			var filteredData = table.rows({ search: 'applied' }).data().toArray();
+
+			// Clean the data to remove irrelevant columns (e.g., the button elements)
+			var cleanedData = filteredData.map(function(row) {
+				return [
+					row[0],  // Comp. Code
+					row[1],  // Comp. Code
+					row[2],  // Comp. SAP Code
+					row[3],  // R.M Code
+					row[4],  // R.M SAP Code
+					row[5],  // Description
+					row[6],  // R.M Group
+					row[7],  // UOM
+					row[8],  // Quantity
+					row[9]   // Rs./Kg.
+				];
+			});
+
+			// Send the cleaned data to the server to generate the PDF
+			$.ajax({
+				url: '/product/generate_pdf/',
+				method: 'POST',
+				data: JSON.stringify({ data: cleanedData }),  // Send only the cleaned data
+				contentType: 'application/json',
+				success: function(response) {
+					// Open the generated PDF in a new tab
+					var blob = new Blob([response], { type: 'application/pdf' });
+					var link = document.createElement('a');
+					link.href = window.URL.createObjectURL(blob);
+					link.download = "Recepi_Report.pdf";
+					link.click();
+				},
+				error: function(xhr, status, error) {
+					console.error('Error generating PDF:', error);
+				}
+			});
+		});
+		
+		*/
+		
+		$('#generatePdfBtn').on('click', function() {
+			// Get filtered data from DataTable
+			var table = $('#recepiTable').DataTable();
+			var filteredData = table.rows({ search: 'applied' }).data().toArray();
+
+			// Clean the data to remove irrelevant columns (e.g., the button elements)
+			var cleanedData = filteredData.map(function(row) {
+				return [
+					row[0],  // Srl
+					row[1],  // Card No
+					row[2],  // Doc Date					
+					row[3],  // Comp. Code
+					row[4],  // Comp. SAP Code
+					row[5],  // R.M Code
+					row[6],  // R.M SAP Code
+					row[7],  // Description
+					row[8],  // Group Desc
+					row[9],  // UOM
+					row[10],  // Quantity
+					row[11]   // Rate (Rs./Kg.)
+				];
+			});
+
+			// Send the cleaned data to the server to generate the HTML report
+			$.ajax({
+				url: '/product/generate_doc_report/',
+				method: 'POST',
+				data: JSON.stringify({ data: cleanedData }),
+				contentType: 'application/json',
+				success: function(response) {
+					// Create a new window/tab
+					//var newWindow = window.open();
+					var newWindow = window.open('', '_blank');
+					// Write the response (HTML content) into the new window
+					newWindow.document.write(response);
+					// Optional: set the document title for the new window
+					newWindow.document.title = "Generated Report";
+					// Close the document stream to ensure rendering in the new tab
+					newWindow.document.close();
+					// Redirect back to the 'recepi_list' page
+					newWindow.onunload = function() {
+						window.location.href = "{% url 'product:recepi_list' %}";
+					};
+					// Inject the response HTML into the reportContainer div
+					$('#reportContainer').html(response);
+				},
+				error: function(xhr, status, error) {
+					console.error('Error:', error);
+				}
+			});
+
+			
+		});
+
+		 // Add row functionality
+		
+		
+		document.addEventListener('DOMContentLoaded', function () {
+			const addRowBtn = document.getElementById('addRow');
+			const recepiRows = document.getElementById('recepiRows');
+
+			addRowBtn.addEventListener('click', function () {
+				const newRow = `
+					<tr>
+						<td>
+							<select class="form-control des" name="rm_cd[]" required>
+								<option value="" disabled selected>Select R.M</option>
+								{% for rm_cd in rm_cds %}
+									<option value="{{ rm_cd.id }}">{{ rm_cd.rm_des }} - {{ rm_cd.rm_cd }} - UOM : {{ rm_cd.uom }}</option>
+								{% endfor %}
+							</select>
+						</td>
+						<td>
+							<input type="number" class="form-control" name="qty[]" step="0.01" required>
+						</td>
+						<td>
+							<button type="button" class="btn btn-danger remove-row">Remove</button>
+						</td>
+					</tr>
+				`;
+				recepiRows.insertAdjacentHTML('beforeend', newRow);
+			});
+
+			recepiRows.addEventListener('click', function (event) {
+				if (event.target.classList.contains('remove-row')) {
+					event.target.closest('tr').remove();
+				}
+			});
+		});
+
+	
+        // JavaScript function to toggle the visibility of the PDF list
+        function togglePdfList() {
+            const pdfList = document.getElementById('pdf-list');
+            if (pdfList.style.display === 'none') {
+                pdfList.style.display = 'block';
+            } else {
+                pdfList.style.display = 'none';
+            }
+        }
+    
+	</script>
+
+</body>
+</html>
+
+
+{% endblock content %}
+

@@ -1,0 +1,32 @@
+https://sunil-chakraborty.github.io/sunil-c.github.io/
+https://tinyurl.com/sunilcsite
+local
+file:///D:/JU/index.html
+
+https://sunilc.pythonanywhere.com/accounts/login/
+
+OBS video for video record
+https://youtu.be/-puA85ciDEM
+
+
+https://sayantani.pythonanywhere.com/teachers/profile/
+
+
+git remote add origin https://github.com/Sunil-Chakraborty/teacher.git
+git push -u origin main
+
+Delete File Locally via Git (Command Line)
+
+1. Clone your repository (if not already cloned):
+	git clone https://github.com/sunil-chakraborty/sunil-c.github.io.git
+	cd sunil-c.github.io
+
+2. issue dos command (for file del dir ren copy etc.)
+
+3. Stage and commit the change:
+	git add .
+	git commit -m "Deleted unnecessary file"
+	git push origin main
+
+Replace main with master if your default branch is master.
+

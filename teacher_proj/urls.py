@@ -14,7 +14,8 @@ urlpatterns = [
     path('util/', include('util.urls', namespace='util')),
     path('polls/', include('polls.urls', namespace='polls')),
     path('tokencast/', include('tokencast.urls', namespace='tokencast')),
-    
+    path('nrc/', include('nrcApp.urls', namespace='nrcApp')),
+    path('academy/', include('dataImport.urls', namespace='dataImport')),
 ]
 
 if settings.DEBUG:

@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% load widget_tweaks %}
+{% load signing_tags %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="text-center text-danger">Delete Customer Record</h2>
+    <p class="text-center">Are you sure you want to delete the record for <strong>{{ customer.customer_code }} - {{ customer.customer_name }}</strong></p>
+    <form method="POST" action="{% url 'nrcApp:customer_delete' signed_id=customer.id|sign_id %}">
+        {% csrf_token %}
+        <div class="text-center mt-4">
+            <button type="submit" class="btn btn-danger">Yes, Delete</button>
+            <a href="{% url 'nrcApp:group_table_with_id' grp_id %}" class="btn btn-secondary">Cancel</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,33 @@
+{% extends 'nrcApp/group_table.html' %}
+{% load widget_tweaks %}
+{% load signing_tags %}
+{% load static %}
+{% block group_table_details %}
+
+<h3>Party Details</h3>
+
+<a href="{% url 'nrcApp:group_table_with_id' group_id %}" class="btn btn-default mb-2">Back to list <i class="fa fa-arrow-circle-left"></i></a>
+
+<a href="{% url 'nrcApp:party_detail_create' %}" class="btn btn-primary mb-2">Add Party</a>
+
+
+
+<table class="table table-bordered">
+  <tr>
+    <th>Customer</th><th>Type</th><th>Code</th><th>Name</th><th>Address</th><th>Actions</th>
+  </tr>
+  {% for p in parties %}
+  <tr>
+    <td>{{ p.customer }}</td>
+    <td>{{ p.get_party_type_display }}</td>
+    <td>{{ p.party_code }}</td>
+    <td>{{ p.party_name }}</td>
+    <td>{{ p.address }}</td>
+    <td>
+      <a href="{% url 'nrcApp:party_detail_update' p.id %}">Edit</a> |
+      <a href="{% url 'nrcApp:party_detail_delete' p.id %}">Delete</a>
+    </td>
+  </tr>
+  {% endfor %}
+</table>
+{% endblock %}

@@ -1,0 +1,609 @@
+{% extends 'nrcApp/group_table.html' %}
+{% load widget_tweaks %}
+{% load signing_tags %}
+{% load static %}
+{% block group_table_details %}
+
+<head>
+	<!-- Include jQuery and DataTables scripts -->
+	<!-- CSS -->
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.4.1/css/buttons.dataTables.min.css">
+
+	
+	
+	<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+	<script src="https://cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js"></script>
+	<script src="https://cdn.datatables.net/1.13.5/js/dataTables.bootstrap5.min.js"></script>
+	<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
+<style>
+	input[type=number]::-webkit-inner-spin-button, 
+    input[type=number]::-webkit-outer-spin-button { 
+           -webkit-appearance: none; 
+           margin: 0; 
+    }
+	/* Custom CSS for Dark Black Table Header */
+	.table-dark thead {
+		background-color: #000; /* Pure black background */
+		color: #fff;           /* White text color for contrast */
+		text-align: left;      /* Align text to the left */
+		font-weight: bold;     /* Bold text for emphasis */
+		border-bottom: 2px solid #444; /* Optional: Adds a border to separate header */
+	}
+	th {
+		vertical-align: top;
+	}
+	div.dataTables_filter {
+		margin-left: 440px;
+		margin-bottom:15px;
+		font-weight:bold;
+	}
+	/* Adjust layout for dataTables_length */
+	.dataTables_length {
+		margin-top:14px;
+		display: flex;              /* Use flexbox for alignment */
+		align-items: center;        /* Center items vertically */
+		gap: 5px;                   /* Add space between elements */
+	}
+
+	
+	/* Optional: Adjust "entries" text */
+	.dataTables_length label {
+		display: flex;
+		align-items: center;
+		gap: 5px;                   /* Space between "Show", dropdown, and "entries" */
+	}
+
+	/* Modal Custom Styles */
+	.modal-content {
+		border-radius: 10px;
+		box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+	}
+
+	.modal-header {
+		background-color: #007bff;
+		color: #fff;
+		border-top-left-radius: 10px;
+		border-top-right-radius: 10px;
+		cursor: move; /* Indicate draggable header */
+	}
+
+	.modal-title {
+		font-weight: bold;
+	}
+
+	.modal-body {
+		padding: 20px;
+	}
+
+	.modal-footer {
+		border-top: none;
+		padding: 15px 20px;
+	}
+
+	.help-text-error {
+		color: red !important; /* Highlights the help text in red */
+		font-weight: bold; /* Optional: make the text bold */
+	}
+	.text-danger {
+		color: red;
+		font-size: 14px;
+		font-weight: bold;
+	}
+	.highlight-row {
+            background-color: #ffffcc !important;
+    }
+</style>
+
+
+</head>
+<div class="container mt-3">
+	
+	<h2>Students attending online courses of MOOCs, SWAYAM/e Pathshala/ NPTEL</h2>
+    <br>
+	
+	<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addOnlineModal">
+		Add Record
+	</button>
+	
+	
+	{% if success %}
+		<p id="success" style="color: green;">Record added successfully!</p>
+		<script>
+			$(document).ready(function () {
+				
+				// Hide the success message after 2 seconds
+				setTimeout(function () {
+					$("#success").fadeOut();
+				}, 3000);
+			});
+		</script>
+	{% endif %}
+	<br>
+	<br>
+	<table id="onlineTable" class="table table-striped table-bordered">
+        <thead class="table-dark">
+            <tr>
+                <th>Srl</th>                
+                <th>Programme/Course<br> Name</th>
+                <th>Programme/Course<br> Code(if any)</th>
+                <th style="text-align:center;">Year of<br> Offering/Enrollment</th>
+                <th style="text-align:center;" >Contact hours <br> of the Course</th>
+                <th style="text-align:center;" >No.of students<br> Enrolled in th Year</th>                
+                <th style="text-align:center;" >No.of Students completing<br> the course  <br>in the years</th>
+                <th style="text-align:center;" >Course Completion<br> Certificate</th>
+                <th style="text-align:center;width:10%;">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for course in courses %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+					
+                    <td>{{ course.course_name }}</td>
+					<td>{{ course.prog_cd }}</td>
+                    <td style="text-align:center;" >{{ course.enrol_year }}</td>
+                    <td style="text-align:center;">{{ course.contact_hrs }}</td>
+                    <td style="text-align:center;">{{ course.enrol_students }}</td>
+                    <td style="text-align:center;">{{ course.complete_count }}</td>
+					
+					{% if course.document %}
+						<td style="text-align:center;"><a  class="btn btn-primary btn-sm" href='{{ course.document.url }}' target=_blank>View</a></td>
+					{% else %}
+						<td style="text-align:center;">None</td>
+					{% endif %}                
+					
+					
+                    <td>                        
+                        
+						<button class="btn btn-warning btn-sm edit-btn" data-row="{{ forloop.counter0 }}" data-id="{{ course.id }}" 
+						    data-teacher="{{ course.teacher.id }}" data-dept_name="{{course.dept_name}}"
+							data-course_name="{{course.course_name}}" data-prog_cd="{{course.prog_cd}}"
+							data-enrol_year="{{course.enrol_year}}" data-contact_hrs="{{course.contact_hrs}}"
+							data-enrol_students="{{course.enrol_students}}" data-complete_count="{{course.complete_count}}"
+							data-group_id="{{course.group_id}}"  
+							{% if course.document %}
+								data-document_url="{{ course.document.url }}"
+							{% else %}
+								data-document_url=""
+							{% endif %}>
+							
+							<i class="fa fa-pencil"></i>Edit</button>
+							
+                        
+						<a href="{% url 'hod_group:course_delete' signed_id=course.id|sign_id %}" class="btn btn-sm btn-danger">Delete</a>
+
+					
+					
+					</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+	
+	<!-- Add Modal -->
+	<div class="modal fade" id="addOnlineModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="addOnlineModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="addOnlineModalLabel">Add Course Record</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					
+					<form method="POST" action="{% url 'hod_group:courses_add' %}"  id="OnlineCourseForm" enctype="multipart/form-data" >
+												
+						{% csrf_token %}
+						
+						<!-- Render  fields -->
+						<div class="row">
+							{% for field in form %}
+								
+								<div class="col-md-6 mb-3">
+									<label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
+									{{ field|add_class:"form-control" }}
+										{% if field.help_text %}
+											<small id="{{ field.id_for_label }}_helptext" class="form-text text-muted">{{ field.help_text }}</small>
+										{% endif %}
+										
+									<!-- Explicitly render errors under the field -->
+									{% if field.errors %}
+										<ul class="errorlist">
+											{% for error in field.errors %}
+												<li class="text-danger">{{ error }}</li>
+											{% endfor %}
+										</ul>
+									{% endif %}
+									
+								</div>
+								
+							{% endfor %}
+							
+							
+							
+						</div>
+						<!-- Action buttons -->
+						<div class="modal-footer">
+							<button type="submit" class="btn btn-primary">Add & Exit</button>
+							<button type="button" class="btn btn-success" id="submitAndContinue">Add & Continue</button>
+							{% if grp_id %}
+								<a href="{% url 'hod_group:group_table_with_id' group_id=grp_id %}" class="btn btn-secondary px-4">Cancel</a>
+							{% endif %}
+							
+						</div>
+						
+						<div class="mb-3">
+								<button type="button" class="btn btn-outline-primary btn-sm" onclick="copyCourseForm()">Copy Data</button>
+								<button type="button" class="btn btn-outline-success btn-sm" onclick="pasteCourseForm()">Paste Data</button>
+						</div>
+						
+					</form>
+					
+						
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<!-- Edit Modal -->
+	<div class="modal fade" id="editOnlineModal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="editOnlineModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+				 <h5 class="modal-title" >Edit Course Record</h5>
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+				
+				</div>
+				<div class="modal-body">
+					<form method="POST" action="" id="editOnlineCourseForm" enctype="multipart/form-data">
+						{% csrf_token %}
+						<input type="hidden" id="edit-course-id" name="course_id">
+						<div class="row">
+							{% for field in form %}
+								{% if field.field.widget.input_type != "file" %}
+									<div class="col-md-6 mb-3">
+										<label for="edit-{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
+										{{ field|add_class:"form-control" }}
+										{% if field.help_text %}
+											<small id="{{ field.id_for_label }}_helptext" class="form-text text-muted">{{ field.help_text }}</small>
+										{% endif %}
+										{% if field.errors %}
+											<ul class="errorlist">
+												{% for error in field.errors %}
+													<li class="text-danger">{{ error }}</li>
+												{% endfor %}
+											</ul>
+										{% endif %}
+									</div>
+								{% else %}
+									
+									<div class="mb-3">
+										<label for="id_document" class="form-label">Upload Course Document</label>
+										<input type="file" name="document" id="id_document" class="form-control">
+										<br>
+										<a id="current-document-link" href="#" target="_blank" style="display:none;">View Current Document</a>
+									</div>
+									
+									
+								{% endif %}
+								
+							{% endfor %}
+						</div>
+						<div class="modal-footer">
+							<button type="submit" class="btn btn-primary">Update</button>
+							<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	
+	
+	
+	
+</div>
+<!-- Required Scripts -->
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+
+<!-- Buttons Extension -->
+<script src="https://cdn.datatables.net/buttons/2.4.1/js/dataTables.buttons.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.html5.min.js"></script>
+
+<!-- JSZip for Excel export -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+
+<script>
+		$(document).ready(function () {
+		
+			$('#onlineTable').DataTable({
+				autoWidth: false,
+				pageLength: 10,
+				lengthChange: true,
+				searching: true,
+				ordering: true,
+				columnDefs: [
+					{ orderable: false, targets: -1 } // Disable sorting on last column (Actions)
+				],
+				dom: '<"row mb-2"<"col-md-6"l><"col-md-6"f>>' + 
+					 '<"row mb-2"<"col-md-12"B>>' + 
+					 'rt<"row mt-2"<"col-md-6"i><"col-md-6"p>>',
+					 
+				buttons: [
+					{
+						extend: 'csvHtml5',
+						text: 'Export CSV',
+						className: 'btn btn-sm btn-outline-primary me-2',
+						exportOptions: {
+							columns: ':not(:last-child):not(:nth-last-child(2))'
+						}
+					},
+					{
+						extend: 'excelHtml5',
+						text: 'Export Excel',
+						className: 'btn btn-sm btn-outline-success',
+						exportOptions: {
+							columns: ':not(:last-child):not(:nth-last-child(2))'
+						}
+					}
+				]
+			});
+
+			// Clear the Add form when the modal is opened
+			$('#addOnlineModal').on('show.bs.modal', function () {
+				const $form = $('#OnlineCourseForm');
+				$form[0].reset();  // Reset native form values
+				$form.find('select').val('').trigger('change');  // Reset dropdowns
+				$form.find('input[type="file"]').val(''); // Clear file inputs
+				$form.find('.errorlist').remove(); // Remove any error messages
+			});
+
+
+
+			// Make the modal draggable
+			$('#addOnlineModal').draggable({
+				handle: ".modal-header" // Allow dragging by the modal header
+			});
+			
+			// Validate the enrol_year field 
+			//✅ The input contains only 4-digit numbers (YYYY format).
+			//✅ The value is within the range 1990 to the current year.
+			//✅ The input does not exceed 4 characters (max_length=4).
+			
+			
+			// Get the current year dynamically
+			const currentYear = new Date().getFullYear(); // Get current year
+
+			$("#id_enrol_year, input[name='enrol_year']").on('input', function () {
+				const enrolYear = $(this).val().trim(); // Get input value
+				const helpText = $('#id_enrol_year_helptext'); // Ensure correct selector
+				const yearRegex = /^\d{4}$/; // Regex: Exactly 4 digits
+
+				if (enrolYear === "") {
+					helpText.text(`Year must be between 1990 and ${currentYear}.`);
+					helpText.removeClass('help-text-error');
+					return;
+				}
+
+				if (enrolYear.length > 4) {
+					$(this).val(enrolYear.slice(0, 4)); // Trim excess characters
+					return;
+				}
+
+				if (!yearRegex.test(enrolYear)) {
+					helpText.text("Invalid! Enter a 4-digit year.");
+					helpText.addClass('help-text-error');
+				} else {
+					const year = parseInt(enrolYear, 10);
+
+					if (year < 1990 || year > currentYear) {
+						helpText.text(`Year must be between 1990 and ${currentYear}.`);
+						helpText.addClass('help-text-error');
+
+						// Reset input if greater than max
+						if (year > currentYear) {
+							$(this).val(currentYear);
+						}
+					} else {
+						helpText.text(""); // Clear error message
+						helpText.removeClass('help-text-error');
+					}
+				}
+			});
+			
+			
+			// Validate the contact_hrs field 
+			//✅Only allows up to 4 digits (max length = 4).
+			//✅Only allows positive whole numbers (no decimals or letters).
+			//✅Restricts value within a reasonable range (1 to 100).
+			//✅Automatically removes extra characters if input exceeds 4 digits.
+			//✅Displays error messages dynamically.
+			
+			$("#id_contact_hrs, input[name='contact_hrs']").on('input', function () {
+				let contactHrs = $(this).val().trim(); // Get input value
+				const helpText = $('#id_contact_hrs_helptext'); // Help text element
+				const intRegex = /^\d+$/; // Regex: Only digits (no letters or symbols)
+				
+				// If input is empty, show default help text
+				if (contactHrs === "") {
+					helpText.text("Contact hours must be between 1 and 100.");
+					helpText.removeClass('help-text-error');
+					return;
+				}
+
+				
+				// Restrict input to 3 characters max
+				if (contactHrs.length > 3) {
+					$(this).val(contactHrs.slice(0, 3)); // Trim excess characters
+					contactHrs = $(this).val().trim(); // Update trimmed value
+				}
+
+				if (!intRegex.test(contactHrs)) {
+					// If input is not numeric
+					helpText.text("Invalid! Enter only digits (1-100).");
+					helpText.addClass('help-text-error');
+				} else {
+					const hours = parseInt(contactHrs, 10); // Convert to integer
+					if (hours < 1 || hours > 100) {
+						// Check if in the valid range
+						helpText.text("Contact hours must be between 1 and 100.");
+						helpText.addClass('help-text-error');
+					} else {
+						// Valid input, clear error message
+						helpText.text("");
+						helpText.removeClass('help-text-error');
+					}
+				}
+			});
+			
+			$('#submitAndContinue').click(function (e) {
+				e.preventDefault();
+				const form = $('#OnlineCourseForm')[0];
+				const formData = new FormData(form);
+
+				$.ajax({
+					type: 'POST',
+					url: "{% url 'hod_group:courses_add_continue' %}",
+					data: formData,
+					processData: false,
+					contentType: false,
+					headers: {'X-CSRFToken': '{{ csrf_token }}'},
+					success: function (response) {
+						if (response.success) {
+							alert("Record added successfully!");
+							$('#OnlineCourseForm')[0].reset();  // Reset form
+						}
+					},
+					error: function (xhr) {
+						const errorData = JSON.parse(xhr.responseText);
+						let message = "Error:\n";
+						for (let field in errorData.errors) {
+							message += `${field}: ${errorData.errors[field][0].message}\n`;
+						}
+						alert(message);
+					}
+				});
+			});
+					
+			
+			
+			
+			
+			// Remove highlight when Edit modal is closed (via X or Cancel button)
+			$('#editOnlineModal').on('hidden.bs.modal', function () {
+				$('tr').removeClass('highlight-row');
+			});
+					
+			//$('.edit-btn').on('click', function() {
+			$(".edit-btn").click(function () {				 
+				var courseId = $(this).data("id");
+				
+				$('tr').removeClass('highlight-row'); // Remove previous highlights
+				var row = $(this).closest('tr');
+				row.addClass('highlight-row'); // Highlight this row
+		
+				$("#editOnlineCourseForm").attr("action", "/hod/edit_course/" + courseId + "/");  // Update form action dynamically
+				
+				$("#edit-course-id").val(courseId);
+				var courseName = $(this).data("course_name"); // Get data from button				
+				$("input[name='course_name']").val(courseName);
+				
+				var progCd = $(this).data("prog_cd"); // Get data from button				
+				$("input[name='prog_cd']").val(progCd);
+				
+				var enrolYear = $(this).data("enrol_year"); // Get data from button				
+				$("input[name='enrol_year']").val(enrolYear);
+				
+				var contactHrs = $(this).data("contact_hrs"); // Get data from button				
+				$("input[name='contact_hrs']").val(contactHrs);
+				
+				var enrolStudents = $(this).data("enrol_students"); // Get data from button				
+				$("input[name='enrol_students']").val(enrolStudents);
+				
+				var completeCount = $(this).data("complete_count"); // Get data from button				
+				$("input[name='complete_count']").val(completeCount);
+				
+				var documentUrl = $(this).data("document_url"); // Get data from button
+				console.log(documentUrl); // Check the value in the console
+				
+				
+				if (documentUrl) {
+					$("#current-document-link").attr("href", documentUrl).text("View Current Document").show();
+				} else {
+					$("#current-document-link").hide();
+				}
+				
+				$("#id_document").change(function () {
+					if (this.files.length > 0) {
+						$("#document-link").hide(); // Hide the old document link when a new file is selected
+					}
+				});
+								
+				
+				$("#editOnlineModal").modal("show");
+				
+				var rowNo = $(this).data('row');  // Get the row number from the data attribute
+				var modalTitle = 'Edit Course Record - Row ' + (rowNo + 1);  // Add 1 to make it 1-based index
+				$('.modal-title').text(modalTitle);  // Update the modal title
+
+				
+				// Highlight the current row
+				$('tr').removeClass('highlight-row');
+				$(this).closest('tr').addClass('highlight-row');
+				
+				
+            });
+			
+			
+			// Make the modal draggable
+            $('#editOnlineModal').draggable({
+                handle: ".modal-header" // Allow dragging by the modal header
+            });
+
+		
+			
+		});
+
+	
+</script>
+
+<!-- Clipboard Script (at the bottom) -->
+<script>
+    const storageKey = 'onlineCourseFormData';
+
+    function copyCourseForm() {
+        const data = {
+            course_name: document.getElementById("id_course_name")?.value || "",
+            prog_cd: document.getElementById("id_prog_cd")?.value || "",
+            enrol_year: document.getElementById("id_enrol_year")?.value || "",
+            contact_hrs: document.getElementById("id_contact_hrs")?.value || "",
+            enrol_students: document.getElementById("id_enrol_students")?.value || "",
+            complete_count: document.getElementById("id_complete_count")?.value || ""
+        };
+        localStorage.setItem(storageKey, JSON.stringify(data));
+        alert("Form data copied!");
+    }
+
+    function pasteCourseForm() {
+        const data = JSON.parse(localStorage.getItem(storageKey) || "{}");
+        if (!data || Object.keys(data).length === 0) {
+            alert("No copied data found.");
+            return;
+        }
+
+        document.getElementById("id_course_name").value = data.course_name || "";
+        document.getElementById("id_prog_cd").value = data.prog_cd || "";
+        document.getElementById("id_enrol_year").value = data.enrol_year || "";
+        document.getElementById("id_contact_hrs").value = data.contact_hrs || "";
+        document.getElementById("id_enrol_students").value = data.enrol_students || "";
+        document.getElementById("id_complete_count").value = data.complete_count || "";
+        alert("Form data pasted!");
+    }
+</script>
+
+
+{% endblock %}

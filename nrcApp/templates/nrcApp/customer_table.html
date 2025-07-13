@@ -1,0 +1,23 @@
+<form method="get" class="mb-3">
+    {{ filter.form.as_p }}
+    <button type="submit" class="btn btn-primary">Filter</button>
+</form>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Code</th><th>Name</th><th>Address</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for customer in customers %}
+    <tr>
+      <td>{{ customer.customer_code }}</td>
+      <td>{{ customer.customer_name }}</td>
+      <td>{{ customer.address }}</td>
+    </tr>
+    {% empty %}
+    <tr><td colspan="3">No results found.</td></tr>
+    {% endfor %}
+  </tbody>
+</table>

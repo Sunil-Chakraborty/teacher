@@ -129,7 +129,7 @@
         .hero-image img {
             max-width: 100%;
             border-radius: 50%;
-            width: 300px;
+            width: 400px;
             height: 300px;
             object-fit: cover;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
@@ -196,49 +196,7 @@
             gap: 30px;
         }
         
-        .project-card {
-            background-color: var(--card-bg);
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s;
-        }
         
-        .project-card:hover {
-            transform: translateY(-10px);
-        }
-        
-        .project-img {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
-        }
-        
-        .project-content {
-            padding: 20px;
-        }
-        
-        .project-title {
-            font-size: 1.3rem;
-            margin-bottom: 10px;
-            color: var(--primary-color);
-        }
-        
-        .project-tags {
-            display: flex;
-            flex-wrap: wrap;
-            margin: 10px 0;
-        }
-        
-        .tag {
-            background-color: #eef2ff;
-            color: var(--secondary-color);
-            padding: 5px 10px;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            margin-right: 8px;
-            margin-bottom: 8px;
-        }
         
         /* Contact Section */
         .contact-grid {
@@ -362,6 +320,89 @@
                 font-size: 2.5rem;
             }
         }
+
+		.project-card {
+		  width: 100%;		  
+		  margin: 20px auto;
+		  padding: 20px 30px;
+		  border-radius: 16px;
+		  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+		  background-color: #ffffff;
+		  text-align: left;
+		  font-family: 'Segoe UI', sans-serif;
+		}
+		.project-card h3 {
+		  margin-top: 0;
+		  font-size: 1.4rem;
+		  color: #333;
+		}
+
+		.project-screenshot {
+		  margin-top: 15px;
+		  text-align: center;
+		}
+
+		.screenshot-img {
+		  max-width: 100%;
+		  border-radius: 6px;
+		  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+		  transition: transform 0.3s;
+		}
+
+		.screenshot-img:hover {
+		  transform: scale(1.03);
+		}
+
+		.btn.btn-primary {
+		  display: inline-block;
+		  margin-top: 15px;
+		  background-color: #007bff;
+		  color: white;
+		  padding: 10px 16px;
+		  border-radius: 6px;
+		  text-decoration: none;
+		}
+
+		.btn.btn-primary:hover {
+		  background-color: #0056b3;
+		}
+
+	    .badge {
+		  display: inline-block;
+		  background-color: #e0e0e0;
+		  color: #333;
+		  font-size: 0.75rem;
+		  padding: 4px 10px;
+		  margin-right: 6px;
+		  margin-bottom: 6px;
+		  border-radius: 12px;
+		  font-weight: 500;
+		  text-transform: uppercase;
+		  letter-spacing: 0.5px;
+		  transition: background-color 0.3s;
+		}
+
+		.badge:hover {
+		  background-color: #007bff;
+		  color: white;
+		  cursor: default;
+		}
+		.readonly-code {
+		  user-select: none;
+		  pointer-events: none;
+		  background-color: #f4f4f4;
+		  padding: 16px;
+		  border-radius: 8px;
+		  font-family: 'Courier New', monospace;
+		  font-size: 0.9rem;
+		  color: #2a4494;
+		  overflow-x: auto;
+		  margin-top: 20px;
+		  white-space: pre-wrap;
+		  line-height: 1.5;
+		  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+		}
+
     </style>
     <!-- Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -378,6 +419,7 @@
                     <li><a href="#home">Home</a></li>
                     <li><a href="#about">About</a></li>
                     <li><a href="#projects">Projects</a></li>
+					<li><a href="#certificate">Certificate</a></li>
                     <li><a href="#contact">Contact</a></li>
                 </ul>
             </nav>
@@ -385,204 +427,216 @@
     </header>
     
     <!-- Hero Section -->
-    <section id="home" class="hero">
+<section id="home" class="hero">
         <div class="container">
-            <div class="hero-content">
-                <h1>Hi, I'm Sunil</h1>
-                <p>A passionate app developer specializing in python django web framework. I create many real life  projects that are working.</p>
-                <a href="#contact" class="btn">Get In Touch</a>
-            </div>
-            <div class="hero-image">
-                <img src="d:ju/profile_image_sc.png" alt="Profile Photo" style="width:100px;height:100px;">
+            <div class="min-h-screen flex flex-col items-center justify-center px-4 py-8 bg-white text-center">
+		<h1 class="text-4xl md:text-5xl font-extrabold text-blue-800 mb-4">
+			👋 Hi, I'm <span style="color:#2a4494;">Sunil Chakraborty</span>
+		</h1>
+		<p class="text-gray-700 text-lg md:text-xl max-w-2xl mb-6 leading-relaxed">
+			A passionate <strong>application developer</strong> with hands-on expertise in the 
+			<strong>Python Django web framework</strong>. I specialize in crafting 
+			<em>secure</em>, <em>scalable</em>, and <em>enterprise-grade web applications</em> 
+			that solve real business challenges.
+		</p>
+
+		<div class="flex flex-col sm:flex-row items-center gap-6 mb-10 hero-image">
+ 			 <img src="d:ju/profile_image_sc.png" alt="Profile Photo" style="width:100px;height:100px;">
+
+		</div>
+		
+	   </div>
+	</div>
+</section>
+ 
+<!-- About Section -->
+<section id="about">
+    <div class="container">
+       <h2 class="text-2xl font-bold text-blue-700 mt-10">About Me</h2>
+	   <div class="about-text" style="font-size: 1.05rem; color: #444; line-height: 1.8;">
+
+        <div class="about-content">
+            <div class="about-text">
+			<p><strong>Hello! I’m Sunil Chakraborty</strong>, a seasoned <strong>IT consultant and full-stack developer</strong> based in <strong>Kolkata, India</strong>, with over a decade of experience in designing, developing, and deploying enterprise-grade applications tailored for manufacturing industries.</p>
+
+			<p>During my tenure as <strong>Senior IT Manager at a global MNC</strong>, I led multiple transformation projects that enhanced operational efficiency. My core expertise lies in building end-to-end web solutions using <strong>Python, Django, REST APIs</strong>, and seamless <strong>SAP module integrations</strong> including MM, PP, and FI.</p>
+
+			<p>I’m deeply passionate about <em>automation</em>, <em>problem-solving</em>, and crafting clean, efficient designs. Outside of work, I enjoy <strong>writing, public speaking</strong>, and exploring <strong>multilingual technologies</strong> to bridge communication gaps in digital systems.</p>
+
+	    	  <br>
+		  <div style="background-color: #eef6ff; border-left: 4px solid #2a4494; padding: 15px; margin-top: 20px; border-radius: 6px; font-weight: 500;">
+			  I prefer to work remotely and offer contractual services for commercial projects.
+			  For evaluation purposes, I’m happy to provide a sample solution hosted online
+			  (e.g., via <a href="https://www.pythonanywhere.com" target="_blank" style="color: #2a4494; font-weight: 600;">pythonanywhere.com</a>)
+			  based on the given requirements.
+		  </div>
+
+	    </div>
+
+		<div class="skills">
+		  <div class="skill-item">
+		    <div class="skill-info">
+		      <span>Python & Django</span>
+		      <span>95%</span>
+		    </div>
+		    <div class="skill-bar"><div class="skill-level" style="width: 95%;"></div></div>
+		  </div>
+		  <div class="skill-item">
+		    <div class="skill-info">
+		      <span>HTML / CSS / JavaScript / AJAX</span>
+		      <span>90%</span>
+		    </div>
+		    <div class="skill-bar"><div class="skill-level" style="width: 90%;"></div></div>
+		  </div>
+		  <div class="skill-item">
+		    <div class="skill-info">
+		      <span>SAP Modules (FI, IM, WM, SD, PP-PI)</span>
+		      <span>85%</span>
+		    </div>
+		    <div class="skill-bar"><div class="skill-level" style="width: 85%;"></div></div>
+		  </div>
+		  <div class="skill-item">
+		    <div class="skill-info">
+		      <span>Project Management & Software Deployment</span>
+		      <span>80%</span>
+		    </div>
+		    <div class="skill-bar"><div class="skill-level" style="width: 80%;"></div></div>
+		  </div>
+		  <div class="skill-item">
+		    <div class="skill-info">
+		      <span>MS Office, Excel Automation, MS Access</span>
+		      <span>75%</span>
+		    </div>
+		    <div class="skill-bar"><div class="skill-level" style="width: 75%;"></div></div>
+		  </div>
+		</div>
+        </div>
+    </div>
+</section>
+
+<!-- Projects Section -->
+<section id="projects">
+    <div class="container">
+        <h2 class="section-title">Projects</h2>
+        <div class="projects-grid">
+            <div class="project-card">
+			  <h3>Recepi Management System</h3>
+			  <p>
+				The above web application manages the formulation of compound recipes with integration of SAP codes, quantity tracking, and pricing per unit. 
+				Features include CRUD operations, search/filtering, export to Excel/PDF, and user role-based access.
+			  </p>
+			  <br>
+				<div class="tech-stack">
+				  <span class="badge">Django</span>
+				  <span class="badge">Bootstrap</span>
+				  <span class="badge">DataTables</span>
+				  <span class="badge">jQuery</span>
+				  <span class="badge">SQLite</span>
+				</div>
 				
-            </div>
+			  <div class="project-screenshot">
+				<img src="recepi_list.PNG" alt="Recepi List Screenshot" class="screenshot-img">
+			  </div>
+
+			  <a href="https://sunilc.pythonanywhere.com/product/recepi/" class="btn btn-primary" target="_blank">View Live Demo</a>
+			
+				
+			</div>
+			
+			python
+			  <h3 class="project-title">Barcode Integration System</h3>
+              <p>Created on-the-fly barcode generation for materials and compounds using Python and integrated it with printable Django templates.</p>
+
+			  <br>
+				<div class="tech-stack">
+				  <span class="badge">Django</span>				  
+				  <span class="badge">DataTables</span>
+				  <span class="badge">jQuery</span>
+				  <span class="badge">PDF Export</span>
+				  <span class="badge">SQLite</span>
+				</div>
+			  <!---
+			  <p>
+                    <a href="https://github.com/sunilchak/barcode-django" target="_blank">GitHub</a>			
+                    <a href=" https://raw.githack.com/Sunil-Chakraborty/softnook/master/clock/clock.html" target="_blank">Live Demo</a>
+              </p> 
+			  --> 	
+			  <div class="project-screenshot">
+				<img src="bar_code.PNG" alt="Recepi List Screenshot" class="screenshot-img">
+			  </div>
+
+			  <a href="https://sunilc.pythonanywhere.com/product/recepi/" class="btn btn-primary" target="_blank">View Live Demo</a>
+			</div>
+			
+            <!-- Add more project-cards as needed -->
         </div>
-    </section>
-    
-    <!-- About Section -->
-    <section id="about">
-        <div class="container">
-            <h2 class="section-title">About Me</h2>
-            <div class="about-content">
-                <div class="about-text">
-                    <p>Welcome to my portfolio! I'm a [Your Profession] with [X years] of experience in [Your Industry]. I specialize in [Your Specialization] and have a passion for [Your Passion].</p>
-                    <p>My journey began [brief background]. Since then, I've worked with [types of clients/companies] to deliver [types of projects/solutions].</p>
-                    <p>When I'm not [working/coding/designing], you can find me [your hobbies or interests]. I believe that [your professional philosophy or values].</p>
-                </div>
-                <div class="skills">
-                    <div class="skill-item">
-                        <div class="skill-info">
-                            <span>Skill 1</span>
-                            <span>90%</span>
-                        </div>
-                        <div class="skill-bar">
-                            <div class="skill-level" style="width: 90%;"></div>
-                        </div>
-                    </div>
-                    <div class="skill-item">
-                        <div class="skill-info">
-                            <span>Skill 2</span>
-                            <span>85%</span>
-                        </div>
-                        <div class="skill-bar">
-                            <div class="skill-level" style="width: 85%;"></div>
-                        </div>
-                    </div>
-                    <div class="skill-item">
-                        <div class="skill-info">
-                            <span>Skill 3</span>
-                            <span>80%</span>
-                        </div>
-                        <div class="skill-bar">
-                            <div class="skill-level" style="width: 80%;"></div>
-                        </div>
-                    </div>
-                    <div class="skill-item">
-                        <div class="skill-info">
-                            <span>Skill 4</span>
-                            <span>75%</span>
-                        </div>
-                        <div class="skill-bar">
-                            <div class="skill-level" style="width: 75%;"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    
-    <!-- Projects Section -->
-    <section id="projects">
-        <div class="container">
-            <h2 class="section-title">My Projects</h2>
-            <div class="projects-grid">
-                <!-- Project 1 -->
-                <div class="project-card">
-                    <img src="/api/placeholder/400/200" alt="Project 1" class="project-img">
-                    <div class="project-content">
-                        <h3 class="project-title">Project One</h3>
-                        <p>A brief description of the project, what technologies were used, and what problems it solved.</p>
-                        <div class="project-tags">
-                            <span class="tag">HTML</span>
-                            <span class="tag">CSS</span>
-                            <span class="tag">JavaScript</span>
-                        </div>
-                        <a href="#" class="btn">View Project</a>
-                    </div>
-                </div>
+    </div>
+</section>
+
+<!-- Contact Section -->
+<section id="contact">
+    <div class="container">
+        <h2 class="section-title">Get in Touch</h2>
+        <div class="contact-grid">
+            <div class="contact-form">
+               <form action="https://formsubmit.co/to.sunilc@gmail.com" method="POST">
+                  <!-- optional hidden field to disable captcha -->
+                  <input type="hidden" name="_captcha" value="false">
                 
-                <!-- Project 2 -->
-                <div class="project-card">
-                    <img src="/api/placeholder/400/200" alt="Project 2" class="project-img">
-                    <div class="project-content">
-                        <h3 class="project-title">Project Two</h3>
-                        <p>A brief description of the project, what technologies were used, and what problems it solved.</p>
-                        <div class="project-tags">
-                            <span class="tag">React</span>
-                            <span class="tag">Node.js</span>
-                            <span class="tag">MongoDB</span>
-                        </div>
-                        <a href="#" class="btn">View Project</a>
-                    </div>
-                </div>
+                  <!-- optional thank you page -->
+                  <input type="hidden" name="_next" value="https://sunil-chakraborty.github.io/sunil-c.github.io/thankyou.html">
                 
-                <!-- Project 3 -->
-                <div class="project-card">
-                    <img src="/api/placeholder/400/200" alt="Project 3" class="project-img">
-                    <div class="project-content">
-                        <h3 class="project-title">Project Three</h3>
-                        <p>A brief description of the project, what technologies were used, and what problems it solved.</p>
-                        <div class="project-tags">
-                            <span class="tag">Python</span>
-                            <span class="tag">Django</span>
-                            <span class="tag">PostgreSQL</span>
-                        </div>
-                        <a href="#" class="btn">View Project</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    
-    <!-- Contact Section -->
-    <section id="contact">
-        <div class="container">
-            <h2 class="section-title">Get In Touch</h2>
-            <div class="contact-grid">
-                <form class="contact-form">
-                    <input type="text" placeholder="Your Name" required>
-                    <input type="email" placeholder="Your Email" required>
-                    <input type="text" placeholder="Subject">
-                    <textarea placeholder="Your Message" required></textarea>
-                    <button type="submit" class="btn">Send Message</button>
+                  <input type="text" name="name" placeholder="Your Name" required>
+                  <input type="email" name="email" placeholder="Your Email" required>
+				  <input type="text" name="cell" placeholder="Your Mobile No" >
+				  <input type="text" name="file" placeholder="to upload file,paste the Google Drive share link" >
+				  
+                  <input type="text" name="subject" placeholder="Subject" required>
+                  <textarea name="message" placeholder="Your Message" required></textarea>
+                
+                  <button type="submit" class="btn">Send Message</button>
                 </form>
-                <div class="contact-info">
-                    <div class="contact-info-item">
-                        <div class="contact-icon">
-                            <i class="fas fa-envelope"></i>
-                        </div>
-                        <div>
-                            <h3>Email</h3>
-                            <p>your.email@example.com</p>
-                        </div>
-                    </div>
-                    <div class="contact-info-item">
-                        <div class="contact-icon">
-                            <i class="fas fa-phone"></i>
-                        </div>
-                        <div>
-                            <h3>Phone</h3>
-                            <p>+1 (123) 456-7890</p>
-                        </div>
-                    </div>
-                    <div class="contact-info-item">
-                        <div class="contact-icon">
-                            <i class="fas fa-map-marker-alt"></i>
-                        </div>
-                        <div>
-                            <h3>Location</h3>
-                            <p>Your City, Country</p>
-                        </div>
-                    </div>
-                    <div class="contact-info-item">
-                        <div class="contact-icon">
-                            <i class="fab fa-github"></i>
-                        </div>
-                        <div>
-                            <h3>GitHub</h3>
-                            <p>github.com/yourusername</p>
-                        </div>
-                    </div>
+            </div>
+            <div class="contact-info">
+                <div class="contact-info-item">
+                    <div class="contact-icon"><i class="fas fa-envelope"></i></div>
+                    <p>to.sunilc@gmail.com</p>
                 </div>
+                <div class="contact-info-item">
+			<a href="https://wa.me/919903751108" target="_blank">
+                             <i class="fab fa-whatsapp" style="margin-left:6px;font-size:40px;"></i> Chat on WhatsApp
+			</a>
+                </div>
+                <div class="contact-info-item">
+                    <div class="contact-icon"><i class="fas fa-map-marker-alt"></i></div>
+                    <p>Kolkata-700148 West Bengal, India</p>
+                </div>
+		<!-- CV Link -->
+		<div class="contact-info-item">
+		    <div class="contact-icon"><i class="fas fa-file-pdf"></i></div>
+		    <div>
+		        <h3>Download CV</h3>
+		        <p>
+		            <a href="pdf/CV.pdf" target="_blank" class="btn">
+		                View / Download PDF
+		            </a>
+		        </p>
+		    </div>
+		</div>    
             </div>
         </div>
-    </section>
-    
-    <!-- Footer -->
-    <footer>
-        <div class="container">
-            <div class="social-links">
-                <a href="#"><i class="fab fa-linkedin"></i></a>
-                <a href="#"><i class="fab fa-github"></i></a>
-                <a href="#"><i class="fab fa-twitter"></i></a>
-                <a href="#"><i class="fab fa-instagram"></i></a>
-            </div>
-            <p>&copy; 2025 Your Name. All Rights Reserved.</p>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <p>&copy; 2025 Sunil Chakraborty. All rights reserved.</p>
+        <div class="social-links">
+            <a href="https://github.com/Sunil-Chakraborty" target="_blank"><i class="fab fa-github"></i></a>
+            <a href="https://linkedin.com/in/sunilchak" target="_blank"><i class="fab fa-linkedin"></i></a>
         </div>
-    </footer>
-    
-    <!-- JavaScript for smooth scrolling and other interactions -->
-    <script>
-        // Smooth scrolling for navigation links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
-                    behavior: 'smooth'
-                });
-            });
-        });
-    </script>
+    </div>
+</footer>
 </body>
 </html>
