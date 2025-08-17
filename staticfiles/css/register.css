@@ -1,0 +1,31 @@
+
+<style>
+    /* Ensure inputs are evenly aligned */
+    .form-group label {
+        display: block;
+        font-weight: bold;
+    }
+
+    .form-group input {
+        width: 100%;  /* Full width input fields */
+        padding: 10px;
+        margin-top: 5px;
+        border-radius: 5px;
+        border: 1px solid #ced4da;
+        box-sizing: border-box;  /* Include padding and border in element's width */
+    }
+
+    .form-group {
+        margin-bottom: 15px;
+    }
+
+    .card {
+        padding: 20px;
+        border-radius: 10px;
+    }
+
+    .form-control {
+        display: block;
+        width: 100%;
+    }
+</style>

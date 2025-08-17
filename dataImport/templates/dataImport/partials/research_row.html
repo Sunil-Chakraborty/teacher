@@ -1,0 +1,30 @@
+<tr id="research-row-{{ research.id }}">
+    <td>{{ counter }}</td>
+    <td>{{ research.pi_name }}</td>
+    <td>{{ research.project_title }}</td>
+    <td>{{ research.funding_agency }}</td>
+    <td>{{ research.award_year }}</td>
+    <td>{{ research.amount }}</td>
+    <td>{{ research.duration }}</td>
+    <td style="text-align:center;">
+        <button class="btn btn-warning btn-sm edit-btn"
+                hx-get="{% url 'dataImport:research_edit' research.id %}"
+                hx-target="#modal-container"
+                hx-swap="innerHTML"
+                data-id="{{ research.id }}"
+                data-pi-name="{{ research.pi_name }}"
+                data-project-title="{{ research.project_title }}"
+                data-funding-agency="{{ research.funding_agency }}"
+                data-award-year="{{ research.award_year }}"
+                data-amount="{{ research.amount }}"
+                data-duration="{{ research.duration }}">
+            <i class="fa fa-pencil"></i> Edit
+        </button>
+        
+        <a href="{% url 'dataImport:research_delete' research.pk %}" 
+           class="btn btn-sm btn-danger"
+           onclick="return confirm('Are you sure you want to delete this Research rec.?');">
+            Delete
+        </a>
+    </td>
+</tr>

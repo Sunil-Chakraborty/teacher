@@ -1,0 +1,57 @@
+{% load widget_tweaks %}
+
+<div class="modal fade" id="editResearchModal" tabindex="-1" data-bs-backdrop="false" data-bs-keyboard="false" aria-labelledby="editResearchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Edit Research Record</h5>
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            
+            <form hx-post="{% url 'dataImport:research_edit' research.id %}"
+                  hx-target="#research-row-{{ research.id }}"
+                  hx-swap="outerHTML"
+                  hx-on::after-request="bootstrap.Modal.getInstance(document.getElementById('editResearchModal')).hide()">
+                {% csrf_token %}
+                
+                <div class="modal-body">
+                    <div class="row">
+                        {% for field in form %}
+                            {% if field.field.widget.input_type != "file" %}
+                                <div class="col-md-6 mb-3">
+                                    <label for="edit-{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
+                                    {{ field|add_class:"form-control" }}
+                                    {% if field.help_text %}
+                                        <small id="{{ field.id_for_label }}_helptext" class="form-text text-muted">{{ field.help_text }}</small>
+                                    {% endif %}
+                                    {% if field.errors %}
+                                        <ul class="errorlist">
+                                            {% for error in field.errors %}
+                                                <li class="text-danger">{{ error }}</li>
+                                            {% endfor %}
+                                        </ul>
+                                    {% endif %}
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+                
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Update</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Show the modal when this partial is loaded
+    document.addEventListener('DOMContentLoaded', function() {
+        const modal = new bootstrap.Modal(document.getElementById('editResearchModal'));
+        modal.show();
+    });
+</script>

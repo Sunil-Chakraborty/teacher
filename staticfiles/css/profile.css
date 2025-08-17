@@ -1,0 +1,93 @@
+/* static/css/profile.css */
+.container {
+    display: flex;
+    justify-content: space-around;
+    margin: 20px;
+}
+
+.box {
+    padding: 20px; 	
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 20%;
+    text-align: center;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.box:hover {
+    transform: scale(1.05);
+}
+
+/* Additional styles can be added here */
+/* Style for the modal */
+
+/* Style for the table inside the modal */
+.publication-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.publication-table th, .publication-table td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.publication-table th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+}
+
+.publication-table tr:hover {
+    background-color: #f9f9f9;
+}
+
+/* Style for action buttons */
+.btn-add, .btn-edit, .btn-delete {
+    text-decoration: none;
+    padding: 5px 10px;
+    margin-right: 5px;
+    border-radius: 4px;
+    color: white;
+}
+
+.btn-add {
+    background-color: #4CAF50;
+}
+
+.btn-edit {
+    background-color: #FFC107;
+}
+
+.btn-delete {
+    background-color: #F44336;
+}
+/* Close button styling */
+.close {
+    color: #aaa;
+    font-size: 28px;
+    font-weight: bold;
+    position: absolute;
+    right: 20px;
+    top: 10px;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.close:hover,
+.close:focus {
+    color: #f44336; /* Red on hover for a better visual cue */
+    text-decoration: none;
+}
+
+.no-data-message {
+    text-align: center; /* Center the text */
+    font-style: italic; /* Italicize the text */
+    color: #888; /* A lighter color for less emphasis */
+    padding: 20px; /* Add some padding for spacing */
+    font-size: 1.1em; /* Slightly larger font size */
+}
+

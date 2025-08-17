@@ -1,0 +1,40 @@
+.container {
+            max-width: 50px;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            box-shadow: 2px 2px 12px rgba(0,0,0,0.1);
+        }
+/* Style for the feedback label */
+label[for="feedback"] {
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+    display: block;
+    margin-bottom: 8px;
+}
+
+/* Style for the feedback input field */
+input[name="feedback"] {
+    width: 100%;
+    max-width: 400px;
+    padding: 10px;
+    font-size: 14px;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    outline: none;
+    transition: border-color 0.3s ease-in-out;
+}
+
+/* Highlight input when focused */
+input[name="feedback"]:focus {
+    border-color: #007bff;
+    box-shadow: 0px 0px 5px rgba(0, 123, 255, 0.5);
+}
+
+/* Placeholder styling */
+input[name="feedback"]::placeholder {
+    color: #999;
+    font-style: italic;
+}

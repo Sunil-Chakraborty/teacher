@@ -241,7 +241,7 @@ def research_project_bulk_create(request):
             if has_partial_error:
                 messages.error(request, "Some rows are incomplete. Please complete or clear them.")
             if valid_count > 0 and not has_partial_error:
-                messages.success(request, f"{valid_count} project(s) saved.")
+                messages.success(request, f"{valid_count} record(s) saved.")
                 return redirect('dataImport:group_table_with_id', 'group4')
 
             # ❗ If no valid rows and no partial error, stop redirect
@@ -281,7 +281,7 @@ def research_edit(request, research_id):
     })
 
 
-    
+
 @login_required
 def research_delete(request, pk):
     research = get_object_or_404(ResearchProject, pk=pk)
