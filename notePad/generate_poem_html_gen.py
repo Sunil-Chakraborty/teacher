@@ -1,4 +1,4 @@
-# file:///D:/JU/index.html
+# file:///D:/JU/index3.html
 # python generate_poem_html_gen.py
 import re
 from pathlib import Path
@@ -6,11 +6,11 @@ from pathlib import Path
 with open("Poem3.txt", "r", encoding="utf-8") as f:
     raw_text = f.read()
 
-# Regex: generic – capture poet + title + optional media
+# Regex: poet, title, optional media
 pattern = re.compile(
     r"(\d{2}/\d{2}/\d{4}, \d{2}:\d{2}) - (.*?): ?[\"']?(.*?)[\"']?\n"
-    r"(?:(audio|video|image):(.*?)\n)?"  
-    r"\n?(.*?)(?=\n\d{2}/\d{2}/\d{4}, \d{2}:\d{2} - |\Z)", 
+    r"(?:(audio|video|image):(.*?)\n)?"
+    r"\n?(.*?)(?=\n\d{2}/\d{2}/\d{4}, \d{2}:\d{2} - |\Z)",
     re.DOTALL
 )
 matches = pattern.findall(raw_text)
@@ -31,6 +31,7 @@ html = """<!DOCTYPE html>
     #searchBox { width: 100%; padding: 8px; margin: 10px 0; font-size: 1em; border: 1px solid #ccc; border-radius: 4px; }
     .index a { display: block; margin: 0.5em 0; color: #0066cc; text-decoration: none; }
     .index a:hover { text-decoration: underline; }
+    .index a.has-media { color: green; font-weight: bold; }
     .poem { margin-bottom: 4em; }
     p { white-space: pre-line; }
     .media-card {
@@ -56,12 +57,6 @@ html = """<!DOCTYPE html>
       margin: 8px auto 0 auto;
       display: block;
     }
-    .media-thumb {
-      max-width: 80%;
-      border-radius: 8px;
-      margin-bottom: 8px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-    }
     .media-caption {
       font-size: 0.9em;
       font-weight: bold;
@@ -78,20 +73,34 @@ html = """<!DOCTYPE html>
     <div class="index">
 """
 
-# Add poems
+# Build index + main content
 main_content = ""
 for idx, (_, poet, title, media_type, media_file, body) in enumerate(matches, start=1):
     anchor = f"poem{idx}"
-    html += f'      <a href="#{anchor}">{title} - {poet}</a>\n'
 
-    # Media check with cover support
+    # Has media?
+    has_media = media_file and media_file.strip()
+    link_class = "has-media" if has_media else ""
+    
+    # Choose emoji
+    emoji = ""
+    if has_media:
+        if media_type == "audio":
+            emoji = " 🎵"
+        elif media_type == "video":
+            emoji = " 🎥"
+        elif media_type == "image":
+            emoji = " 🖼️"
+
+    # Aside index link
+    html += f'      <a href="#{anchor}" class="{link_class}">{title}{emoji} - {poet}</a>\n'
+
+    # Media block
     media_html = ""
-    if media_file and media_file.strip():
-        # allow "file|cover"
+    if has_media:
         parts = media_file.strip().split("|")
         file_name = parts[0].strip()
         cover_img = parts[1].strip() if len(parts) > 1 else None
-
         media_path = Path("media") / file_name
         cover_path = Path("media") / cover_img if cover_img else None
 
@@ -101,7 +110,7 @@ for idx, (_, poet, title, media_type, media_file, body) in enumerate(matches, st
                 media_html = f'''
                 <div class="media-card">
                   {img_html}
-                  <p class="media-caption">🎵 অডিও পাঠ</p>
+                  <p class="media-caption">🎵 কবিতা পাঠ</p>
                   <audio controls>
                     <source src="media/{file_name}" type="audio/mpeg">
                   </audio>
@@ -121,10 +130,8 @@ for idx, (_, poet, title, media_type, media_file, body) in enumerate(matches, st
                   <p class="media-caption">🖼️ ছবি</p>
                   <img src="media/{file_name}" alt="{title}">
                 </div>'''
-        else:
-            print(f"⚠️ Skipped missing media file: {file_name}")
 
-    # Poem block with poet line (bold + italic)
+    # Poem block
     main_content += f"""
     <div class="poem" id="{anchor}">
       <h2>{title}</h2>
@@ -134,7 +141,7 @@ for idx, (_, poet, title, media_type, media_file, body) in enumerate(matches, st
     </div>
 """
 
-# Close aside + main + add JS search function
+# Close HTML
 html += f"""    </div>
   </aside>
   <main id="poemContainer">
@@ -160,4 +167,4 @@ function filterPoems() {{
 """
 
 Path("index3.html").write_text(html, encoding="utf-8")
-print("✅ index3.html generated successfully with cover image support for audio/video!")
+print("✅ index3.html generated successfully with emoji-marked media titles in index!")
